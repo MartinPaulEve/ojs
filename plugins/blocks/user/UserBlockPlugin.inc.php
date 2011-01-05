@@ -19,6 +19,19 @@ class UserBlockPlugin extends BlockPlugin {
 		$success = parent::register($category, $path);
 		if ($success) {
 			AppLocale::requireComponents(array(LOCALE_COMPONENT_PKP_USER));
+			$this->addLocaleData();
+
+			// Do all this Plugin Stuff here so that it can appear outside the block
+			$templateMgr =& TemplateManager::getManager();
+			$session =& Request::getSession();
+			$templateMgr->assign_by_ref('userSession', $session);
+			$templateMgr->assign('loggedInUsername', $session->getSessionVar('username'));
+			$loginUrl = Request::url(null, 'login', 'signIn');
+			if (Config::getVar('security', 'force_login_ssl')) {
+				$loginUrl = String::regexp_replace('/^http:/', 'https:', $loginUrl);
+			}
+			$templateMgr->assign('userBlockLoginUrl', $loginUrl);
+
 		}
 		return $success;
 	}

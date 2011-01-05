@@ -32,20 +32,20 @@
  */
 
 a:link {
-	color: #375;
+	color: #000;
 }
 
 a:active {
-	color: #253;
+	color: #000;
 }
 
 a:visited {
-	color: #375;
+	color: #000;
 }
 
 a:hover {
-	color: #253;
-	background: #CDC;
+	color: #000;
+	text-decoration: underline;
 }
 
 
@@ -54,11 +54,13 @@ a:hover {
  */
 
 #header {
-	background-color: #ABA;
+	background-color: #FFDC53;
+	min-height:150px;
+	border-top: 15px solid #FBFBF3;	
 }
 
 #footer {
-	background-color: #ABA;
+	background-color: #FFDC53;
 }
 
 #main {
@@ -66,6 +68,39 @@ a:hover {
 	margin: 0 auto;
 }
 
+#headerContainer {
+   width: 50%;
+   float: left;
+   padding-top:10px;
+}
+
+#headerLanguageSelect {
+  float: left;
+	width:10%;
+	line-height:100%;
+	font-size:.5em;
+	font-weight:normal;
+	color:#f68417; 
+}
+
+#headerLanguageSelect a {
+	color:#000;
+	text-decoration:underline;
+}
+
+#headerLanguageSelect a:hover {
+	color:#c94909; 
+	text-decoration:underline;
+}
+
+#headerJournalDesc {
+	float:right;
+	width:70%; 
+	font-size:.5em;
+	font-weight:normal;
+	line-height:100%;
+	color:#c94909; 
+}
 
 /**
  * Access icons and key
@@ -206,6 +241,9 @@ h4.tocSectionTitle {
 }
 
 table.tocArticle {
+	border-bottom: 1px solid #efefef;
+	padding-bottom: 7px;
+	margin-bottom: 7px;	
 	width: 100%;
 }
 
@@ -216,7 +254,11 @@ table.tocArticle td.tocTitle {
 
 table.tocArticle td.tocGalleys {
 	width: 30%;
-	text-align: right;
+	padding-top: 3px;	
+}
+
+table.tocArticle td.tocGalleys a.file {
+	color: #777;	
 }
 
 table.tocArticle td.tocAuthors {
@@ -228,6 +270,7 @@ table.tocArticle td.tocAuthors {
 table.tocArticle td.tocPages {
 	text-align: right;
 	vertical-align: top;
+	font-size: 1.3em;	
 }
 
 .tocArticleCoverImage img {
@@ -237,6 +280,14 @@ table.tocArticle td.tocPages {
 	margin: 0 1em 1em 0;
 }
 
+/**
+ * Article title
+ */
+.articleTitle {
+	text-transform: none;
+	margin: 0em 1em 0em 0em;
+
+}
 
 /**
  * Homepage image
@@ -254,7 +305,7 @@ table.tocArticle td.tocPages {
 	border: 0;
 	float: left;
 	width: 100px;
-	margin: 1em 1em 1em 0;
+	margin: 0 1em 1em 0;
 	text-align: center;
 }
 
@@ -372,6 +423,55 @@ td.notificationFunction {
 	text-align: right;
 }
 
+/**** topNavbar styles the sign in navbar at the very top of the page ****/
+
+#topNavbar {
+  margin: 0 auto;
+  margin-top:-22px;
+	padding-bottom: 0.2em;
+	text-align:right;
+}
+
+ul.topNavbar {
+	margin: 0;
+	padding: 0;
+	margin-right:13%;
+}
+
+ul.topNavbar li {
+	margin: 0;
+	padding: 0;
+	padding-right: .7em;
+	padding-left: .3em;
+	border-right:1px solid #999;
+	display: inline;
+}
+
+ul.topNavbar li.userName {
+	font-size: 0.65em;
+	text-transform: lowercase;
+	text-decoration: none;
+  	color:#444;
+}
+
+ul.topNavbar li.noBorder {
+	margin: 0;
+	padding: 0;
+	padding-left: .3em;
+	padding-right: 2em;
+	display: inline;
+	border:none;
+}
+
+ul.topNavbar a {
+	font-size: 0.65em;
+	text-transform: lowercase;
+	text-decoration: none;
+  color:#444;
+}
+
+
+
 .throbber {
 	display: none;
 	background: url(../lib/pkp/templates/images/throbber.gif) no-repeat;
@@ -465,6 +565,55 @@ ul.tagit input[type="text"] {
 	width: inherit;
 	background-color: inherit;
     outline: none;
+}
+/*** this styles featured article homepage title and description ***/
+.feature {
+	width: 100%;
+	margin:0;
+	margin-bottom:15px;
+	padding:0;
+	padding-bottom:.7em;
+	line-height:1.3em;
+	border-bottom:1px solid #444;
+}
+
+.feature a {
+	color:#c94909;
+	text-decoration:none;
+}
+
+.feature a:hover {
+	color:#000;
+	text-decoration:underline;
+}
+
+.articleAuthor {
+	color:#101010;
+	font-style:italic;
+}
+
+.articleLink a:link {
+	color: #999;
+}
+
+.articleLink a:active {
+	color: #999;
+}
+
+.articleLink a:visited {
+	color: #999;
+}
+
+.articleLink a:hover {
+	color: #000;
+	text-decoration: underline;
+}
+
+/*** creative common license ***/
+
+div.license {
+	font-size:10px; 
+	margin-left:3%;
 }
 
 

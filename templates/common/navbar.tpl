@@ -9,16 +9,14 @@
  *}
 <div id="navbar">
 	<ul class="menu">
-		<li id="home"><a href="{url page="index"}">{translate key="navigation.home"}</a></li>
+		<li id="home"><a href="/ojs/">{translate key="navigation.home"}</a></li>
 		<li id="about"><a href="{url page="about"}">{translate key="navigation.about"}</a></li>
 
 		{if $isUserLoggedIn}
 			<li id="userHome"><a href="{url journal="index" page="user"}">{translate key="navigation.userHome"}</a></li>
 		{else}
 			<li id="login"><a href="{url page="login"}">{translate key="navigation.login"}</a></li>
-			{if !$hideRegisterLink}
-				<li id="register"><a href="{url page="user" op="register"}">{translate key="navigation.register"}</a></li>
-			{/if}
+			<li id="register"><a href="{url page="user" op="register"}">{translate key="navigation.register"}</a></li>
 		{/if}{* $isUserLoggedIn *}
 
 		{if $siteCategoriesEnabled}
@@ -47,4 +45,3 @@
 		{/foreach}
 	</ul>
 </div>
-

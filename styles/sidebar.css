@@ -24,10 +24,12 @@
 
 #sidebar div.block span.blockTitle {
 	display: block;
-	padding: 0.5em 0 0.5em 0;
-	font-size: 1em;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
+	padding: 0.5em 0 0.1em 0;
+	font-size: 1.8em;
+	letter-spacing: 0.02em;
+	text-transform: lowercase;
+	color:#c94909;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
 }
 
 #sidebar div.block span.blockSubtitle {
@@ -35,7 +37,21 @@
 	padding: 0;
 }
 
+#sidebar div.block li {
+    list-style: none;
+    line-height: 1.5em;
+    margin-left:-25px;
+}
+
 #sidebar input.textField, #sidebar select.selectMenu, #sidebar input.button {
 	font-size: 1em;
 }
 
+#sidebarReadingTools {
+	list-style: none;
+	line-height: 1.3em;
+}
+
+img.newTools {
+	margin:12px 6px -10px 0px;
+}

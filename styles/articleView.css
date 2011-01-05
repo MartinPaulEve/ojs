@@ -22,6 +22,7 @@
 #main {
 	width: 100%;
 	margin: 0;
+	margin-left:3%;
 }
 
 #main h2 {
@@ -141,6 +142,10 @@ a.rtAction {
 *  Styles for XSLT Article Rendering
 *  (based on NLM DTD classes)
 */
+
+table {
+	background-color: #F0F0E8;
+}
 
 table.bm {
 	border: 1px solid #000;

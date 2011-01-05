@@ -75,12 +75,16 @@
 	{/if}
 
 	{$additionalHeadData}
+ 	<script type="text/javascript" src="http://www.readability.com/embed.js"></script>
 </head>
 <body>
 
 <div id="container">
 
 <div id="header">
+
+{include file="common/topnavbar.tpl"}
+
 <div id="headerTitle">
 <h1>
 {if $displayPageHeaderLogo && is_array($displayPageHeaderLogo)}
@@ -92,16 +96,30 @@
 	{$displayPageHeaderTitle}
 {elseif $alternatePageHeader}
 	{$alternatePageHeader}
+{elseif $customLogoTemplate}
+	{include file=$customLogoTemplate}
 {elseif $siteTitle}
 	{$siteTitle}
 {else}
 	{$applicationName}
 {/if}
+<div id="headerContainer">
+	<div id="headerLanguageSelect">
+		<a href="javascript:location.href={if $languageToggleNoUser}'{$currentUrl|escape}{if strstr($currentUrl, '?')}&{else}?{/if}setLocale=en_US{else}('{url page="user" op="setLocale" path="en_US" source=$smarty.server.REQUEST_URI escape=false}'){/if}">english</a>
+		<br />
+		<a href="javascript:location.href={if $languageToggleNoUser}'{$currentUrl|escape}{if strstr($currentUrl, '?')}&{else}?{/if}setLocale=es_ES{else}('{url page="user" op="setLocale" path="es_ES" source=$smarty.server.REQUEST_URI escape=false}'){/if}">espa&ntilde;ol</a>
+		<br />
+		<a href="javascript:location.href={if $languageToggleNoUser}'{$currentUrl|escape}{if strstr($currentUrl, '?')}&{else}?{/if}setLocale=pt_BR{else}('{url page="user" op="setLocale" path="pt_BR" source=$smarty.server.REQUEST_URI escape=false}'){/if}">portugues</a>
+	</div>
+	<div id="headerJournalDesc">a peer-reviewed, independent,<br />open-access, multilingual journal</div>
+</div>
 </h1>
 </div>
 </div>
 
 <div id="body">
+
+{include file="common/navbar.tpl"}
 
 {if $leftSidebarCode || $rightSidebarCode}
 	<div id="sidebar">
@@ -120,13 +138,10 @@
 
 <div id="main">
 
-{include file="common/navbar.tpl"}
-
 <div id="breadcrumb">
 	<a href="{url page="index"}" target="_parent">{translate key="navigation.home"}</a> &gt;
 	{if $issue}<a href="{url page="issue" op="view" path=$issue->getBestIssueId($currentJournal)}" target="_parent">{$issue->getIssueIdentification(false,true)|escape}</a> &gt;{/if}
 	<a href="{url page="article" op="view" path=$articleId|to_array:$galleyId}" class="current" target="_parent">{$article->getFirstAuthor(true)|escape}</a>
 </div>
-
 <div id="content">
-
+<div id='rdbWrapper'></div>

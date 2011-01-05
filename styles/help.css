@@ -40,11 +40,11 @@
 	margin-left: 5%;
 }
 
-/* hack to set width for non-IE browsers to to a percentage 
+/* hack to set width for non-IE browsers to to a percentage
    width of container (like it should be), not the window */
 html>body #main {
 	width: 68%;
-} 
+}
 
 #main h4 {
 	margin: 0em 1em 0.5em 0em;

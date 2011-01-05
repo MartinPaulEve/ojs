@@ -24,11 +24,11 @@
 
 #rightSidebar {
 	float: right;
-	width: 14%;
+	width: 22%;
 	padding: 1em 0em 1em 0em;
 	font-size: 0.65em;
 	height: 100%;
-	margin-right: 10%;
+	margin-right: 8%;
 	margin-left: 2%;
 }
 
@@ -36,8 +36,8 @@
 
 #main {
 	float: left;
-	width: 63%;
-	margin-left: 10%;
+	width: 58%;
+	margin-left: 3%;
 	display: inline;
 	overflow: hidden;
 }

@@ -58,8 +58,12 @@
 define('INDEX_FILE_LOCATION', __FILE__);
 require('./lib/pkp/includes/bootstrap.inc.php');
 
+// Load Wordpress
+require('lib/blog/wp-blog-header.php');
+
 // Serve the request
 $application =& PKPApplication::getApplication();
+
 $application->execute();
 
 ?>

@@ -372,12 +372,16 @@ class UserHandler extends Handler {
 		}
 
 		if(isset($_SERVER['HTTP_REFERER'])) {
-			$request->redirectUrl($_SERVER['HTTP_REFERER']);
+            // JPA Hack to make wordpress work with qTranslate
+            $append= ( strpos($_SERVER['HTTP_REFERER'], '?')?'&':'?' ) . 'lang=' . substr($setLocale, 0, 2);
+            $request->redirectUrl($_SERVER['HTTP_REFERER'] . $append);
 		}
 
 		$source = $request->getUserVar('source');
 		if (isset($source) && !empty($source)) {
-			$request->redirectUrl($request->getProtocol() . '://' . $request->getServerHost() . $source, false);
+			// JPA Hack to make wordpress work with qTranslate
+			$source = $source . ( strpos($source, '?')?'&':'?' ) . 'lang=' . substr($setLocale, 0, 2);
+			$request->redirectUrl(Request::getProtocol() . '://' . Request::getServerHost() . $source, false);
 		}
 
 		$request->redirect(null, 'index');

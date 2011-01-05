@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../locale/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2003-2008 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the en_US (U.S. English) locale.
+  *
+  * $Id$
+  -->
+ 
+<locale name="en_US" full_name="U.S. English">
+	<message key="plugins.blocks.recentArticles.displayName">Recent Articles</message>
+	<message key="plugins.blocks.recentArticles.displayTitle">Recent Articles</message>
+	<message key="plugins.blocks.recentArticles.description">This block will display the most recent articles on your homepage</message>	
+	
+	<message key="plugins.blocks.recentArticles.by">By</message>
+	<message key="plugins.blocks.recentArticles.fullText">Full Text</message>	
+</locale>
