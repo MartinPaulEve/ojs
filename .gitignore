@@ -6,3 +6,10 @@ files
 .project
 .buildpath
 .settings
+.idea/.name
+.idea/encodings.xml
+.idea/epaa.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml

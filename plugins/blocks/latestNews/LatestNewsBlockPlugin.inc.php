@@ -13,7 +13,7 @@
  */
 
 
-import('plugins.BlockPlugin');
+import('lib.pkp.classes.plugins.BlockPlugin');
 
 class LatestNewsBlockPlugin extends BlockPlugin {
 	function register($category, $path) {

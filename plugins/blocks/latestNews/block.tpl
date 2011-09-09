@@ -7,13 +7,12 @@
  * Most Popular Articles
  *
  *}
-	<h2>{translate key="plugins.blocks.latestNews.displayTitle"}</h2>
-	{php} 
-	wp_reset_query();	
-	query_posts('&cat=5&posts_per_page=1'); 
+	{php}
+	wp_reset_query();
+	query_posts('&cat=5&year=2011&posts_per_page=1');
 	{/php}
 	{php} if (have_posts()) : {/php}
-
+		<h2>{translate key="plugins.blocks.latestNews.displayTitle"}</h2>
 		{php} while (have_posts()) : the_post(); {/php}
 
 			<h3>{php} the_title(); {/php}</h3>
@@ -25,5 +24,5 @@
 
 	{php}
 	//Reset Query
-	//wp_reset_query();	
+	//wp_reset_query();
 	{/php}

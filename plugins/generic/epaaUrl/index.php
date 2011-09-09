@@ -12,8 +12,8 @@
  *
  */
 
-// require_once('EpaaUrlPlugin.inc.php');
-//
-// return new EpaaUrlPlugin();
+require_once('EpaaUrlPlugin.inc.php');
+
+return new EpaaUrlPlugin();
 
 ?>

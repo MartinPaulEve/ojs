@@ -13,7 +13,7 @@
  *
  */
 
-import('classes.plugins.GenericPlugin');
+import('lib.pkp.classes.plugins.GenericPlugin');
 
 class EpaaUrlPlugin extends GenericPlugin {
 
@@ -37,7 +37,7 @@ class EpaaUrlPlugin extends GenericPlugin {
 	 * @return boolean
 	 */
 	function register($category, $path) {
-		if (parent::register($category, $path)) {
+		if ( parent::register($category, $path)) {
 			$this->addLocaleData();
 			if ($this->getEnabled()) {
 				HookRegistry::register('LoadHandler', array(&$this, 'callbackHandleContent'));
@@ -55,7 +55,6 @@ class EpaaUrlPlugin extends GenericPlugin {
 
 		$page =& $args[0];
 		$op =& $args[1];
-
 		if ( $page == 'oldepaa' ) {
 			define('HANDLER_CLASS', 'EpaaUrlHandler');
 			$this->import('EpaaUrlHandler');

@@ -29,7 +29,7 @@
 installed = On
 
 ; The canonical URL to the OJS installation (excluding the trailing slash)
-base_url = "http://epaa.asu.edu/ojs"
+base_url = "http://git.local/epaa"
 
 ; Path to the registry directory (containing various settings files)
 ; Although the files in this directory generally do not contain any
@@ -75,8 +75,8 @@ allow_url_fopen = Off
 ; To override URLs that aren't part of a particular journal, use a
 ; journal_path of "index".
 ; Examples:
-base_url[index] = http://epaa.asu.edu/ojs/
-base_url[epaa] = http://epaa.asu.edu/ojs/
+base_url[index] = http://git.local/epaa
+base_url[epaa] = http://git.local/epaa
 ; base_url[myOtherJournal] = http://myOtherJournal.myUrl.com
 
 ; Generate RESTful URLs using mod_rewrite.  This requires the
@@ -102,7 +102,7 @@ driver = mysql
 host = localhost
 username = root
 password = 123456789
-name = epaa 
+name = epaa-current
 
 ; Enable persistent connections (recommended)
 persistent = On
