@@ -78,7 +78,7 @@ class UserBlockPlugin extends BlockPlugin {
 			}
 			$templateMgr->assign('userBlockLoginUrl', $loginUrl);
 		}
-		return parent::getContents($templateMgr);
+		return ''; // parent::getContents($templateMgr);
 	}
 }
 

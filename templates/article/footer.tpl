@@ -34,8 +34,6 @@
 				<img src="{$sharingButtonUrl}" width="{$sharingButtonWidth}" height="{$sharingButtonHeight}" border="0" alt="Bookmark and Share" style="border:0;padding:0" />
 		</a>
 	{/if}
-{/if}
-
 <!-- end AddThis -->
 {/if}
 

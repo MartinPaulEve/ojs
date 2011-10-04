@@ -101,26 +101,26 @@ class RelatedArticlesBlockPlugin extends BlockPlugin {
 	function getDescription() {
 		return Locale::translate('plugins.block.relatedArticles.description');
 	}
-	
+
 	function getContents() {
 		$page = Request::getRequestedPage();
 		$op = Request::getRequestedOp();
-		
+
 		if ( $page != 'article' || $op != 'view' ) return '';
 		$args = Request::getRequestedArgs();
-		
+
 		//FIXME: this wont work with custom identifiers
 		$articleId = (int) $args[0];
-		$posts = get_posts('meta_key=article_id&meta_value=' . $articleId . '&category=4&numberposts=1');		
+		$posts = get_posts('meta_key=article_id&meta_value=' . $articleId . '&category=4&numberposts=1');
 		if ( count($posts) != 1 ) return '';
 		$post = $posts[0];
-		
+
 		$output = '<div class="block" id="sidebarRelatedArticles">' . "\n" . '<span class="blockTitle">';
 		$output .= Locale::translate('plugins.block.relatedArticles.displayName');
 		$output .= "\n</span>";
 		$output .= nl2br($post->post_content);
 		$output .= "\n</div>";
-		return $output;		
+		return $output;
 	}
 }
 

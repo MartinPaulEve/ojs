@@ -3,7 +3,7 @@
 /**
  * @defgroup plugins_blocks_relatedArticles
  */
- 
+
 /**
  * @file plugins/blocks/relatedArticles/index.php
  *
@@ -18,8 +18,8 @@
 // $Id$
 
 
-// require_once('RelatedArticlesBlockPlugin.inc.php');
-// 
-// return new RelatedArticlesBlockPlugin();
+require_once('RelatedArticlesBlockPlugin.inc.php');
 
-?> 
+return new RelatedArticlesBlockPlugin();
+
+?>

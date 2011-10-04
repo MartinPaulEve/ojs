@@ -75,10 +75,10 @@ class RecentArticlesBlockPlugin extends BlockPlugin {
 		$journal =& Request::getJournal();
 		if (!$journal) return '';
 
-		$publishedArticleDao =& DAORegistry::getDAO('PublishedArticleDAO');
+		$publishedArticleDao =& DAORegistry::getDAO('PublishedArticleDAO'); /* @var $publishedArticleDao PublishedArticleDAO  */
 		import('db.DBResultRange');
 		$rangeInfo = new DBResultRange(4, 1);
-		$publishedArticleObjects =& $publishedArticleDao->getPublishedArticlesByJournalId($journal->getId(), $rangeInfo, null, true);
+		$publishedArticleObjects =& $publishedArticleDao->getPublishedArticlesByJournalId($journal->getId(), $rangeInfo, true);
 		while ($publishedArticle =& $publishedArticleObjects->next()) {
 			$recentArticles[]['articles'][] =& $publishedArticle;
 			unset($publishedArticle);

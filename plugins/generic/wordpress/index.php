@@ -12,8 +12,8 @@
  *
  */
 
-// require_once('WordpressPlugin.inc.php');
-//
-// return new WordpressPlugin();
+require_once('WordpressPlugin.inc.php');
+
+return new WordpressPlugin();
 
 ?>

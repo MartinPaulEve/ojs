@@ -3,7 +3,7 @@
 /**
  * @defgroup plugins_blocks_popularArtilces
  */
- 
+
 /**
  * @file plugins/blocks/recentArticles/index.php
  *
@@ -16,8 +16,8 @@
  */
 
 
-// require_once('RecentArticlesBlockPlugin.inc.php');
-// 
-// return new RecentArticlesBlockPlugin();
+require_once('RecentArticlesBlockPlugin.inc.php');
+
+return new RecentArticlesBlockPlugin();
 
 ?>
