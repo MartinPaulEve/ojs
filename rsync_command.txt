@@ -1,0 +1,1 @@
+rsync --exclude-from=.ojs-rsync-exclude -avr epaa/ epaaadm@epaa.asu.edu:public_html/ojs/
