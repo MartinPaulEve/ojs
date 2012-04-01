@@ -34,7 +34,7 @@
 				<img src="{$sharingButtonUrl}" width="{$sharingButtonWidth}" height="{$sharingButtonHeight}" border="0" alt="Bookmark and Share" style="border:0;padding:0" />
 		</a>
 	{/if}
-<!-- end AddThis -->
+	<!-- end AddThis -->
 {/if}
 
 {if $currentJournal && $currentJournal->getSetting('includeCreativeCommons')}
@@ -44,15 +44,17 @@
 	This <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text" rel="dc:type">work</span> is licensed under a <a target="_new" rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>.
 {/if}
 
+</div><!-- content -->
+</div><!-- main -->
+</div><!-- body -->
 {call_hook name="Templates::Article::Footer::PageFooter"}
+
+<br clear="all" />
 {if $pageFooter}
 <br /><br />
 {$pageFooter}
 {/if}
-</div><!-- content -->
-</div><!-- main -->
-</div><!-- body -->
-<br clear="all" />
+
 </div>
 
 {if $defineTermsContextId}

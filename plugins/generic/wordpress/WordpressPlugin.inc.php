@@ -23,7 +23,7 @@ class WordpressPlugin extends GenericPlugin {
 
 	function getDisplayName() {
 		return Locale::translate('plugins.generic.wordpress.displayName');
-	} 		
+	}
 
 	function getDescription() {
 		return Locale::translate('plugins.generic.wordpress.description');;
@@ -36,7 +36,7 @@ class WordpressPlugin extends GenericPlugin {
 	 * @return boolean
 	 */
 	function register($category, $path) {
-		if (parent::register($category, $path)) {		
+		if (parent::register($category, $path)) {
 			$this->addLocaleData();
 			if ($this->getEnabled()) {
 				HookRegistry::register('PluginRegistry::loadCategory', array(&$this, 'callbackLoadCategory'));
@@ -60,7 +60,7 @@ class WordpressPlugin extends GenericPlugin {
 			case 'blog':
 				define('HANDLER_CLASS', 'WordpressHandler');
 				$this->import('WordpressHandler');
-				return true;				
+				return true;
 		}
 		return false;
 	}
@@ -89,21 +89,21 @@ class WordpressPlugin extends GenericPlugin {
 			case 'article/comments.tpl':
 
 			$requestedArgs = Request::getRequestedArgs();
-			
+
 			//FIXME: this wont work with custom identifiers
 			$articleId = (int) $requestedArgs[0];
-			$posts = query_posts('meta_key=article_id&meta_value=' . $articleId . '&category=3&numberposts=1');		
+			$posts = query_posts('meta_key=article_id&meta_value=' . $articleId . '&cat=3&numberposts=1');
 			if ( count($posts) > 0 ) {
-				the_post();			
-  				$withcomments = true;  
-  				comments_template(); 
+				the_post();
+  				$withcomments = true;
+  				comments_template();
 				return true;
 			}
 		}
 		return false;
 	}
-	
-				
+
+
 	/**
 	 * Register as a block plugin, even though this is a generic plugin.
 	 * This will allow the plugin to behave as a block plugin, i.e. to
@@ -116,20 +116,20 @@ class WordpressPlugin extends GenericPlugin {
 		$plugins =& $args[1];
 		switch ($category) {
 			case 'blocks':
-				$this->import('WordpressBlockPlugin');				
+				$this->import('WordpressBlockPlugin');
 				$blockPlugin =& new WordpressBlockPlugin();
 				$plugins[$blockPlugin->getSeq()][$blockPlugin->getPluginPath(). '/' . $blockPlugin->getName()] =& $blockPlugin;
 				break;
 		}
 		return false;
-	}		
-	
+	}
+
 	/**
 	 * Determine whether or not this plugin is enabled.
 	 */
 	function getEnabled() {
-		$journal =& Request::getJournal();	
-		if ( !$journal ) return false;	
+		$journal =& Request::getJournal();
+		if ( !$journal ) return false;
 		return $this->getSetting($journal->getJournalId(), 'enabled');
 	}
 
@@ -151,9 +151,9 @@ class WordpressPlugin extends GenericPlugin {
 				'disable',
 				Locale::translate('manager.plugins.disable')
 			);
-/*			
+/*
 			$verbs[] = array(
-				'settings', 
+				'settings',
 				Locale::translate('plugins.generic.wordpress.settings')
 			);
 */
@@ -190,17 +190,17 @@ class WordpressPlugin extends GenericPlugin {
 				'user.role.manager'
 			)
 		);
-		
+
 		switch ($verb) {
 			case 'settings':
 				$journal =& Request::getJournal();
 
 				$this->import('WordpressSettingsForm');
 				$form =& new WordpressSettingsForm($this, $journal->getJournalId());
-				
+
 				$templateMgr->assign('pageHierarchy', $pageCrumbs);
 				$form->initData();
-				$form->display();			
+				$form->display();
 				break;
 			case 'execute':
 				$journal =& Request::getJournal();
@@ -209,8 +209,8 @@ class WordpressPlugin extends GenericPlugin {
 				$form =& new WordpressSettingsForm($this, $journal->getJournalId());
 
 				$form->readInputData();
-				$form->execute();	
-				$form->display();			
+				$form->execute();
+				$form->display();
 				break;
 			case 'enable':
 				$this->setEnabled(true);

@@ -9,7 +9,7 @@
  *}
 	{php}
 	wp_reset_query();
-	query_posts('&cat=5&year=2011&posts_per_page=1');
+	query_posts('&cat=5&posts_per_page=1');
 	{/php}
 	{php} if (have_posts()) : {/php}
 		<h2>{translate key="plugins.blocks.latestNews.displayTitle"}</h2>
