@@ -87,7 +87,7 @@ class ArticleHTMLGalley extends ArticleGalley {
 		$site =& Request::getSite();
 
 		$paramArray = array(
-			'issueTitle' => $issue?$issue->getIssueIdentification():__('editor.article.scheduleForPublication.toBeAssigned'),
+			'issueTitle' => $issue?$issue->getIssueIdentification():PKPLocale::translate('editor.article.scheduleForPublication.toBeAssigned'),
 			'journalTitle' => $journal->getLocalizedTitle(),
 			'siteTitle' => $site->getLocalizedTitle(),
 			'currentUrl' => Request::getRequestUrl()

@@ -64,14 +64,14 @@ class DevelopedByBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.developedBy.displayName');
+		return PKPLocale::translate('plugins.block.developedBy.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.developedBy.description');
+		return PKPLocale::translate('plugins.block.developedBy.description');
 	}
 }
 

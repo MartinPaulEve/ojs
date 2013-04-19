@@ -132,7 +132,7 @@ class Dc11SchemaArticleAdapter extends MetadataDataObjectAdapter {
 		$dc11Description->addStatement('dc:type', $driverType, METADATA_DESCRIPTION_UNKNOWN_LOCALE);
 		$types = $section->getIdentifyType(null);
 		$types = array_merge_recursive(
-			empty($types)?array(AppLocale::getLocale() => __('rt.metadata.pkp.peerReviewed')):$types,
+			empty($types)?array(AppLocale::getLocale() => PKPLocale::translate('rt.metadata.pkp.peerReviewed')):$types,
 			(array) $article->getType(null)
 		);
 		$this->_addLocalizedElements($dc11Description, 'dc:type', $types);

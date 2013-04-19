@@ -3,7 +3,7 @@
 /**
  * @defgroup subscription_form
  */
- 
+
 /**
  * @file classes/subscription/form/IndividualSubscriptionForm.inc.php
  *
@@ -35,7 +35,7 @@ class IndividualSubscriptionForm extends SubscriptionForm {
 		$journalId = $journal->getId();
 
 		if (isset($subscriptionId)) {
-			$subscriptionDao =& DAORegistry::getDAO('IndividualSubscriptionDAO'); 
+			$subscriptionDao =& DAORegistry::getDAO('IndividualSubscriptionDAO');
 			if ($subscriptionDao->subscriptionExists($subscriptionId)) {
 				$this->subscription =& $subscriptionDao->getSubscription($subscriptionId);
 			}
@@ -47,7 +47,7 @@ class IndividualSubscriptionForm extends SubscriptionForm {
 
 		$subscriptionTypeCount = count($this->subscriptionTypes);
 		if ($subscriptionTypeCount == 0) {
-			$this->addError('typeId', __('manager.subscriptions.form.typeRequired'));
+			$this->addError('typeId', PKPLocale::translate('manager.subscriptions.form.typeRequired'));
 			$this->addErrorField('typeId');
 		}
 
@@ -63,7 +63,7 @@ class IndividualSubscriptionForm extends SubscriptionForm {
 	}
 
 	/**
-	 * Save individual subscription. 
+	 * Save individual subscription.
 	 */
 	function execute() {
 		$insert = false;
@@ -80,13 +80,13 @@ class IndividualSubscriptionForm extends SubscriptionForm {
 			$individualSubscriptionDao->insertSubscription($this->subscription);
 		} else {
 			$individualSubscriptionDao->updateSubscription($this->subscription);
-		} 
+		}
 
 		// Send notification email
 		if ($this->_data['notifyEmail'] == 1) {
 			$mail =& $this->_prepareNotificationEmail('SUBSCRIPTION_NOTIFY');
 			$mail->send();
-		} 
+		}
 	}
 }
 

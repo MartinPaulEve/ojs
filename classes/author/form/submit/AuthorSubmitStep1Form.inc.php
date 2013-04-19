@@ -50,7 +50,7 @@ class AuthorSubmitStep1Form extends AuthorSubmitForm {
 		// allowed to submit to.
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
 		$isEditor = $roleDao->userHasRole($journal->getId(), $user->getId(), ROLE_ID_EDITOR) || $roleDao->userHasRole($journal->getId(), $user->getId(), ROLE_ID_SECTION_EDITOR);
-		$templateMgr->assign('sectionOptions', array('0' => __('author.submit.selectSection')) + $sectionDao->getSectionTitles($journal->getId(), !$isEditor));
+		$templateMgr->assign('sectionOptions', array('0' => PKPLocale::translate('author.submit.selectSection')) + $sectionDao->getSectionTitles($journal->getId(), !$isEditor));
 
 		// Set up required Payment Related Information
 		import('classes.payment.ojs.OJSPaymentManager');

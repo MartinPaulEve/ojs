@@ -60,11 +60,11 @@ class PiwikPlugin extends GenericPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.generic.piwik.displayName');
+		return PKPLocale::translate('plugins.generic.piwik.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.piwik.description');
+		return PKPLocale::translate('plugins.generic.piwik.description');
 	}
 
 	/**
@@ -120,16 +120,16 @@ class PiwikPlugin extends GenericPlugin {
 		if ($this->getEnabled()) {
 			$verbs[] = array(
 				'disable',
-				__('manager.plugins.disable')
+				PKPLocale::translate('manager.plugins.disable')
 			);
 			$verbs[] = array(
 				'settings',
-				__('plugins.generic.piwik.manager.settings')
+				PKPLocale::translate('plugins.generic.piwik.manager.settings')
 			);
 		} else {
 			$verbs[] = array(
 				'enable',
-				__('manager.plugins.enable')
+				PKPLocale::translate('manager.plugins.enable')
 			);
 		}
 		return $verbs;

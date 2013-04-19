@@ -46,11 +46,11 @@ class ResolverPlugin extends GatewayPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.gateways.resolver.displayName');
+		return PKPLocale::translate('plugins.gateways.resolver.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.gateways.resolver.description');
+		return PKPLocale::translate('plugins.gateways.resolver.description');
 	}
 
 	/**
@@ -176,7 +176,7 @@ class ResolverPlugin extends GatewayPlugin {
 		if (Validation::isSiteAdmin() && $this->getEnabled()) {
 			$verbs[] = array(
 				'exportHoldings',
-				__('plugins.gateways.resolver.exportHoldings')
+				PKPLocale::translate('plugins.gateways.resolver.exportHoldings')
 			);
 		}
 		return $verbs;

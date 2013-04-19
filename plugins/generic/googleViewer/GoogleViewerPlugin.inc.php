@@ -26,11 +26,11 @@ class GoogleViewerPlugin extends GenericPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.generic.googleViewer.name');
+		return PKPLocale::translate('plugins.generic.googleViewer.name');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.googleViewer.description');
+		return PKPLocale::translate('plugins.generic.googleViewer.description');
 	}
 
 	function _callback($hookName, $args) {

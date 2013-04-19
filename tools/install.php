@@ -32,7 +32,7 @@ class OJSInstallTool extends InstallTool {
 	 */
 	function readParams() {
 		AppLocale::requireComponents(LOCALE_COMPONENT_PKP_INSTALLER, LOCALE_COMPONENT_APPLICATION_COMMON, LOCALE_COMPONENT_PKP_USER);
-		printf("%s\n", __('installer.ojsInstallation'));
+		printf("%s\n", PKPLocale::translate('installer.ojsInstallation'));
 
 		parent::readParams();
 

@@ -20,14 +20,14 @@ class ReadingToolsBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.readingTools.displayName');
+		return PKPLocale::translate('plugins.block.readingTools.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.readingTools.description');
+		return PKPLocale::translate('plugins.block.readingTools.description');
 	}
 
 	/**

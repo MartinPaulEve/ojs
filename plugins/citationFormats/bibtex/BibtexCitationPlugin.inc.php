@@ -36,15 +36,15 @@ class BibtexCitationPlugin extends CitationPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.citationFormats.bibtex.displayName');
+		return PKPLocale::translate('plugins.citationFormats.bibtex.displayName');
 	}
 
 	function getCitationFormatName() {
-		return __('plugins.citationFormats.bibtex.citationFormatName');
+		return PKPLocale::translate('plugins.citationFormats.bibtex.citationFormatName');
 	}
 
 	function getDescription() {
-		return __('plugins.citationFormats.bibtex.description');
+		return PKPLocale::translate('plugins.citationFormats.bibtex.description');
 	}
 
 	/**

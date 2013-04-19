@@ -45,7 +45,7 @@ class DOAJPlugin extends ImportExportPlugin {
 	 * @return string
 	 */
 	function getDisplayName() {
-		return __('plugins.importexport.doaj.displayName');
+		return PKPLocale::translate('plugins.importexport.doaj.displayName');
 	}
 
 	/**
@@ -53,7 +53,7 @@ class DOAJPlugin extends ImportExportPlugin {
 	 * @return string
 	 */
 	function getDescription() {
-		return __('plugins.importexport.doaj.description');
+		return PKPLocale::translate('plugins.importexport.doaj.description');
 	}
 
 	/**
@@ -64,7 +64,7 @@ class DOAJPlugin extends ImportExportPlugin {
 		$templateMgr =& TemplateManager::getManager();
 		parent::display($args, $request);
 		$journal =& Request::getJournal();
-		
+
 		switch (array_shift($args)) {
 			case 'export':
 				// export an xml file with the journal's information
@@ -88,7 +88,7 @@ class DOAJPlugin extends ImportExportPlugin {
 	function exportJournal(&$journal, $outputFile = null) {
 		$this->import('DOAJExportDom');
 		$doc =& XMLCustomWriter::createDocument();
-		
+
 		$journalNode =& DOAJExportDom::generateJournalDom($doc, $journal);
 		$journalNode->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
 		$journalNode->setAttribute('xsi:noNamespaceSchemaLocation', DOAJ_XSD_URL);

@@ -44,14 +44,14 @@ class WebFeedBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.generic.webfeed.displayName');
+		return PKPLocale::translate('plugins.generic.webfeed.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.generic.webfeed.description');
+		return PKPLocale::translate('plugins.generic.webfeed.description');
 	}
 
 	/**

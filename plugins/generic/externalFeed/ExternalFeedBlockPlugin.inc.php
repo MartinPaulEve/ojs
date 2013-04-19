@@ -43,14 +43,14 @@ class ExternalFeedBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.generic.externalFeed.block.displayName');
+		return PKPLocale::translate('plugins.generic.externalFeed.block.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.generic.externalFeed.description');
+		return PKPLocale::translate('plugins.generic.externalFeed.description');
 	}
 
 	/**

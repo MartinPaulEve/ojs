@@ -31,15 +31,15 @@ class MlaCitationPlugin extends CitationPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.citationFormats.mla.displayName');
+		return PKPLocale::translate('plugins.citationFormats.mla.displayName');
 	}
 
 	function getCitationFormatName() {
-		return __('plugins.citationFormats.mla.citationFormatName');
+		return PKPLocale::translate('plugins.citationFormats.mla.citationFormatName');
 	}
 
 	function getDescription() {
-		return __('plugins.citationFormats.mla.description');
+		return PKPLocale::translate('plugins.citationFormats.mla.description');
 	}
 
 }

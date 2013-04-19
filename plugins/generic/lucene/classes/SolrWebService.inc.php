@@ -692,11 +692,11 @@ class SolrWebService extends XmlWebService {
 
 		// Check whether the core is active.
 		if ($nodeList->length != 1) {
-			$this->_serviceMessage = __('plugins.generic.lucene.message.coreNotFound', array('core' => $this->_solrCore));
+			$this->_serviceMessage = PKPLocale::translate('plugins.generic.lucene.message.coreNotFound', array('core' => $this->_solrCore));
 			return SOLR_STATUS_OFFLINE;
 		}
 
-		$this->_serviceMessage = __('plugins.generic.lucene.message.indexOnline', array('numDocs' => $nodeList->item(0)->textContent));
+		$this->_serviceMessage = PKPLocale::translate('plugins.generic.lucene.message.indexOnline', array('numDocs' => $nodeList->item(0)->textContent));
 		return SOLR_STATUS_ONLINE;
 	}
 
@@ -933,7 +933,7 @@ class SolrWebService extends XmlWebService {
 
 		// Did we get a response at all?
 		if (!$response) {
-			$this->_serviceMessage = __('plugins.generic.lucene.message.searchServiceOffline');
+			$this->_serviceMessage = PKPLocale::translate('plugins.generic.lucene.message.searchServiceOffline');
 			return $nullValue;
 		}
 
@@ -944,7 +944,7 @@ class SolrWebService extends XmlWebService {
 			// to avoid information leakage and log the exact error.
 			$application =& PKPApplication::getApplication();
 			error_log($application->getName() . ' - Lucene plugin:' . "\nThe Lucene web service returned a status code $status and the message\n" . $response->saveXML());
-			$this->_serviceMessage = __('plugins.generic.lucene.message.webServiceError');
+			$this->_serviceMessage = PKPLocale::translate('plugins.generic.lucene.message.webServiceError');
 			return $nullValue;
 		}
 
@@ -1138,7 +1138,7 @@ class SolrWebService extends XmlWebService {
 		if (!is_numeric($numProcessed)) return null;
 		$numProcessed = (integer)$numProcessed;
 		if ($numProcessed != $batchCount) {
-			$this->_serviceMessage = __(
+			$this->_serviceMessage = PKPLocale::translate(
 				'plugins.generic.lucene.message.indexingIncomplete',
 				array('numProcessed' => $numProcessed, 'numDeleted' => $numDeleted, 'batchCount' => $batchCount)
 			);
@@ -1727,9 +1727,9 @@ class SolrWebService extends XmlWebService {
 		if (is_null($queryKeywords)) {
 			// Query keywords.
 			$queryKeywords = array(
-				String::strtoupper(__('search.operator.not')) => 'NOT',
-				String::strtoupper(__('search.operator.and')) => 'AND',
-				String::strtoupper(__('search.operator.or')) => 'OR'
+				String::strtoupper(PKPLocale::translate('search.operator.not')) => 'NOT',
+				String::strtoupper(PKPLocale::translate('search.operator.and')) => 'AND',
+				String::strtoupper(PKPLocale::translate('search.operator.or')) => 'OR'
 			);
 		}
 

@@ -9,7 +9,7 @@
  * @class AdminFunctionsHandler
  * @ingroup pages_admin
  *
- * @brief Handle requests for site administrative/maintenance functions. 
+ * @brief Handle requests for site administrative/maintenance functions.
  */
 
 import('lib.pkp.classes.site.Version');
@@ -44,7 +44,7 @@ class AdminFunctionsHandler extends AdminHandler {
 		$serverInfo = array(
 			'admin.server.platform' => Core::serverPHPOS(),
 			'admin.server.phpVersion' => Core::serverPHPVersion(),
-			'admin.server.apacheVersion' => (function_exists('apache_get_version') ? apache_get_version() : __('common.notAvailable')),
+			'admin.server.apacheVersion' => (function_exists('apache_get_version') ? apache_get_version() : PKPLocale::translate('common.notAvailable')),
 			'admin.server.dbDriver' => Config::getVar('database', 'driver'),
 			'admin.server.dbVersion' => (empty($dbServerInfo['description']) ? $dbServerInfo['version'] : $dbServerInfo['description'])
 		);

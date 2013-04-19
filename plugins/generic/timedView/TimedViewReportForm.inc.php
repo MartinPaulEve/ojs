@@ -53,7 +53,7 @@ class TimedViewReportForm extends Form {
 
 		parent::display();
 	}
-	
+
 	/**
 	 * Assign form data to user-submitted data.
 	 */
@@ -70,12 +70,12 @@ class TimedViewReportForm extends Form {
 		$journal =& Request::getJournal();
 
 		$columns = array(
-			__('plugins.generic.timedView.report.articleId'),
-			__('plugins.generic.timedView.report.articleTitle'),
-			__('issue.issue'),
-			__('plugins.generic.timedView.report.datePublished'),
-			__('plugins.generic.timedView.report.abstractViews'),
-			__('plugins.generic.timedView.report.galleyViews'),
+			PKPLocale::translate('plugins.generic.timedView.report.articleId'),
+			PKPLocale::translate('plugins.generic.timedView.report.articleTitle'),
+			PKPLocale::translate('issue.issue'),
+			PKPLocale::translate('plugins.generic.timedView.report.datePublished'),
+			PKPLocale::translate('plugins.generic.timedView.report.abstractViews'),
+			PKPLocale::translate('plugins.generic.timedView.report.galleyViews'),
 		);
 
 		$articleData = $galleyLabels = $galleyViews = array();

@@ -63,11 +63,11 @@ class CustomLocalePlugin extends GenericPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.generic.customLocale.name');
+		return PKPLocale::translate('plugins.generic.customLocale.name');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.customLocale.description');
+		return PKPLocale::translate('plugins.generic.customLocale.description');
 	}
 
 	function smartyPluginUrl($params, &$smarty) {
@@ -96,7 +96,7 @@ class CustomLocalePlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('index', __('plugins.generic.customLocale.customize'));
+			$verbs[] = array('index', PKPLocale::translate('plugins.generic.customLocale.customize'));
 		}
 		return parent::getManagementVerbs($verbs);
 	}

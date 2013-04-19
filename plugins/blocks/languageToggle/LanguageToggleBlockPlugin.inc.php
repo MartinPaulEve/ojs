@@ -64,14 +64,14 @@ class LanguageToggleBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.languageToggle.displayName');
+		return PKPLocale::translate('plugins.block.languageToggle.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.languageToggle.description');
+		return PKPLocale::translate('plugins.block.languageToggle.description');
 	}
 
 	/**

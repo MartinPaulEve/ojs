@@ -19,14 +19,14 @@ import('classes.handler.Handler');
 class CounterHandler extends Handler {
 	/** Plugin associated with this request **/
 	var $plugin;
-	
+
 	/**
 	 * Constructor
 	 **/
 	function CounterHandler() {
 		parent::Handler();
 	}
-	
+
 	/**
 	 * Display the main log analyzer page.
 	 */
@@ -68,7 +68,7 @@ class CounterHandler extends Handler {
 	*/
 	function _assignTemplateCounterXML($templateManager, $begin, $end='') {
 		$journal =& Request::getJournal();
-		
+
 		$counterReportDao =& DAORegistry::getDAO('CounterReportDAO');
 
 		$journalDao =& DAORegistry::getDAO('JournalDAO');
@@ -161,9 +161,9 @@ class CounterHandler extends Handler {
 				case 'http://www.niso.org/schemas/sushi/counter':
 					$counterPrefix = $xmlns[1];
 					break;
-			}			
+			}
 		}
-		
+
 		if (strlen($soapEnvPrefix)>0) $soapEnvPrefix .= ':';
 		if (strlen($sushiPrefix)>0)   $sushiPrefix .= ':';
 		if (strlen($counterPrefix)>0) $counterPrefix .= ':';
@@ -256,18 +256,18 @@ class CounterHandler extends Handler {
 		header('content-disposition: attachment; filename=counter-' . date('Ymd') . '.csv');
 
 		$fp = fopen('php://output', 'wt');
-		String::fputcsv($fp, array(__('plugins.generic.counter.1a.title1')));
-		String::fputcsv($fp, array(__('plugins.generic.counter.1a.title2', array('year' => $year))));
+		String::fputcsv($fp, array(PKPLocale::translate('plugins.generic.counter.1a.title1')));
+		String::fputcsv($fp, array(PKPLocale::translate('plugins.generic.counter.1a.title2', array('year' => $year))));
 		String::fputcsv($fp, array()); // FIXME: Criteria should be here?
-		String::fputcsv($fp, array(__('plugins.generic.counter.1a.dateRun')));
+		String::fputcsv($fp, array(PKPLocale::translate('plugins.generic.counter.1a.dateRun')));
 		String::fputcsv($fp, array(strftime("%Y-%m-%d")));
 
 		$cols = array(
 			'',
-			__('plugins.generic.counter.1a.publisher'),
-			__('plugins.generic.counter.1a.platform'),
-			__('plugins.generic.counter.1a.printIssn'),
-			__('plugins.generic.counter.1a.onlineIssn')
+			PKPLocale::translate('plugins.generic.counter.1a.publisher'),
+			PKPLocale::translate('plugins.generic.counter.1a.platform'),
+			PKPLocale::translate('plugins.generic.counter.1a.printIssn'),
+			PKPLocale::translate('plugins.generic.counter.1a.onlineIssn')
 		);
 		for ($i=1; $i<=12; $i++) {
 			$time = strtotime($year . '-' . $i . '-01');
@@ -275,15 +275,15 @@ class CounterHandler extends Handler {
 			$cols[] = strftime('%b-%Y', $time);
 		}
 
-		$cols[] = __('plugins.generic.counter.1a.ytdTotal');
-		$cols[] = __('plugins.generic.counter.1a.ytdHtml');
-		$cols[] = __('plugins.generic.counter.1a.ytdPdf');
+		$cols[] = PKPLocale::translate('plugins.generic.counter.1a.ytdTotal');
+		$cols[] = PKPLocale::translate('plugins.generic.counter.1a.ytdHtml');
+		$cols[] = PKPLocale::translate('plugins.generic.counter.1a.ytdPdf');
 		fputcsv($fp, $cols);
 
 		// Display the totals first
 		$totals = $counterReportDao->getMonthlyTotalRange($begin, $end);
 		$cols = array(
-			__('plugins.generic.counter.1a.totalForAllJournals'),
+			PKPLocale::translate('plugins.generic.counter.1a.totalForAllJournals'),
 			'-', // Publisher
 			'', // Platform
 			'-',

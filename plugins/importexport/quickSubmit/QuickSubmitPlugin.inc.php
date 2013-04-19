@@ -39,11 +39,11 @@ class QuickSubmitPlugin extends ImportExportPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.importexport.quickSubmit.displayName');
+		return PKPLocale::translate('plugins.importexport.quickSubmit.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.importexport.quickSubmit.description');
+		return PKPLocale::translate('plugins.importexport.quickSubmit.description');
 	}
 
 	function display(&$args, $request) {

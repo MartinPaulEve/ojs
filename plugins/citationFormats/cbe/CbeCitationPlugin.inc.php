@@ -31,15 +31,15 @@ class CbeCitationPlugin extends CitationPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.citationFormats.cbe.displayName');
+		return PKPLocale::translate('plugins.citationFormats.cbe.displayName');
 	}
 
 	function getCitationFormatName() {
-		return __('plugins.citationFormats.cbe.citationFormatName');
+		return PKPLocale::translate('plugins.citationFormats.cbe.citationFormatName');
 	}
 
 	function getDescription() {
-		return __('plugins.citationFormats.cbe.description');
+		return PKPLocale::translate('plugins.citationFormats.cbe.description');
 	}
 
 }

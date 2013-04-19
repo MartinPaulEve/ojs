@@ -37,13 +37,13 @@ class Gift extends PKPGift {
 				$subscriptionTypeDao =& DAORegistry::getDAO('SubscriptionTypeDAO');
 				$subscriptionType =& $subscriptionTypeDao->getSubscriptionType($this->getGiftAssocId());
 				if ($subscriptionType) {
-					return __('payment.type.gift', null, $locale) . ' ' . __('payment.type.gift.subscription', null, $locale) . ': ' . $subscriptionType->getName($locale) . ' - ' . $subscriptionType->getDurationYearsMonths($locale);
+					return PKPLocale::translate('payment.type.gift', null, $locale) . ' ' . PKPLocale::translate('payment.type.gift.subscription', null, $locale) . ': ' . $subscriptionType->getName($locale) . ' - ' . $subscriptionType->getDurationYearsMonths($locale);
 				} else {
-					return __('payment.type.gift', null, $locale) . ' ' . __('payment.type.gift.subscription', null, $locale);
+					return PKPLocale::translate('payment.type.gift', null, $locale) . ' ' . PKPLocale::translate('payment.type.gift.subscription', null, $locale);
 				}
 				break;
 			default:
-				return __('payment.type.gift', null, $locale);
+				return PKPLocale::translate('payment.type.gift', null, $locale);
 		}
 	}
 }

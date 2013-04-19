@@ -702,8 +702,8 @@ class Issue extends DataObject {
 		}
 
 		AppLocale::requireComponents(array(LOCALE_COMPONENT_APPLICATION_COMMON));
-		$volLabel = __('issue.vol');
-		$numLabel = __('issue.no');
+		$volLabel = PKPLocale::translate('issue.vol');
+		$numLabel = PKPLocale::translate('issue.no');
 
 		$vol = $this->getData('volume');
 		$num = $this->getData('number');

@@ -33,7 +33,7 @@ class LatestNewsBlockPlugin extends BlockPlugin {
 	function templateManagerCallback($hookName, &$args) {
 		$templateMgr =& $args[0]; //TemplateManager::getManager();
 		if ( Request::getRequestedPage() == 'index' || Request::getRequestedPage() == '' )
-			$templateMgr->assign('alternativeTitleTranslated', ''); //__('plugins.blocks.latestNews.displayTitle'));
+			$templateMgr->assign('alternativeTitleTranslated', ''); //PKPLocale::translate('plugins.blocks.latestNews.displayTitle'));
 	}
 
 	/**
@@ -62,14 +62,14 @@ class LatestNewsBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.latestNews.displayName');
+		return PKPLocale::translate('plugins.block.latestNews.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.latestNews.description');
+		return PKPLocale::translate('plugins.block.latestNews.description');
 	}
 
 	function getContents(&$templateMgr) {

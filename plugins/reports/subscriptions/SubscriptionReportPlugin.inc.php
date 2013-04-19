@@ -41,7 +41,7 @@ class SubscriptionReportPlugin extends ReportPlugin {
 	 * @return String display name of plugin
 	 */
 	function getDisplayName() {
-		return __('plugins.reports.subscriptions.displayName');
+		return PKPLocale::translate('plugins.reports.subscriptions.displayName');
 	}
 
 	/**
@@ -49,12 +49,12 @@ class SubscriptionReportPlugin extends ReportPlugin {
 	 * @return String description text for this plugin
 	 */
 	function getDescription() {
-		return __('plugins.reports.subscriptions.description');
+		return PKPLocale::translate('plugins.reports.subscriptions.description');
 	}
 
 	/**
 	 * Generate the subscription report and write CSV contents to file
-	 * @param $args array Request arguments 
+	 * @param $args array Request arguments
 	 */
 	function display(&$args) {
 		$journal =& Request::getJournal();
@@ -70,28 +70,28 @@ class SubscriptionReportPlugin extends ReportPlugin {
 		$fp = fopen('php://output', 'wt');
 
 		// Columns for individual subscriptions
-		$columns = array(__('subscriptionManager.individualSubscriptions'));
+		$columns = array(PKPLocale::translate('subscriptionManager.individualSubscriptions'));
 		String::fputcsv($fp, array_values($columns));
 
 		$columnsCommon = array(
-			'subscription_id' => __('common.id'),
-			'status' => __('subscriptions.status'),
-			'type' => __('common.type'),
-			'format' => __('subscriptionTypes.format'),
-			'date_start' => __('manager.subscriptions.dateStart'),
-			'date_end' => __('manager.subscriptions.dateEnd'),
-			'membership' => __('manager.subscriptions.membership'),
-			'reference_number' => __('manager.subscriptions.referenceNumber'),
-			'notes' => __('common.notes')
+			'subscription_id' => PKPLocale::translate('common.id'),
+			'status' => PKPLocale::translate('subscriptions.status'),
+			'type' => PKPLocale::translate('common.type'),
+			'format' => PKPLocale::translate('subscriptionTypes.format'),
+			'date_start' => PKPLocale::translate('manager.subscriptions.dateStart'),
+			'date_end' => PKPLocale::translate('manager.subscriptions.dateEnd'),
+			'membership' => PKPLocale::translate('manager.subscriptions.membership'),
+			'reference_number' => PKPLocale::translate('manager.subscriptions.referenceNumber'),
+			'notes' => PKPLocale::translate('common.notes')
 		);
 
 		$columnsIndividual = array(
-			'name' => __('user.name'),
-			'mailing_address' => __('common.mailingAddress'),
-			'country' => __('common.country'),
-			'email' => __('user.email'),
-			'phone' => __('user.phone'),
-			'fax' => __('user.fax')
+			'name' => PKPLocale::translate('user.name'),
+			'mailing_address' => PKPLocale::translate('common.mailingAddress'),
+			'country' => PKPLocale::translate('common.country'),
+			'email' => PKPLocale::translate('user.email'),
+			'phone' => PKPLocale::translate('user.phone'),
+			'fax' => PKPLocale::translate('user.fax')
 		);
 
 		$columns = array_merge($columnsCommon, $columnsIndividual);
@@ -117,7 +117,7 @@ class SubscriptionReportPlugin extends ReportPlugin {
 						$columns[$index] = $subscription->getSubscriptionTypeSummaryString();
 						break;
 					case 'format':
-						$columns[$index] = __($subscriptionType->getFormatString());
+						$columns[$index] = PKPLocale::translate($subscriptionType->getFormatString());
 						break;
 					case 'date_start':
 						$columns[$index] = $subscription->getDateStart();
@@ -164,20 +164,20 @@ class SubscriptionReportPlugin extends ReportPlugin {
 		$columns = array('');
 		String::fputcsv($fp, array_values($columns));
 
-		$columns = array(__('subscriptionManager.institutionalSubscriptions'));
+		$columns = array(PKPLocale::translate('subscriptionManager.institutionalSubscriptions'));
 		String::fputcsv($fp, array_values($columns));
 
 		$columnsInstitution = array(
-			'institution_name' => __('manager.subscriptions.institutionName'),
-			'institution_mailing_address' => __('plugins.reports.subscriptions.institutionMailingAddress'),
-			'domain' => __('manager.subscriptions.domain'),
-			'ip_ranges' => __('plugins.reports.subscriptions.ipRanges'),
-			'contact' => __('manager.subscriptions.contact'),
-			'mailing_address' => __('common.mailingAddress'),
-			'country' => __('common.country'),
-			'email' => __('user.email'),
-			'phone' => __('user.phone'),
-			'fax' => __('user.fax')
+			'institution_name' => PKPLocale::translate('manager.subscriptions.institutionName'),
+			'institution_mailing_address' => PKPLocale::translate('plugins.reports.subscriptions.institutionMailingAddress'),
+			'domain' => PKPLocale::translate('manager.subscriptions.domain'),
+			'ip_ranges' => PKPLocale::translate('plugins.reports.subscriptions.ipRanges'),
+			'contact' => PKPLocale::translate('manager.subscriptions.contact'),
+			'mailing_address' => PKPLocale::translate('common.mailingAddress'),
+			'country' => PKPLocale::translate('common.country'),
+			'email' => PKPLocale::translate('user.email'),
+			'phone' => PKPLocale::translate('user.phone'),
+			'fax' => PKPLocale::translate('user.fax')
 		);
 
 		$columns = array_merge($columnsCommon, $columnsInstitution);
@@ -203,7 +203,7 @@ class SubscriptionReportPlugin extends ReportPlugin {
 						$columns[$index] = $subscription->getSubscriptionTypeSummaryString();
 						break;
 					case 'format':
-						$columns[$index] = __($subscriptionType->getFormatString());
+						$columns[$index] = PKPLocale::translate($subscriptionType->getFormatString());
 						break;
 					case 'date_start':
 						$columns[$index] = $subscription->getDateStart();

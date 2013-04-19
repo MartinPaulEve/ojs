@@ -52,16 +52,16 @@ class BookForReviewForm extends Form {
 		}
 
 		$this->validStatus = array (
-			BFR_STATUS_AVAILABLE => __('plugins.generic.booksForReview.status.available'),
-			BFR_STATUS_REQUESTED => __('plugins.generic.booksForReview.status.requested'),
-			BFR_STATUS_ASSIGNED => __('plugins.generic.booksForReview.status.assigned'),
-			BFR_STATUS_MAILED => __('plugins.generic.booksForReview.status.mailed'),
-			BFR_STATUS_SUBMITTED => __('plugins.generic.booksForReview.status.submitted')
+			BFR_STATUS_AVAILABLE => PKPLocale::translate('plugins.generic.booksForReview.status.available'),
+			BFR_STATUS_REQUESTED => PKPLocale::translate('plugins.generic.booksForReview.status.requested'),
+			BFR_STATUS_ASSIGNED => PKPLocale::translate('plugins.generic.booksForReview.status.assigned'),
+			BFR_STATUS_MAILED => PKPLocale::translate('plugins.generic.booksForReview.status.mailed'),
+			BFR_STATUS_SUBMITTED => PKPLocale::translate('plugins.generic.booksForReview.status.submitted')
 		);
 
 		$this->validAuthorTypes = array (
-			BFR_AUTHOR_TYPE_BY => __('plugins.generic.booksForReview.authorType.by'),
-			BFR_AUTHOR_TYPE_EDITED_BY => __('plugins.generic.booksForReview.authorType.editedBy')
+			BFR_AUTHOR_TYPE_BY => PKPLocale::translate('plugins.generic.booksForReview.authorType.by'),
+			BFR_AUTHOR_TYPE_EDITED_BY => PKPLocale::translate('plugins.generic.booksForReview.authorType.editedBy')
 		);
 
 		$languageDao =& DAORegistry::getDAO('LanguageDAO');
@@ -80,7 +80,7 @@ class BookForReviewForm extends Form {
 		$this->addCheck(new FormValidatorLocale($this, 'title', 'required', 'plugins.generic.booksForReview.editor.form.titleRequired'));
 
 		// Author Type is provided and is valid value
-		$this->addCheck(new FormValidator($this, 'authorType', 'required', 'plugins.generic.booksForReview.editor.form.authorTypeRequired'));	
+		$this->addCheck(new FormValidator($this, 'authorType', 'required', 'plugins.generic.booksForReview.editor.form.authorTypeRequired'));
 		$this->addCheck(new FormValidatorInSet($this, 'authorType', 'required', 'plugins.generic.booksForReview.editor.form.authorTypeValid', array_keys($this->validAuthorTypes)));
 
 		// Authors are provided
@@ -94,7 +94,7 @@ class BookForReviewForm extends Form {
 		$this->addCheck(new FormValidatorCustom($this, 'year', 'required', 'plugins.generic.booksForReview.editor.form.yearValid', create_function('$year', 'return $year > 1900 && $year < 2100 ? true : false;'), array()));
 
 		// Language is provided and is valid value
-		$this->addCheck(new FormValidator($this, 'language', 'required', 'plugins.generic.booksForReview.editor.form.languageRequired'));	
+		$this->addCheck(new FormValidator($this, 'language', 'required', 'plugins.generic.booksForReview.editor.form.languageRequired'));
 		$this->addCheck(new FormValidatorInSet($this, 'language', 'required', 'plugins.generic.booksForReview.editor.form.languageValid', array_keys($this->validLanguages)));
 
 		// If provided, edition is valid value
@@ -115,11 +115,11 @@ class BookForReviewForm extends Form {
 
 			$this->_data['bookId'] = $book->getId();
 			$this->_data['status'] = $book->getStatus();
-			$this->_data['dateRequested'] = $book->getDateRequested(); 
-			$this->_data['dateAssigned'] = $book->getDateAssigned(); 
-			$this->_data['dateMailed'] = $book->getDateMailed(); 
-			$this->_data['dateDue'] = $book->getDateDue(); 
-			$this->_data['dateSubmitted'] = $book->getDateSubmitted(); 
+			$this->_data['dateRequested'] = $book->getDateRequested();
+			$this->_data['dateAssigned'] = $book->getDateAssigned();
+			$this->_data['dateMailed'] = $book->getDateMailed();
+			$this->_data['dateDue'] = $book->getDateDue();
+			$this->_data['dateSubmitted'] = $book->getDateSubmitted();
 		}
 
 		$templateMgr =& TemplateManager::getManager();
@@ -187,7 +187,7 @@ class BookForReviewForm extends Form {
 		return array(
 			'title',
 			'description',
-			'coverPageAltText', 
+			'coverPageAltText',
 			'originalFileName',
 			'fileName',
 			'width',
@@ -229,7 +229,7 @@ class BookForReviewForm extends Form {
 		);
 
 		if (!empty($this->_data['dateDueYear']) && !empty($this->_data['dateDueMonth']) && !empty($this->_data['dateDueDay'])) {
-			$this->_data['dateDue'] = $this->_data['dateDueYear'] . '-' . $this->_data['dateDueMonth'] . '-' . $this->_data['dateDueDay'] . ' 00:00:00'; 
+			$this->_data['dateDue'] = $this->_data['dateDueYear'] . '-' . $this->_data['dateDueMonth'] . '-' . $this->_data['dateDueDay'] . ' 00:00:00';
 		} else {
 			$this->_data['dateDue'] = '';
 		}
@@ -252,7 +252,7 @@ class BookForReviewForm extends Form {
 			$extension = $publicFileManager->getImageExtension($type);
 			if (!$extension) {
 				// Not a valid image.
-				$this->addError('imageFile', __('submission.layout.imageInvalid'));
+				$this->addError('imageFile', PKPLocale::translate('submission.layout.imageInvalid'));
 				return false;
 			}
 		}
@@ -262,7 +262,7 @@ class BookForReviewForm extends Form {
 	}
 
 	/**
-	 * Save book. 
+	 * Save book.
 	 */
 	function execute() {
 		$bfrPlugin =& PluginRegistry::getPlugin('generic', $this->parentPluginName);
@@ -273,7 +273,7 @@ class BookForReviewForm extends Form {
 		$journal =& Request::getJournal();
 		$journalId = $journal->getId();
 		$user =& Request::getUser();
-		$editorId = $user->getId(); 
+		$editorId = $user->getId();
 
 		if ($this->book == null) {
 			$book = new BookForReview();
@@ -298,8 +298,8 @@ class BookForReviewForm extends Form {
 		$book->setUserId($this->getData('userId'));
 		$book->setArticleId($this->getData('articleId'));
 		$book->setNotes($this->getData('notes'));
-		$book->setTitle($this->getData('title'), null); // Localized	
-		$book->setDescription($this->getData('description'), null); // Localized	
+		$book->setTitle($this->getData('title'), null); // Localized
+		$book->setDescription($this->getData('description'), null); // Localized
 		$book->setCoverPageAltText($this->getData('coverPageAltText'), null); // Localized
 
 		// Update authors
@@ -362,7 +362,7 @@ class BookForReviewForm extends Form {
 			list($width, $height) = getimagesize($publicFileManager->getJournalFilesPath($journalId) . '/' . $newFileName);
 			$book->setWidth($width, $formLocale);
 			$book->setHeight($height, $formLocale);
-		
+
 			$bfrDao->updateObject($book);
 		}
 	}

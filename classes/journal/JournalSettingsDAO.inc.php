@@ -261,7 +261,7 @@ class JournalSettingsDAO extends DAO {
 		preg_match('{{translate key="([^"]+)"}}', $rawInput, $matches);
 		if ( isset($matches[1]) ) {
 			AppLocale::requireComponents(LOCALE_COMPONENT_OJS_DEFAULT, LOCALE_COMPONENT_OJS_MANAGER, $locale);
-			return __($matches[1], $paramArray, $locale);
+			return PKPLocale::translate($matches[1], $paramArray, $locale);
 		}
 
 		return $rawInput;
@@ -346,7 +346,7 @@ class JournalSettingsDAO extends DAO {
 	 * Used internally by journal setting installation code to perform translation function.
 	 */
 	function _installer_regexp_callback($matches) {
-		return __($matches[1]);
+		return PKPLocale::translate($matches[1]);
 	}
 }
 

@@ -62,11 +62,11 @@ class GoogleAnalyticsPlugin extends GenericPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.generic.googleAnalytics.displayName');
+		return PKPLocale::translate('plugins.generic.googleAnalytics.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.googleAnalytics.description');
+		return PKPLocale::translate('plugins.generic.googleAnalytics.description');
 	}
 
 	/**
@@ -120,7 +120,7 @@ class GoogleAnalyticsPlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('settings', __('plugins.generic.googleAnalytics.manager.settings'));
+			$verbs[] = array('settings', PKPLocale::translate('plugins.generic.googleAnalytics.manager.settings'));
 		}
 		return parent::getManagementVerbs($verbs);
 	}
@@ -145,7 +145,7 @@ class GoogleAnalyticsPlugin extends GenericPlugin {
 	function metadataExecute($hookName, $params) {
 		$author =& $params[0];
 		$formAuthor =& $params[1];
-		$author->setData('gs', $formAuthor['gs']);				
+		$author->setData('gs', $formAuthor['gs']);
 		return false;
 	}
 

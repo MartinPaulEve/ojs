@@ -93,7 +93,7 @@ class LanguageAction {
 	function downloadLocale($locale, &$errors) {
 		$downloadableLocales = $this->getDownloadableLocales();
 		if (!is_array($downloadableLocales) || !isset($downloadableLocales[$locale])) {
-			$errors[] = __('admin.languages.download.cannotOpen');
+			$errors[] = PKPLocale::translate('admin.languages.download.cannotOpen');
 			return false;
 		}
 
@@ -117,7 +117,7 @@ class LanguageAction {
 		$languagePackUrl = sprintf(LANGUAGE_PACK_TAR_URL, $versionString, $locale);
 		$wrapper =& FileWrapper::wrapper($languagePackUrl);
 		if (!$wrapper->open()) {
-			$errors[] = __('admin.languages.download.cannotOpen');
+			$errors[] = PKPLocale::translate('admin.languages.download.cannotOpen');
 			return false;
 		}
 
@@ -154,14 +154,14 @@ class LanguageAction {
 			$pos = strpos($contents, '</locales>');
 			if ($pos === false) {
 				// Unable to locate insert point for new locale
-				$errors[] = __('admin.languages.download.cannotModifyRegistry');
+				$errors[] = PKPLocale::translate('admin.languages.download.cannotModifyRegistry');
 				return false;
 			}
 			$contents = substr_replace($contents, "\t<locale key=\"$locale\" name=\"" . $downloadableLocales[$locale]['name'] . "\" />\n", $pos, 0);
 			$fp = fopen(LOCALE_REGISTRY_FILE, 'w');
 			if (!$fp) {
 				// Unable to locate insert point for new locale
-				$errors[] = __('admin.languages.download.cannotModifyRegistry');
+				$errors[] = PKPLocale::translate('admin.languages.download.cannotModifyRegistry');
 				return false;
 			}
 			fwrite($fp, $contents);

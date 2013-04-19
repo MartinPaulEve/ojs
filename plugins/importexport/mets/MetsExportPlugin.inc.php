@@ -37,11 +37,11 @@ class METSExportPlugin extends ImportExportPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.importexport.METSExport.displayName');
+		return PKPLocale::translate('plugins.importexport.METSExport.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.importexport.METSExport.description');
+		return PKPLocale::translate('plugins.importexport.METSExport.description');
 	}
 
 	function display(&$args, $request) {

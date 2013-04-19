@@ -680,7 +680,7 @@ class IssueManagementHandler extends EditorHandler {
 						$user =& $request->getUser();
 						$notificationManager->createTrivialNotification(
 							$user->getId(), NOTIFICATION_TYPE_ERROR,
-							array('contents' => __($message, $params))
+							array('contents' => PKPLocale::translate($message, $params))
 						);
 						$publicArticleId = '';
 					}

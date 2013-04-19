@@ -31,15 +31,15 @@ class ApaCitationPlugin extends CitationPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.citationFormats.apa.displayName');
+		return PKPLocale::translate('plugins.citationFormats.apa.displayName');
 	}
 
 	function getCitationFormatName() {
-		return __('plugins.citationFormats.apa.citationFormatName');
+		return PKPLocale::translate('plugins.citationFormats.apa.citationFormatName');
 	}
 
 	function getDescription() {
-		return __('plugins.citationFormats.apa.description');
+		return PKPLocale::translate('plugins.citationFormats.apa.description');
 	}
 }
 

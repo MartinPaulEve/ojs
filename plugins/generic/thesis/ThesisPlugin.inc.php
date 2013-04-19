@@ -44,11 +44,11 @@ class ThesisPlugin extends GenericPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.generic.thesis.displayName');
+		return PKPLocale::translate('plugins.generic.thesis.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.thesis.description');
+		return PKPLocale::translate('plugins.generic.thesis.description');
 	}
 
 	/**
@@ -118,8 +118,8 @@ class ThesisPlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('theses', __('plugins.generic.thesis.manager.theses'));
-			$verbs[] = array('settings', __('plugins.generic.thesis.manager.settings'));
+			$verbs[] = array('theses', PKPLocale::translate('plugins.generic.thesis.manager.theses'));
+			$verbs[] = array('settings', PKPLocale::translate('plugins.generic.thesis.manager.settings'));
 		}
 		return parent::getManagementVerbs($verbs);
 	}

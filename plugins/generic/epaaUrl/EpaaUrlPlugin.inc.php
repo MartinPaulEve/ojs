@@ -22,11 +22,11 @@ class EpaaUrlPlugin extends GenericPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.generic.epaaUrl.displayName');
+		return PKPLocale::translate('plugins.generic.epaaUrl.displayName');
 	}
 
 	function getDescription() {
-		$description = __('plugins.generic.epaaUrl.description');
+		$description = PKPLocale::translate('plugins.generic.epaaUrl.description');
 		return $description;
 	}
 
@@ -93,12 +93,12 @@ class EpaaUrlPlugin extends GenericPlugin {
 		if ($this->getEnabled()) {
 			$verbs[] = array(
 				'disable',
-				__('manager.plugins.disable')
+				PKPLocale::translate('manager.plugins.disable')
 			);
 		} else {
 			$verbs[] = array(
 				'enable',
-				__('manager.plugins.enable')
+				PKPLocale::translate('manager.plugins.enable')
 			);
 		}
 		return $verbs;

@@ -41,8 +41,8 @@ class StudentThesisForm extends Form {
 		$thesisPlugin->import('Thesis');
 
 		$this->validDegrees = array (
-			THESIS_DEGREE_MASTERS => __('plugins.generic.thesis.manager.degree.masters'),
-			THESIS_DEGREE_DOCTORATE => __('plugins.generic.thesis.manager.degree.doctorate')
+			THESIS_DEGREE_MASTERS => PKPLocale::translate('plugins.generic.thesis.manager.degree.masters'),
+			THESIS_DEGREE_DOCTORATE => PKPLocale::translate('plugins.generic.thesis.manager.degree.doctorate')
 		);
 
 		import('lib.pkp.classes.captcha.CaptchaManager');
@@ -60,7 +60,7 @@ class StudentThesisForm extends Form {
 		}
 
 		// Degree is provided and is valid value
-		$this->addCheck(new FormValidator($this, 'degree', 'required', 'plugins.generic.thesis.form.degreeRequired'));	
+		$this->addCheck(new FormValidator($this, 'degree', 'required', 'plugins.generic.thesis.form.degreeRequired'));
 		$this->addCheck(new FormValidatorInSet($this, 'degree', 'required', 'plugins.generic.thesis.form.degreeValid', array_keys($this->validDegrees)));
 
 		// Degree Name is provided
@@ -183,7 +183,7 @@ class StudentThesisForm extends Form {
 		}
 
 		$this->readUserVars($userVars);
-		$this->_data['dateApproved'] = $this->_data['dateApprovedYear'] . '-' . $this->_data['dateApprovedMonth'] . '-' . $this->_data['dateApprovedDay']; 
+		$this->_data['dateApproved'] = $this->_data['dateApprovedYear'] . '-' . $this->_data['dateApprovedMonth'] . '-' . $this->_data['dateApprovedDay'];
 
 		// If a url is provided, ensure it includes a proper prefix (i.e. http:// or ftp://).
 		if (!empty($this->_data['url'])) {
@@ -193,7 +193,7 @@ class StudentThesisForm extends Form {
 	}
 
 	/**
-	 * Save thesis. 
+	 * Save thesis.
 	 */
 	function execute() {
 		$thesisPlugin =& PluginRegistry::getPlugin('generic', $this->parentPluginName);
@@ -279,8 +279,8 @@ class StudentThesisForm extends Form {
 				'university' =>	$thesis->getUniversity(),
 				'dateApproved' => $thesis->getDateApproved(),
 				'supervisorName' => $supervisorName,
-				'abstract' => $thesis->getAbstract(),		
-				'thesisContactSignature' => $thesisContactSignature 
+				'abstract' => $thesis->getAbstract(),
+				'thesisContactSignature' => $thesisContactSignature
 			);
 
 			import('classes.mail.MailTemplate');

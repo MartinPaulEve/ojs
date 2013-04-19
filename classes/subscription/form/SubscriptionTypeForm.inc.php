@@ -21,7 +21,7 @@ class SubscriptionTypeForm extends Form {
 	/** @var validFormats array keys are valid subscription type formats */
 	var $validFormats;
 
-	/** @var validCurrencies array keys are valid subscription type currencies */	
+	/** @var validCurrencies array keys are valid subscription type currencies */
 	var $validCurrencies;
 
 	/**
@@ -31,9 +31,9 @@ class SubscriptionTypeForm extends Form {
 	function SubscriptionTypeForm($typeId = null) {
 
 		$this->validFormats = array (
-			SUBSCRIPTION_TYPE_FORMAT_ONLINE => __('subscriptionTypes.format.online'),
-			SUBSCRIPTION_TYPE_FORMAT_PRINT => __('subscriptionTypes.format.print'),
-			SUBSCRIPTION_TYPE_FORMAT_PRINT_ONLINE => __('subscriptionTypes.format.printOnline')
+			SUBSCRIPTION_TYPE_FORMAT_ONLINE => PKPLocale::translate('subscriptionTypes.format.online'),
+			SUBSCRIPTION_TYPE_FORMAT_PRINT => PKPLocale::translate('subscriptionTypes.format.print'),
+			SUBSCRIPTION_TYPE_FORMAT_PRINT_ONLINE => PKPLocale::translate('subscriptionTypes.format.printOnline')
 		);
 
 		$currencyDao =& DAORegistry::getDAO('CurrencyDAO');
@@ -51,19 +51,19 @@ class SubscriptionTypeForm extends Form {
 		// Type name is provided
 		$this->addCheck(new FormValidatorLocale($this, 'name', 'required', 'manager.subscriptionTypes.form.typeNameRequired'));
 
-		// Cost	is provided and is numeric and positive	
-		$this->addCheck(new FormValidator($this, 'cost', 'required', 'manager.subscriptionTypes.form.costRequired'));	
+		// Cost	is provided and is numeric and positive
+		$this->addCheck(new FormValidator($this, 'cost', 'required', 'manager.subscriptionTypes.form.costRequired'));
 		$this->addCheck(new FormValidatorCustom($this, 'cost', 'required', 'manager.subscriptionTypes.form.costNumeric', create_function('$cost', 'return (is_numeric($cost) && $cost >= 0);')));
 
 		// Currency is provided and is valid value
-		$this->addCheck(new FormValidator($this, 'currency', 'required', 'manager.subscriptionTypes.form.currencyRequired'));	
+		$this->addCheck(new FormValidator($this, 'currency', 'required', 'manager.subscriptionTypes.form.currencyRequired'));
 		$this->addCheck(new FormValidatorInSet($this, 'currency', 'required', 'manager.subscriptionTypes.form.currencyValid', array_keys($this->validCurrencies)));
 
 		// Non-expiring flag is valid value
 		$this->addCheck(new FormValidatorInSet($this, 'nonExpiring', 'optional', 'manager.subscriptionTypes.form.nonExpiringValid', array('0', '1')));
 
 		// Format is provided and is valid value
-		$this->addCheck(new FormValidator($this, 'format', 'required', 'manager.subscriptionTypes.form.formatRequired'));	
+		$this->addCheck(new FormValidator($this, 'format', 'required', 'manager.subscriptionTypes.form.formatRequired'));
 		$this->addCheck(new FormValidatorInSet($this, 'format', 'required', 'manager.subscriptionTypes.form.formatValid', array_keys($this->validFormats)));
 
 		// Institutional flag is valid value
@@ -135,13 +135,13 @@ class SubscriptionTypeForm extends Form {
 
 		// If expiring subscription type, ensure duration is provided and valid
 		if ($this->getData('nonExpiring') === 0) {
-			$this->addCheck(new FormValidator($this, 'duration', 'required', 'manager.subscriptionTypes.form.durationRequired'));	
+			$this->addCheck(new FormValidator($this, 'duration', 'required', 'manager.subscriptionTypes.form.durationRequired'));
 			$this->addCheck(new FormValidatorCustom($this, 'duration', 'required', 'manager.subscriptionTypes.form.durationNumeric', create_function('$duration', 'return (is_numeric($duration) && $duration >= 0);')));
 		}
 	}
 
 	/**
-	 * Save subscription type. 
+	 * Save subscription type.
 	 */
 	function execute() {
 		$subscriptionTypeDao =& DAORegistry::getDAO('SubscriptionTypeDAO');

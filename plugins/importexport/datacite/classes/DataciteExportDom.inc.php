@@ -750,7 +750,7 @@ class DataciteExportDom extends DOIExportDom {
 
 		$sizes = array();
 		if (!empty($pages)) {
-			$sizes[] = $pages . ' ' . __('editor.issues.pages');
+			$sizes[] = $pages . ' ' . PKPLocale::translate('editor.issues.pages');
 		}
 		foreach($files as $file) { /* @var $file PKPFile */
 			$fileSize = round(((int)$file->getFileSize()) / 1024);

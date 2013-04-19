@@ -57,14 +57,14 @@ class UserBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.user.displayName');
+		return PKPLocale::translate('plugins.block.user.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.user.description');
+		return PKPLocale::translate('plugins.block.user.description');
 	}
 
 	function getContents(&$templateMgr) {

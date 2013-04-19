@@ -52,7 +52,7 @@ class OpenAdsConnection {
 		$fp = null;
 		$config = @parse_ini_file($this->getConfigFilename(), true);
 		if (!$config) {
-			$this->errors[] = __('plugins.generic.openads.error.configFileNotFound', array('filename' => $configFilename));
+			$this->errors[] = PKPLocale::translate('plugins.generic.openads.error.configFileNotFound', array('filename' => $configFilename));
 			return false;
 		}
 
@@ -64,7 +64,7 @@ class OpenAdsConnection {
 			!isset($config['table']['prefix'])
 		) {
 			// There was at least one missing required configuration item.
-			$this->errors[] = __('plugins.generic.openads.error.missingParameter');
+			$this->errors[] = PKPLocale::translate('plugins.generic.openads.error.missingParameter');
 			return false;
 		}
 
@@ -106,7 +106,7 @@ class OpenAdsConnection {
 		$conn = mysql_connect ($dbHost . ':' . $dbPort, $this->config['database']['username'], $this->config['database']['password']);
 
 		if (!$conn) {
-			$this->errors[] = __('plugins.generic.openads.error.dbConnectionError');
+			$this->errors[] = PKPLocale::translate('plugins.generic.openads.error.dbConnectionError');
 			$returner = false;
 			return $returner;
 		}

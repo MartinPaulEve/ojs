@@ -62,12 +62,12 @@ class OpenAdsPlugin extends GenericPlugin {
 
 	function getDisplayName() {
 		$this->addLocaleData();
-		return __('plugins.generic.openads');
+		return PKPLocale::translate('plugins.generic.openads');
 	}
 
 	function getDescription() {
 		$this->addLocaleData();
-		return __($this->isConfigured()?'plugins.generic.openads.description':'plugins.generic.openads.descriptionUnconfigured');
+		return PKPLocale::translate($this->isConfigured()?'plugins.generic.openads.description':'plugins.generic.openads.descriptionUnconfigured');
 	}
 
 	function mainCallback($hookName, $args) {
@@ -150,7 +150,7 @@ class OpenAdsPlugin extends GenericPlugin {
 		$openAdsConnection = new OpenAdsConnection($this, $this->getInstallationPath());
 		$sidebarAdHtml = $openAdsConnection->getAdHtml($this->getSetting($journal->getId(), 'sidebarAdId'));
 
-		$index = strrpos($output, '<h5>' . __('rt.readingTools') . '</h5>');
+		$index = strrpos($output, '<h5>' . PKPLocale::translate('rt.readingTools') . '</h5>');
 		if ($index !== false && !empty($sidebarAdHtml)) {
 			$newOutput = substr($output,0,$index);
 			$newOutput .= $sidebarAdHtml;
@@ -167,13 +167,13 @@ class OpenAdsPlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('disable', __('common.disable'));
+			$verbs[] = array('disable', PKPLocale::translate('common.disable'));
 			if ($this->isConfigured()) {
-				$verbs[] = array('settings', __('plugins.generic.openads.manager.settings'));
+				$verbs[] = array('settings', PKPLocale::translate('plugins.generic.openads.manager.settings'));
 			}
 		} else {
 			if ($this->isConfigured()) {
-				$verbs[] = array('enable', __('common.enable'));
+				$verbs[] = array('enable', PKPLocale::translate('common.enable'));
 			}
 		}
 		return $verbs;

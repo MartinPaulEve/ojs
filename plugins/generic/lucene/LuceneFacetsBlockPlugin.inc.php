@@ -51,14 +51,14 @@ class LuceneFacetsBlockPlugin extends BlockPlugin {
 	 * @see PKPPlugin::getDisplayName()
 	 */
 	function getDisplayName() {
-		return __('plugins.generic.lucene.faceting.displayName');
+		return PKPLocale::translate('plugins.generic.lucene.faceting.displayName');
 	}
 
 	/**
 	 * @see PKPPlugin::getDescription()
 	 */
 	function getDescription() {
-		return __('plugins.generic.lucene.faceting.description');
+		return PKPLocale::translate('plugins.generic.lucene.faceting.description');
 	}
 
 	/**

@@ -3,7 +3,7 @@
 /**
  * @defgroup subscription_form
  */
- 
+
 /**
  * @file classes/subscription/form/InstitutionalSubscriptionForm.inc.php
  *
@@ -34,7 +34,7 @@ class InstitutionalSubscriptionForm extends SubscriptionForm {
 		$journalId = $journal->getId();
 
 		if (isset($subscriptionId)) {
-			$subscriptionDao =& DAORegistry::getDAO('InstitutionalSubscriptionDAO'); 
+			$subscriptionDao =& DAORegistry::getDAO('InstitutionalSubscriptionDAO');
 			if ($subscriptionDao->subscriptionExists($subscriptionId)) {
 				$this->subscription =& $subscriptionDao->getSubscription($subscriptionId);
 			}
@@ -46,7 +46,7 @@ class InstitutionalSubscriptionForm extends SubscriptionForm {
 
 		$subscriptionTypeCount = count($this->subscriptionTypes);
 		if ($subscriptionTypeCount == 0) {
-			$this->addError('typeId', __('manager.subscriptions.form.typeRequired'));
+			$this->addError('typeId', PKPLocale::translate('manager.subscriptions.form.typeRequired'));
 			$this->addErrorField('typeId');
 		}
 
@@ -112,7 +112,7 @@ class InstitutionalSubscriptionForm extends SubscriptionForm {
 		}
 
 		// If provided ensure IP ranges have IP address format; IP addresses may contain wildcards
-		if ($ipRangeProvided) {	
+		if ($ipRangeProvided) {
 			$this->addCheck(new FormValidatorArrayCustom($this, 'ipRanges', 'required', 'manager.subscriptions.form.ipRangeValid', create_function('$ipRange, $regExp', 'return String::regexp_match($regExp, $ipRange);'),
 				array(
 					'/^' .
@@ -122,13 +122,13 @@ class InstitutionalSubscriptionForm extends SubscriptionForm {
 				),
 				false,
 				array(),
-				false		
+				false
 			));
 		}
 	}
 
 	/**
-	 * Save institutional subscription. 
+	 * Save institutional subscription.
 	 */
 	function execute() {
 		$insert = false;
@@ -155,13 +155,13 @@ class InstitutionalSubscriptionForm extends SubscriptionForm {
 			$institutionalSubscriptionDao->insertSubscription($this->subscription);
 		} else {
 			$institutionalSubscriptionDao->updateSubscription($this->subscription);
-		} 
+		}
 
 		// Send notification email
 		if ($this->_data['notifyEmail'] == 1) {
 			$mail =& $this->_prepareNotificationEmail('SUBSCRIPTION_NOTIFY');
 			$mail->send();
-		} 
+		}
 	}
 }
 

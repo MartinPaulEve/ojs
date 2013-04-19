@@ -37,11 +37,11 @@ class CrossRefExportPlugin extends ImportExportPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.importexport.crossref.displayName');
+		return PKPLocale::translate('plugins.importexport.crossref.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.importexport.crossref.description');
+		return PKPLocale::translate('plugins.importexport.crossref.description');
 	}
 
 	function display(&$args, $request) {
@@ -247,8 +247,8 @@ class CrossRefExportPlugin extends ImportExportPlugin {
 
 		if (!$journal) {
 			if ($journalPath != '') {
-				echo __('plugins.importexport.crossref.cliError') . "\n";
-				echo __('plugins.importexport.crossref.error.unknownJournal', array('journalPath' => $journalPath)) . "\n\n";
+				echo PKPLocale::translate('plugins.importexport.crossref.cliError') . "\n";
+				echo PKPLocale::translate('plugins.importexport.crossref.error.unknownJournal', array('journalPath' => $journalPath)) . "\n\n";
 			}
 			$this->usage($scriptName);
 			return;
@@ -258,22 +258,22 @@ class CrossRefExportPlugin extends ImportExportPlugin {
 			case 'articles':
 				$results =& ArticleSearch::formatResults($args);
 				if (!$this->exportArticles($journal, $results, $xmlFile)) {
-					echo __('plugins.importexport.crossref.cliError') . "\n";
-					echo __('plugins.importexport.crossref.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
+					echo PKPLocale::translate('plugins.importexport.crossref.cliError') . "\n";
+					echo PKPLocale::translate('plugins.importexport.crossref.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
 				}
 				return;
 			case 'issue':
 				$issueId = array_shift($args);
 				$issue =& $issueDao->getIssueByBestIssueId($issueId, $journal->getId());
 				if ($issue == null) {
-					echo __('plugins.importexport.crossref.cliError') . "\n";
-					echo __('plugins.importexport.crossref.export.error.issueNotFound', array('issueId' => $issueId)) . "\n\n";
+					echo PKPLocale::translate('plugins.importexport.crossref.cliError') . "\n";
+					echo PKPLocale::translate('plugins.importexport.crossref.export.error.issueNotFound', array('issueId' => $issueId)) . "\n\n";
 					return;
 				}
 				$issues = array($issue);
 				if (!$this->exportIssues($journal, $issues, $xmlFile)) {
-					echo __('plugins.importexport.crossref.cliError') . "\n";
-					echo __('plugins.importexport.crossref.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
+					echo PKPLocale::translate('plugins.importexport.crossref.cliError') . "\n";
+					echo PKPLocale::translate('plugins.importexport.crossref.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
 				}
 				return;
 		}
@@ -285,7 +285,7 @@ class CrossRefExportPlugin extends ImportExportPlugin {
 	 * Display the command-line usage information
 	 */
 	function usage($scriptName) {
-		echo __('plugins.importexport.crossref.cliUsage', array(
+		echo PKPLocale::translate('plugins.importexport.crossref.cliUsage', array(
 			'scriptName' => $scriptName,
 			'pluginName' => $this->getName()
 		)) . "\n";

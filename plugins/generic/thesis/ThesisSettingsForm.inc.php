@@ -35,14 +35,14 @@ class ThesisSettingsForm extends Form {
 		$this->plugin =& $plugin;
 
 		$this->validOrder = array (
-			THESIS_ORDER_SUBMISSION_DATE_ASC => __('plugins.generic.thesis.settings.order.submissionDateAsc'),
-			THESIS_ORDER_SUBMISSION_DATE_DESC => __('plugins.generic.thesis.settings.order.submissionDateDesc'),
-			THESIS_ORDER_APPROVAL_DATE_ASC => __('plugins.generic.thesis.settings.order.approvalDateAsc'),
-			THESIS_ORDER_APPROVAL_DATE_DESC => __('plugins.generic.thesis.settings.order.approvalDateDesc'),
-			THESIS_ORDER_LASTNAME_ASC => __('plugins.generic.thesis.settings.order.lastNameAsc'),
-			THESIS_ORDER_LASTNAME_DESC => __('plugins.generic.thesis.settings.order.lastNameDesc'),
-			THESIS_ORDER_TITLE_ASC => __('plugins.generic.thesis.settings.order.titleAsc'),
-			THESIS_ORDER_TITLE_DESC => __('plugins.generic.thesis.settings.order.titleDesc')
+			THESIS_ORDER_SUBMISSION_DATE_ASC => PKPLocale::translate('plugins.generic.thesis.settings.order.submissionDateAsc'),
+			THESIS_ORDER_SUBMISSION_DATE_DESC => PKPLocale::translate('plugins.generic.thesis.settings.order.submissionDateDesc'),
+			THESIS_ORDER_APPROVAL_DATE_ASC => PKPLocale::translate('plugins.generic.thesis.settings.order.approvalDateAsc'),
+			THESIS_ORDER_APPROVAL_DATE_DESC => PKPLocale::translate('plugins.generic.thesis.settings.order.approvalDateDesc'),
+			THESIS_ORDER_LASTNAME_ASC => PKPLocale::translate('plugins.generic.thesis.settings.order.lastNameAsc'),
+			THESIS_ORDER_LASTNAME_DESC => PKPLocale::translate('plugins.generic.thesis.settings.order.lastNameDesc'),
+			THESIS_ORDER_TITLE_ASC => PKPLocale::translate('plugins.generic.thesis.settings.order.titleAsc'),
+			THESIS_ORDER_TITLE_DESC => PKPLocale::translate('plugins.generic.thesis.settings.order.titleDesc')
 		);
 
 		parent::Form($plugin->getTemplatePath() . 'settingsForm.tpl');
@@ -97,7 +97,7 @@ class ThesisSettingsForm extends Form {
 	}
 
 	/**
-	 * Save settings. 
+	 * Save settings.
 	 */
 	function execute() {
 		$plugin =& $this->plugin;

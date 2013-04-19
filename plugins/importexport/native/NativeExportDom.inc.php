@@ -400,25 +400,25 @@ class NativeExportDom {
 
 		// FIXME: These should be constants!
 		switch ($suppFile->getType()) {
-			case __('author.submit.suppFile.researchInstrument'):
+			case PKPLocale::translate('author.submit.suppFile.researchInstrument'):
 				$suppFileType = 'research_instrument';
 				break;
-			case __('author.submit.suppFile.researchMaterials'):
+			case PKPLocale::translate('author.submit.suppFile.researchMaterials'):
 				$suppFileType = 'research_materials';
 				break;
-			case __('author.submit.suppFile.researchResults'):
+			case PKPLocale::translate('author.submit.suppFile.researchResults'):
 				$suppFileType = 'research_results';
 				break;
-			case __('author.submit.suppFile.transcripts'):
+			case PKPLocale::translate('author.submit.suppFile.transcripts'):
 				$suppFileType = 'transcripts';
 				break;
-			case __('author.submit.suppFile.dataAnalysis'):
+			case PKPLocale::translate('author.submit.suppFile.dataAnalysis'):
 				$suppFileType = 'data_analysis';
 				break;
-			case __('author.submit.suppFile.dataSet'):
+			case PKPLocale::translate('author.submit.suppFile.dataSet'):
 				$suppFileType = 'data_set';
 				break;
-			case __('author.submit.suppFile.sourceText'):
+			case PKPLocale::translate('author.submit.suppFile.sourceText'):
 				$suppFileType = 'source_text';
 				break;
 			default:

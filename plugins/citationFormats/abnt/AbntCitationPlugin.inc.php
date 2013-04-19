@@ -39,21 +39,21 @@ class AbntCitationPlugin extends CitationPlugin {
 	 * @see Plugin::getDisplayName
 	 */
 	function getDisplayName() {
-		return __('plugins.citationFormats.abnt.displayName');
+		return PKPLocale::translate('plugins.citationFormats.abnt.displayName');
 	}
 
 	/**
 	 * @see CitationFormatPlugin::getCitationFormatName
 	 */
 	function getCitationFormatName() {
-		return __('plugins.citationFormats.abnt.citationFormatName');
+		return PKPLocale::translate('plugins.citationFormats.abnt.citationFormatName');
 	}
 
 	/**
 	 * @see Plugin::getDescription
 	 */
 	function getDescription() {
-		return __('plugins.citationFormats.abnt.description');
+		return PKPLocale::translate('plugins.citationFormats.abnt.description');
 	}
 
 	/**
@@ -81,7 +81,7 @@ class AbntCitationPlugin extends CitationPlugin {
 		return array(
 			array(
 				'settings',
-				__('plugins.citationFormats.abnt.manager.settings')
+				PKPLocale::translate('plugins.citationFormats.abnt.manager.settings')
 			)
 		);
 	}

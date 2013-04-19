@@ -39,18 +39,18 @@ class METSGatewayPlugin extends GatewayPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.gateways.metsGateway.displayName');
+		return PKPLocale::translate('plugins.gateways.metsGateway.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.gateways.metsGateway.description');
+		return PKPLocale::translate('plugins.gateways.metsGateway.description');
 	}
 
 	function getManagementVerbs() {
 		$verbs = parent::getManagementVerbs();
 		if (!$this->getEnabled()) return $verbs;
 		$verbs[] = array(
-			'settings', __('plugins.gateways.metsGateway.settings')
+			'settings', PKPLocale::translate('plugins.gateways.metsGateway.settings')
 		);
 		return $verbs;
 	}
@@ -173,6 +173,6 @@ class METSGatewayPlugin extends GatewayPlugin {
 		XMLCustomWriter::printXML($doc);
 		return true;
 	}
-	
+
 }
 ?>

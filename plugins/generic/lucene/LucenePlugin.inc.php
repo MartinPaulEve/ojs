@@ -171,14 +171,14 @@ class LucenePlugin extends GenericPlugin {
 	 * @see PKPPlugin::getDisplayName()
 	 */
 	function getDisplayName() {
-		return __('plugins.generic.lucene.displayName');
+		return PKPLocale::translate('plugins.generic.lucene.displayName');
 	}
 
 	/**
 	 * @see PKPPlugin::getDescription()
 	 */
 	function getDescription() {
-		return __('plugins.generic.lucene.description');
+		return PKPLocale::translate('plugins.generic.lucene.description');
 	}
 
 	/**
@@ -225,7 +225,7 @@ class LucenePlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('settings', __('plugins.generic.lucene.settings'));
+			$verbs[] = array('settings', PKPLocale::translate('plugins.generic.lucene.settings'));
 		}
 		return parent::getManagementVerbs($verbs);
 	}
@@ -426,7 +426,7 @@ class LucenePlugin extends GenericPlugin {
 		if (is_null($result)) {
 			$error = $solrWebService->getServiceMessage();
 			$this->_informTechAdmin($error, $journal, true);
-			$error .=  ' ' . __('plugins.generic.lucene.message.techAdminInformed');
+			$error .=  ' ' . PKPLocale::translate('plugins.generic.lucene.message.techAdminInformed');
 			return array();
 		} else {
 			// Store spelling suggestion, highlighting and faceting info
@@ -575,9 +575,9 @@ class LucenePlugin extends GenericPlugin {
 
 		// Clear index (if the journal id is null then
 		// all journals will be deleted from the index).
-		if ($log) echo 'LucenePlugin: ' . __('search.cli.rebuildIndex.clearingIndex') . ' ... ';
+		if ($log) echo 'LucenePlugin: ' . PKPLocale::translate('search.cli.rebuildIndex.clearingIndex') . ' ... ';
 		$solrWebService->deleteArticlesFromIndex($journalIdOrNull);
-		if ($log) echo __('search.cli.rebuildIndex.done') . "\n";
+		if ($log) echo PKPLocale::translate('search.cli.rebuildIndex.done') . "\n";
 
 		// Re-build index, either of a single journal...
 		if (is_a($journal, 'Journal')) {
@@ -593,7 +593,7 @@ class LucenePlugin extends GenericPlugin {
 		// We re-index journal by journal to partition the task a bit
 		// and provide better progress information to the user.
 		foreach($journals as $journal) {
-			if ($log) echo __('search.cli.rebuildIndex.indexing', array('journalName' => $journal->getLocalizedTitle())) . ' ';
+			if ($log) echo PKPLocale::translate('search.cli.rebuildIndex.indexing', array('journalName' => $journal->getLocalizedTitle())) . ' ';
 
 			// Mark all articles in the journal for re-indexing.
 			$numMarked = $this->_solrWebService->markJournalChanged($journal->getId());
@@ -602,7 +602,7 @@ class LucenePlugin extends GenericPlugin {
 			if ($this->getSetting(0, 'pullIndexing')) {
 				// When pull-indexing is configured then we leave it up to the
 				// Solr server to decide when the updates will actually be done.
-				if ($log) echo '... ' . __('plugins.generic.lucene.rebuildIndex.pullResult', array('numMarked' => $numMarked)) . "\n";
+				if ($log) echo '... ' . PKPLocale::translate('plugins.generic.lucene.rebuildIndex.pullResult', array('numMarked' => $numMarked)) . "\n";
 			} else {
 				// In case of push indexing we immediately update the index.
 				$numIndexed = 0;
@@ -613,7 +613,7 @@ class LucenePlugin extends GenericPlugin {
 					if (is_null($articlesInBatch)) {
 						$error = $solrWebService->getServiceMessage();
 						if ($log) {
-							echo ' ' . __('search.cli.rebuildIndex.error') . (empty($error) ? '' : ": $error") . "\n";
+							echo ' ' . PKPLocale::translate('search.cli.rebuildIndex.error') . (empty($error) ? '' : ": $error") . "\n";
 						} else {
 							$this->_informTechAdmin($error, $journal);
 						}
@@ -622,7 +622,7 @@ class LucenePlugin extends GenericPlugin {
 					if ($log) echo '.';
 					$numIndexed += $articlesInBatch;
 				} while ($articlesInBatch == SOLR_INDEXING_MAX_BATCHSIZE);
-				if ($log) echo ' ' . __('search.cli.rebuildIndex.result', array('numIndexed' => $numIndexed)) . "\n";
+				if ($log) echo ' ' . PKPLocale::translate('search.cli.rebuildIndex.result', array('numIndexed' => $numIndexed)) . "\n";
 			}
 		}
 		return true;
@@ -793,7 +793,7 @@ class LucenePlugin extends GenericPlugin {
 		// Return a link to the URL (a template seems overkill here).
 		$output =& $params[2];
 		$output .= '&nbsp;<a href="' . $simdocsUrl . '" class="file">'
-			. __('plugins.generic.lucene.results.similarDocuments')
+			. PKPLocale::translate('plugins.generic.lucene.results.similarDocuments')
 			. '</a>';
 		return false;
 	}
@@ -831,7 +831,7 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function callbackTemplateSyntaxInstructions($hookName, $params) {
 		$output =& $params[2];
-		$output .= __('plugins.generic.lucene.results.syntaxInstructions');
+		$output .= PKPLocale::translate('plugins.generic.lucene.results.syntaxInstructions');
 		return false;
 	}
 
@@ -884,16 +884,16 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function _getResultSetOrderingOptions($journal) {
 		$resultSetOrderingOptions = array(
-			'score' => __('plugins.generic.lucene.results.orderBy.relevance'),
-			'authors' => __('plugins.generic.lucene.results.orderBy.author'),
-			'issuePublicationDate' => __('plugins.generic.lucene.results.orderBy.issue'),
-			'publicationDate' => __('plugins.generic.lucene.results.orderBy.date'),
-			'title' => __('plugins.generic.lucene.results.orderBy.article')
+			'score' => PKPLocale::translate('plugins.generic.lucene.results.orderBy.relevance'),
+			'authors' => PKPLocale::translate('plugins.generic.lucene.results.orderBy.author'),
+			'issuePublicationDate' => PKPLocale::translate('plugins.generic.lucene.results.orderBy.issue'),
+			'publicationDate' => PKPLocale::translate('plugins.generic.lucene.results.orderBy.date'),
+			'title' => PKPLocale::translate('plugins.generic.lucene.results.orderBy.article')
 		);
 
 		// Only show the "journal title" option if we have several journals.
 		if (!is_a($journal, 'Journal')) {
-			$resultSetOrderingOptions['journalTitle'] = __('plugins.generic.lucene.results.orderBy.journal');
+			$resultSetOrderingOptions['journalTitle'] = PKPLocale::translate('plugins.generic.lucene.results.orderBy.journal');
 		}
 
 		return $resultSetOrderingOptions;
@@ -906,8 +906,8 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function _getResultSetOrderingDirectionOptions() {
 		return array(
-			'asc' => __('plugins.generic.lucene.results.orderDir.asc'),
-			'desc' => __('plugins.generic.lucene.results.orderDir.desc')
+			'asc' => PKPLocale::translate('plugins.generic.lucene.results.orderDir.asc'),
+			'desc' => PKPLocale::translate('plugins.generic.lucene.results.orderDir.desc')
 		);
 	}
 
@@ -1027,10 +1027,10 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function _getRankingBoostOptions() {
 		return array(
-			0 => __('plugins.generic.lucene.sectionForm.ranking.never'),
-			1 => __('plugins.generic.lucene.sectionForm.ranking.low'),
-			2 => __('plugins.generic.lucene.sectionForm.ranking.normal'),
-			4 => __('plugins.generic.lucene.sectionForm.ranking.high')
+			0 => PKPLocale::translate('plugins.generic.lucene.sectionForm.ranking.never'),
+			1 => PKPLocale::translate('plugins.generic.lucene.sectionForm.ranking.low'),
+			2 => PKPLocale::translate('plugins.generic.lucene.sectionForm.ranking.normal'),
+			4 => PKPLocale::translate('plugins.generic.lucene.sectionForm.ranking.high')
 		);
 	}
 }

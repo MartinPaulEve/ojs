@@ -5,7 +5,7 @@
  *
  * Copyright (c) 2003-2013 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
- * 
+ *
  * @class ReviewReportPlugin
  * @ingroup plugins_reports_review
  * @see ReviewReportDAO
@@ -43,11 +43,11 @@ class ReviewReportPlugin extends ReportPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.reports.reviews.displayName');
+		return PKPLocale::translate('plugins.reports.reviews.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.reports.reviews.description');
+		return PKPLocale::translate('plugins.reports.reviews.description');
 	}
 
 	function display(&$args) {
@@ -69,29 +69,29 @@ class ReviewReportPlugin extends ReportPlugin {
 			}
 		}
 
-		$yesnoMessages = array( 0 => __('common.no'), 1 => __('common.yes'));
+		$yesnoMessages = array( 0 => PKPLocale::translate('common.no'), 1 => PKPLocale::translate('common.yes'));
 
 		import('classes.submission.reviewAssignment.ReviewAssignment');
 		$recommendations = ReviewAssignment::getReviewerRecommendationOptions();
 
 		$columns = array(
-			'round' => __('plugins.reports.reviews.round'),
-			'article' => __('article.articles'),
-			'articleid' => __('article.submissionId'),
-			'reviewerid' => __('plugins.reports.reviews.reviewerId'),
-			'reviewer' => __('plugins.reports.reviews.reviewer'),
-			'firstname' => __('user.firstName'),
-			'middlename' => __('user.middleName'),
-			'lastname' => __('user.lastName'),
-			'dateassigned' => __('plugins.reports.reviews.dateAssigned'),
-			'datenotified' => __('plugins.reports.reviews.dateNotified'),
-			'dateconfirmed' => __('plugins.reports.reviews.dateConfirmed'),
-			'datecompleted' => __('plugins.reports.reviews.dateCompleted'),
-			'datereminded' => __('plugins.reports.reviews.dateReminded'),
-			'declined' => __('submissions.declined'),
-			'cancelled' => __('common.cancelled'),
-			'recommendation' => __('reviewer.article.recommendation'),
-			'comments' => __('comments.commentsOnArticle')
+			'round' => PKPLocale::translate('plugins.reports.reviews.round'),
+			'article' => PKPLocale::translate('article.articles'),
+			'articleid' => PKPLocale::translate('article.submissionId'),
+			'reviewerid' => PKPLocale::translate('plugins.reports.reviews.reviewerId'),
+			'reviewer' => PKPLocale::translate('plugins.reports.reviews.reviewer'),
+			'firstname' => PKPLocale::translate('user.firstName'),
+			'middlename' => PKPLocale::translate('user.middleName'),
+			'lastname' => PKPLocale::translate('user.lastName'),
+			'dateassigned' => PKPLocale::translate('plugins.reports.reviews.dateAssigned'),
+			'datenotified' => PKPLocale::translate('plugins.reports.reviews.dateNotified'),
+			'dateconfirmed' => PKPLocale::translate('plugins.reports.reviews.dateConfirmed'),
+			'datecompleted' => PKPLocale::translate('plugins.reports.reviews.dateCompleted'),
+			'datereminded' => PKPLocale::translate('plugins.reports.reviews.dateReminded'),
+			'declined' => PKPLocale::translate('submissions.declined'),
+			'cancelled' => PKPLocale::translate('common.cancelled'),
+			'recommendation' => PKPLocale::translate('reviewer.article.recommendation'),
+			'comments' => PKPLocale::translate('comments.commentsOnArticle')
 		);
 		$yesNoArray = array('declined', 'cancelled');
 
@@ -103,7 +103,7 @@ class ReviewReportPlugin extends ReportPlugin {
 				if (in_array($index, $yesNoArray)) {
 					$columns[$index] = $yesnoMessages[$row[$index]];
 				} elseif ($index == "recommendation") {
-					$columns[$index] = (!isset($row[$index])) ? __('common.none') : __($recommendations[$row[$index]]);
+					$columns[$index] = (!isset($row[$index])) ? PKPLocale::translate('common.none') : PKPLocale::translate($recommendations[$row[$index]]);
 				} elseif ($index == "comments") {
 					if (isset($comments[$row['articleid']][$row['reviewerid']])) {
 						$columns[$index] = $comments[$row['articleid']][$row['reviewerid']];

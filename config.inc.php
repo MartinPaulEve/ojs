@@ -102,7 +102,7 @@ driver = mysql
 host = localhost
 username = root
 password = 123456789
-name = epaa-current
+name = epaa
 
 ; Enable persistent connections (recommended)
 persistent = On

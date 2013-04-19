@@ -20,14 +20,14 @@ class AuthorBiosBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.authorBios.displayName');
+		return PKPLocale::translate('plugins.block.authorBios.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.authorBios.description');
+		return PKPLocale::translate('plugins.block.authorBios.description');
 	}
 
 	/**

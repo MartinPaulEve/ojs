@@ -91,7 +91,7 @@ class IssueForm extends Form {
 
 		$publicIssueId = $this->getData('publicIssueId');
 		if ($publicIssueId && $journalDao->anyPubIdExists($journal->getId(), 'publisher-id', $publicIssueId, ASSOC_TYPE_ISSUE, $issueId)) {
-			$this->addError('publicIssueId', __('editor.publicIdentificationExists', array('publicIdentifier' => $publicIssueId)));
+			$this->addError('publicIssueId', PKPLocale::translate('editor.publicIdentificationExists', array('publicIdentifier' => $publicIssueId)));
 			$this->addErrorField('publicIssueId');
 		}
 
@@ -101,7 +101,7 @@ class IssueForm extends Form {
 		if ($publicFileManager->uploadedFileExists('coverPage')) {
 			$type = $publicFileManager->getUploadedFileType('coverPage');
 			if (!$publicFileManager->getImageExtension($type)) {
-				$this->addError('coverPage', __('editor.issues.invalidCoverPageFormat'));
+				$this->addError('coverPage', PKPLocale::translate('editor.issues.invalidCoverPageFormat'));
 				$this->addErrorField('coverPage');
 			}
 		}
@@ -109,7 +109,7 @@ class IssueForm extends Form {
 		if ($publicFileManager->uploadedFileExists('styleFile')) {
 			$type = $publicFileManager->getUploadedFileType('styleFile');
 			if ($type != 'text/plain' && $type != 'text/css') {
-				$this->addError('styleFile', __('editor.issues.invalidStyleFormat'));
+				$this->addError('styleFile', PKPLocale::translate('editor.issues.invalidStyleFormat'));
 			}
 		}
 

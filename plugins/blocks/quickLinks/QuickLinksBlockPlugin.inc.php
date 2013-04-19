@@ -92,14 +92,14 @@ class QuickLinksBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.quickLinks.displayName');
+		return PKPLocale::translate('plugins.block.quickLinks.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.quickLinks.description');
+		return PKPLocale::translate('plugins.block.quickLinks.description');
 	}
 
 	function getContents(&$templateMgr) {
@@ -118,7 +118,7 @@ class QuickLinksBlockPlugin extends BlockPlugin {
 		$post = $posts[0];
 
 		$output = '<div class="block" id="sidebarQuickLinks">' . "\n" . '<span class="blockTitle">';
-		$output .= __('plugins.block.quickLinks.displayName');
+		$output .= PKPLocale::translate('plugins.block.quickLinks.displayName');
 		$output .= "\n</span>";
 		$output .= nl2br($post->post_content);
 		$output .= "\n</div>";

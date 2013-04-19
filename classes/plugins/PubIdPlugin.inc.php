@@ -50,18 +50,18 @@ class PubIdPlugin extends Plugin {
 			$verbs = array(
 				array(
 					'disable',
-					__('manager.plugins.disable')
+					PKPLocale::translate('manager.plugins.disable')
 				),
 				array(
 					'settings',
-					__('manager.plugins.settings')
+					PKPLocale::translate('manager.plugins.settings')
 				)
 			);
 		} else {
 			$verbs = array(
 				array(
 					'enable',
-					__('manager.plugins.enable')
+					PKPLocale::translate('manager.plugins.enable')
 				)
 			);
 		}

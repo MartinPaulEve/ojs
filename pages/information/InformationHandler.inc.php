@@ -57,7 +57,7 @@ class InformationHandler extends Handler {
 				break;
 			case 'sampleCopyrightWording':
 				AppLocale::requireComponents(LOCALE_COMPONENT_OJS_MANAGER);
-				$content = __('manager.setup.authorCopyrightNotice.sample');
+				$content = PKPLocale::translate('manager.setup.authorCopyrightNotice.sample');
 				$pageTitle = $pageCrumbTitle = 'manager.setup.copyrightNotice';
 				break;
 			default:

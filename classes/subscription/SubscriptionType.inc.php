@@ -7,7 +7,7 @@
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Subscriptiontyoe
- * @ingroup subscription 
+ * @ingroup subscription
  * @see SubscriptionTypeDAO
  *
  * @brief Basic class describing a subscription type.
@@ -16,7 +16,7 @@
 /**
  * Subscription type formats
  */
-define('SUBSCRIPTION_TYPE_FORMAT_ONLINE',		0x01); 
+define('SUBSCRIPTION_TYPE_FORMAT_ONLINE',		0x01);
 define('SUBSCRIPTION_TYPE_FORMAT_PRINT',		0x10);
 define('SUBSCRIPTION_TYPE_FORMAT_PRINT_ONLINE',	0x11);
 
@@ -112,7 +112,7 @@ class SubscriptionType extends DataObject {
 
 	/**
 	 * Get subscription type cost.
-	 * @return float 
+	 * @return float
 	 */
 	function getCost() {
 		return $this->getData('cost');
@@ -211,7 +211,7 @@ class SubscriptionType extends DataObject {
 	 */
 	function getDurationYearsMonths($locale = null) {
 		if ($this->getData('nonExpiring')) {
-			return __('subscriptionTypes.nonExpiring', null, $locale);
+			return PKPLocale::translate('subscriptionTypes.nonExpiring', null, $locale);
 		}
 
 		$years = (int)floor($this->getData('duration')/12);
@@ -219,17 +219,17 @@ class SubscriptionType extends DataObject {
 		$yearsMonths = '';
 
 		if ($years == 1) {
-			$yearsMonths = '1 ' . __('subscriptionTypes.year', null, $locale);
+			$yearsMonths = '1 ' . PKPLocale::translate('subscriptionTypes.year', null, $locale);
 		} elseif ($years > 1) {
-			$yearsMonths = $years . ' ' . __('subscriptionTypes.years', null, $locale);
+			$yearsMonths = $years . ' ' . PKPLocale::translate('subscriptionTypes.years', null, $locale);
 		}
 
 		if ($months == 1) {
 			$yearsMonths .= $yearsMonths == ''  ? '1 ' : ' 1 ';
-			$yearsMonths .= __('subscriptionTypes.month', null, $locale);
+			$yearsMonths .= PKPLocale::translate('subscriptionTypes.month', null, $locale);
 		} elseif ($months > 1){
 			$yearsMonths .= $yearsMonths == ''  ? $months . ' ' : ' ' . $months . ' ';
-			$yearsMonths .= __('subscriptionTypes.months', null, $locale);
+			$yearsMonths .= PKPLocale::translate('subscriptionTypes.months', null, $locale);
 		}
 
 		return $yearsMonths;

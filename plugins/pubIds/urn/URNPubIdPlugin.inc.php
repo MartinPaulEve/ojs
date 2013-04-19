@@ -40,14 +40,14 @@ class URNPubIdPlugin extends PubIdPlugin {
 	 * @see PKPPlugin::getDisplayName()
 	 */
 	function getDisplayName() {
-		return __('plugins.pubIds.urn.displayName');
+		return PKPLocale::translate('plugins.pubIds.urn.displayName');
 	}
 
 	/**
 	 * @see PKPPlugin::getDescription()
 	 */
 	function getDescription() {
-		return __('plugins.pubIds.urn.description');
+		return PKPLocale::translate('plugins.pubIds.urn.description');
 	}
 
 	/**
@@ -280,12 +280,12 @@ class URNPubIdPlugin extends PubIdPlugin {
 			$newURNWithoutCheckNo = substr($newURN, 0, -1);
 			$newURNWithCheckNo = $newURNWithoutCheckNo . $this->_calculateCheckNo($newURNWithoutCheckNo);
 			if ($newURN != $newURNWithCheckNo) {
-				$errorMsg = __('plugins.pubIds.urn.form.checkNoRequired');
+				$errorMsg = PKPLocale::translate('plugins.pubIds.urn.form.checkNoRequired');
 				return false;
 			}
 		}
 		if(!$this->checkDuplicate($newURN, $pubObject, $journalId)) {
-			$errorMsg = __('plugins.pubIds.urn.form.customIdentifierNotUnique');
+			$errorMsg = PKPLocale::translate('plugins.pubIds.urn.form.customIdentifierNotUnique');
 			return false;
 		}
 		return true;

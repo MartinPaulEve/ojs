@@ -138,7 +138,7 @@ class NotificationSettingsForm extends PKPNotificationSettingsForm {
 		$templateMgr->assign('notificationSettingCategories', $notificationSettingCategories);
 		$templateMgr->assign('notificationSettings',  $this->_getNotificationSettingsMap());
 
-		$templateMgr->assign('titleVar', __('common.title'));
+		$templateMgr->assign('titleVar', PKPLocale::translate('common.title'));
 		return parent::display($request);
 	}
 

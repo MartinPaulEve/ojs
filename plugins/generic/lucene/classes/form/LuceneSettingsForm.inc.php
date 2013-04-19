@@ -135,8 +135,8 @@ class LuceneSettingsForm extends Form {
 	 */
 	function _getAutosuggestTypes() {
 		return array(
-			SOLR_AUTOSUGGEST_SUGGESTER => __('plugins.generic.lucene.settings.autosuggestTypeSuggester'),
-			SOLR_AUTOSUGGEST_FACETING => __('plugins.generic.lucene.settings.autosuggestTypeFaceting')
+			SOLR_AUTOSUGGEST_SUGGESTER => PKPLocale::translate('plugins.generic.lucene.settings.autosuggestTypeSuggester'),
+			SOLR_AUTOSUGGEST_FACETING => PKPLocale::translate('plugins.generic.lucene.settings.autosuggestTypeFaceting')
 		);
 	}
 }

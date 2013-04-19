@@ -5,7 +5,7 @@
  *
  * Copyright (c) 2003-2013 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
- * 
+ *
  * @class ArticleReportPlugin
  * @ingroup plugins_reports_article
  *
@@ -42,11 +42,11 @@ class ArticleReportPlugin extends ReportPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.reports.articles.displayName');
+		return PKPLocale::translate('plugins.reports.articles.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.reports.articles.description');
+		return PKPLocale::translate('plugins.reports.articles.description');
 	}
 
 	function display(&$args) {
@@ -71,37 +71,37 @@ class ArticleReportPlugin extends ReportPlugin {
 
 		import('classes.article.Article');
 		$decisionMessages = array(
-			SUBMISSION_EDITOR_DECISION_ACCEPT => __('editor.article.decision.accept'),
-			SUBMISSION_EDITOR_DECISION_PENDING_REVISIONS => __('editor.article.decision.pendingRevisions'),
-			SUBMISSION_EDITOR_DECISION_RESUBMIT => __('editor.article.decision.resubmit'),
-			SUBMISSION_EDITOR_DECISION_DECLINE => __('editor.article.decision.decline'),
-			null => __('plugins.reports.articles.nodecision')
+			SUBMISSION_EDITOR_DECISION_ACCEPT => PKPLocale::translate('editor.article.decision.accept'),
+			SUBMISSION_EDITOR_DECISION_PENDING_REVISIONS => PKPLocale::translate('editor.article.decision.pendingRevisions'),
+			SUBMISSION_EDITOR_DECISION_RESUBMIT => PKPLocale::translate('editor.article.decision.resubmit'),
+			SUBMISSION_EDITOR_DECISION_DECLINE => PKPLocale::translate('editor.article.decision.decline'),
+			null => PKPLocale::translate('plugins.reports.articles.nodecision')
 		);
 
 		$columns = array(
-			'article_id' => __('article.submissionId'),
-			'title' => __('article.title'),
-			'abstract' => __('article.abstract')
+			'article_id' => PKPLocale::translate('article.submissionId'),
+			'title' => PKPLocale::translate('article.title'),
+			'abstract' => PKPLocale::translate('article.abstract')
 		);
-			
+
 		for ($a = 1; $a <= $maxAuthors; $a++) {
 			$columns = array_merge($columns, array(
-				'fname' . $a => __('user.firstName') . " (" . __('user.role.author') . " $a)",
-				'mname' . $a => __('user.middleName') . " (" . __('user.role.author') . " $a)",
-				'lname' . $a => __('user.lastName') . " (" . __('user.role.author') . " $a)",
-				'country' . $a => __('common.country') . " (" . __('user.role.author') . " $a)",
-				'affiliation' . $a => __('user.affiliation') . " (" . __('user.role.author') . " $a)",
-				'email' . $a => __('user.email') . " (" . __('user.role.author') . " $a)",
-				'url' . $a => __('user.url') . " (" . __('user.role.author') . " $a)",
-				'biography' . $a => __('user.biography') . " (" . __('user.role.author') . " $a)"
+				'fname' . $a => PKPLocale::translate('user.firstName') . " (" . PKPLocale::translate('user.role.author') . " $a)",
+				'mname' . $a => PKPLocale::translate('user.middleName') . " (" . PKPLocale::translate('user.role.author') . " $a)",
+				'lname' . $a => PKPLocale::translate('user.lastName') . " (" . PKPLocale::translate('user.role.author') . " $a)",
+				'country' . $a => PKPLocale::translate('common.country') . " (" . PKPLocale::translate('user.role.author') . " $a)",
+				'affiliation' . $a => PKPLocale::translate('user.affiliation') . " (" . PKPLocale::translate('user.role.author') . " $a)",
+				'email' . $a => PKPLocale::translate('user.email') . " (" . PKPLocale::translate('user.role.author') . " $a)",
+				'url' . $a => PKPLocale::translate('user.url') . " (" . PKPLocale::translate('user.role.author') . " $a)",
+				'biography' . $a => PKPLocale::translate('user.biography') . " (" . PKPLocale::translate('user.role.author') . " $a)"
 			));
 		}
-			
+
 		$columns = array_merge($columns, array(
-			'section_title' => __('section.title'),
-			'language' => __('common.language'),
-			'editor_decision' => __('submission.editorDecision'),
-			'status' => __('common.status')
+			'section_title' => PKPLocale::translate('section.title'),
+			'language' => PKPLocale::translate('common.language'),
+			'editor_decision' => PKPLocale::translate('submission.editorDecision'),
+			'status' => PKPLocale::translate('common.status')
 		));
 
 		$fp = fopen('php://output', 'wt');
@@ -122,7 +122,7 @@ class ArticleReportPlugin extends ReportPlugin {
 						$columns[$index] = $decisionMessages[null];
 					}
 				} elseif ($index == 'status') {
-					$columns[$index] = __($statusMap[$row[$index]]);
+					$columns[$index] = PKPLocale::translate($statusMap[$row[$index]]);
 				} elseif ($index == 'abstract') {
 					$columns[$index] = html_entity_decode(strip_tags($row[$index]));
 				} elseif (strstr($index, 'biography') !== false) {
@@ -140,10 +140,10 @@ class ArticleReportPlugin extends ReportPlugin {
 			unset($row);
 			$authorIndex++;
 		}
-		
+
 		fclose($fp);
 	}
-	
+
 	/**
 	 * Get the highest author count for any article (to determine how many columns to set)
 	 * @param $authorsIterator DBRowIterator
@@ -156,7 +156,7 @@ class ArticleReportPlugin extends ReportPlugin {
 		}
 		return $maxAuthors;
 	}
-	
+
 	/**
 	 * Flatten an array of author information into one array and append author sequence to each key
 	 * @param $authors array
@@ -167,7 +167,7 @@ class ArticleReportPlugin extends ReportPlugin {
 		$seq = 0;
 		foreach($authors as $author) {
 			$seq++;
-			
+
 			$returner['fname' . $seq] = isset($author['fname']) ? $author['fname'] : '';
 			$returner['mname' . $seq] = isset($author['mname']) ? $author['mname'] : '';
 			$returner['lname' . $seq] = isset($author['lname']) ? $author['lname'] : '';

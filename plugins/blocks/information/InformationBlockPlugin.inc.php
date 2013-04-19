@@ -28,14 +28,14 @@ class InformationBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.information.displayName');
+		return PKPLocale::translate('plugins.block.information.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.information.description');
+		return PKPLocale::translate('plugins.block.information.description');
 	}
 
 	/**

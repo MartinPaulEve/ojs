@@ -40,11 +40,11 @@ class CounterPlugin extends GenericPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.generic.counter');
+		return PKPLocale::translate('plugins.generic.counter');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.counter.description');
+		return PKPLocale::translate('plugins.generic.counter.description');
 	}
 
 	/**
@@ -61,7 +61,7 @@ class CounterPlugin extends GenericPlugin {
 		$smarty =& $args[1];
 		$output =& $args[2];
 
-		$output .= '<li>&#187; <a href="' . Request::url(null, 'counter') . '">' . __('plugins.generic.counter') . '</a></li>';
+		$output .= '<li>&#187; <a href="' . Request::url(null, 'counter') . '">' . PKPLocale::translate('plugins.generic.counter') . '</a></li>';
 		return false;
 	}
 
@@ -151,14 +151,14 @@ class CounterPlugin extends GenericPlugin {
 		$verbs = array();
 
 		if ($this->getEnabled()) {
-			$verbs[] = array('counter', __('plugins.generic.counter'));
+			$verbs[] = array('counter', PKPLocale::translate('plugins.generic.counter'));
 
 			$this->import('CounterReportDAO');
 			$counterReportDao = new CounterReportDAO();
 			DAORegistry::registerDAO('CounterReportDAO', $counterReportDao);
 			$counterReportDao =& DAORegistry::getDAO('CounterReportDAO');
 			if (file_exists($counterReportDao->getOldLogFilename())) {
-				$verbs[] = array('migrate', __('plugins.generic.counter.migrate'));
+				$verbs[] = array('migrate', PKPLocale::translate('plugins.generic.counter.migrate'));
 			}
 		}
 		return parent::getManagementVerbs($verbs);

@@ -36,14 +36,14 @@ class NavigationBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.navigation.displayName');
+		return PKPLocale::translate('plugins.block.navigation.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.navigation.description');
+		return PKPLocale::translate('plugins.block.navigation.description');
 	}
 
 	/**

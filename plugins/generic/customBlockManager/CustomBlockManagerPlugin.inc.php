@@ -17,11 +17,11 @@ import('lib.pkp.classes.plugins.GenericPlugin');
 
 class CustomBlockManagerPlugin extends GenericPlugin {
 	function getDisplayName() {
-		return __('plugins.generic.customBlockManager.displayName');
+		return PKPLocale::translate('plugins.generic.customBlockManager.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.customBlockManager.description');
+		return PKPLocale::translate('plugins.generic.customBlockManager.description');
 	}
 
 	function register($category, $path) {
@@ -82,7 +82,7 @@ class CustomBlockManagerPlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('settings', __('plugins.generic.customBlockManager.settings'));
+			$verbs[] = array('settings', PKPLocale::translate('plugins.generic.customBlockManager.settings'));
 		}
 		return parent::getManagementVerbs($verbs);
 	}
@@ -110,7 +110,7 @@ class CustomBlockManagerPlugin extends GenericPlugin {
 					),
 					array(
 						Request::url(null, 'manager', 'plugins'),
-						__('manager.plugins'),
+						PKPLocale::translate('manager.plugins'),
 						true
 					)
 				);

@@ -279,13 +279,13 @@ class SubscriptionForm extends Form {
 			$subscriptionContactSignature .= "\n" . $subscriptionMailingAddress;
 		}
 		if ($subscriptionPhone != '') {
-			$subscriptionContactSignature .= "\n" . __('user.phone') . ': ' . $subscriptionPhone;
+			$subscriptionContactSignature .= "\n" . PKPLocale::translate('user.phone') . ': ' . $subscriptionPhone;
 		}
 		if ($subscriptionFax != '') {
-			$subscriptionContactSignature .= "\n" . __('user.fax') . ': ' . $subscriptionFax;
+			$subscriptionContactSignature .= "\n" . PKPLocale::translate('user.fax') . ': ' . $subscriptionFax;
 		}
 
-		$subscriptionContactSignature .= "\n" . __('user.email') . ': ' . $subscriptionEmail;
+		$subscriptionContactSignature .= "\n" . PKPLocale::translate('user.email') . ': ' . $subscriptionEmail;
 
 		$paramArray = array(
 			'subscriberName' => $user->getFullName(),

@@ -176,63 +176,63 @@ class NotificationManager extends PKPNotificationManager {
 
 		switch ($type) {
 			case NOTIFICATION_TYPE_ARTICLE_SUBMITTED:
-				return __('notification.type.articleSubmitted', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.articleSubmitted', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_SUPP_FILE_MODIFIED:
-				return __('notification.type.suppFileModified', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.suppFileModified', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_METADATA_MODIFIED:
-				return __('notification.type.metadataModified', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.metadataModified', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_GALLEY_MODIFIED:
-				return __('notification.type.galleyModified', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.galleyModified', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_SUBMISSION_COMMENT:
-				return __('notification.type.submissionComment', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.submissionComment', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_LAYOUT_COMMENT:
-				return __('notification.type.layoutComment', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.layoutComment', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_COPYEDIT_COMMENT:
-				return __('notification.type.copyeditComment', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.copyeditComment', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_PROOFREAD_COMMENT:
-				return __('notification.type.proofreadComment', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.proofreadComment', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_REVIEWER_COMMENT:
-				return __('notification.type.reviewerComment', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.reviewerComment', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_REVIEWER_FORM_COMMENT:
-				return __('notification.type.reviewerFormComment', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.reviewerFormComment', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_EDITOR_DECISION_COMMENT:
-				return __('notification.type.editorDecisionComment', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.editorDecisionComment', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_USER_COMMENT:
-				return __('notification.type.userComment', array('title' => $this->_getArticleTitle($notification)));
+				return PKPLocale::translate('notification.type.userComment', array('title' => $this->_getArticleTitle($notification)));
 			case NOTIFICATION_TYPE_PUBLISHED_ISSUE:
-				return __('notification.type.issuePublished');
+				return PKPLocale::translate('notification.type.issuePublished');
 			case NOTIFICATION_TYPE_GIFT_REDEEM_STATUS_SUCCESS:
-				return __('gifts.giftRedeemed');
+				return PKPLocale::translate('gifts.giftRedeemed');
 			case NOTIFICATION_TYPE_GIFT_REDEEM_STATUS_ERROR_NO_GIFT_TO_REDEEM:
-				return __('gifts.noGiftToRedeem');
+				return PKPLocale::translate('gifts.noGiftToRedeem');
 			case NOTIFICATION_TYPE_GIFT_REDEEM_STATUS_ERROR_GIFT_ALREADY_REDEEMED:
-				return __('gifts.giftAlreadyRedeemed');
+				return PKPLocale::translate('gifts.giftAlreadyRedeemed');
 			case NOTIFICATION_TYPE_GIFT_REDEEM_STATUS_ERROR_GIFT_INVALID:
-				return __('gifts.giftNotValid');
+				return PKPLocale::translate('gifts.giftNotValid');
 			case NOTIFICATION_TYPE_GIFT_REDEEM_STATUS_ERROR_SUBSCRIPTION_TYPE_INVALID:
-				return __('gifts.subscriptionTypeNotValid');
+				return PKPLocale::translate('gifts.subscriptionTypeNotValid');
 			case NOTIFICATION_TYPE_GIFT_REDEEM_STATUS_ERROR_SUBSCRIPTION_NON_EXPIRING:
-				return __('gifts.subscriptionNonExpiring');
+				return PKPLocale::translate('gifts.subscriptionNonExpiring');
 			case NOTIFICATION_TYPE_BOOK_REQUESTED:
-				return __('plugins.generic.booksForReview.notification.bookRequested');
+				return PKPLocale::translate('plugins.generic.booksForReview.notification.bookRequested');
 			case NOTIFICATION_TYPE_BOOK_CREATED:
-				return __('plugins.generic.booksForReview.notification.bookCreated');
+				return PKPLocale::translate('plugins.generic.booksForReview.notification.bookCreated');
 			case NOTIFICATION_TYPE_BOOK_UPDATED:
-				return __('plugins.generic.booksForReview.notification.bookUpdated');
+				return PKPLocale::translate('plugins.generic.booksForReview.notification.bookUpdated');
 			case NOTIFICATION_TYPE_BOOK_DELETED:
-				return __('plugins.generic.booksForReview.notification.bookDeleted');
+				return PKPLocale::translate('plugins.generic.booksForReview.notification.bookDeleted');
 			case NOTIFICATION_TYPE_BOOK_MAILED:
-				return __('plugins.generic.booksForReview.notification.bookMailed');
+				return PKPLocale::translate('plugins.generic.booksForReview.notification.bookMailed');
 			case NOTIFICATION_TYPE_BOOK_SETTINGS_SAVED:
-				return __('plugins.generic.booksForReview.notification.settingsSaved');
+				return PKPLocale::translate('plugins.generic.booksForReview.notification.settingsSaved');
 			case NOTIFICATION_TYPE_BOOK_SUBMISSION_ASSIGNED:
-				return __('plugins.generic.booksForReview.notification.submissionAssigned');
+				return PKPLocale::translate('plugins.generic.booksForReview.notification.submissionAssigned');
 			case NOTIFICATION_TYPE_BOOK_AUTHOR_ASSIGNED:
-				return __('plugins.generic.booksForReview.notification.authorAssigned');
+				return PKPLocale::translate('plugins.generic.booksForReview.notification.authorAssigned');
 			case NOTIFICATION_TYPE_BOOK_AUTHOR_DENIED:
-				return __('plugins.generic.booksForReview.notification.authorDenied');
+				return PKPLocale::translate('plugins.generic.booksForReview.notification.authorDenied');
 			case NOTIFICATION_TYPE_BOOK_AUTHOR_REMOVED:
-				return __('plugins.generic.booksForReview.notification.authorRemoved');
+				return PKPLocale::translate('plugins.generic.booksForReview.notification.authorRemoved');
 			default:
 				return parent::getNotificationContents($request, $notification);
 		}

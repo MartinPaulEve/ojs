@@ -108,11 +108,11 @@ class BooksForReviewPlugin extends GenericPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.generic.booksForReview.displayName');
+		return PKPLocale::translate('plugins.generic.booksForReview.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.booksForReview.description');
+		return PKPLocale::translate('plugins.generic.booksForReview.description');
 	}
 
 	/**

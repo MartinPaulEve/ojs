@@ -135,7 +135,7 @@ class SuppFileForm extends Form {
 
 		$publicSuppFileId = $this->getData('publicSuppFileId');
 		if ($publicSuppFileId && $journalDao->anyPubIdExists($journal->getId(), 'publisher-id', $publicSuppFileId, ASSOC_TYPE_SUPP_FILE, $this->suppFileId)) {
-			$this->addError('publicSuppFileId', __('editor.publicIdentificationExists', array('publicIdentifier' => $publicSuppFileId)));
+			$this->addError('publicSuppFileId', PKPLocale::translate('editor.publicIdentificationExists', array('publicIdentifier' => $publicSuppFileId)));
 			$this->addErrorField('publicSuppFileId');
 		}
 
@@ -262,7 +262,7 @@ class SuppFileForm extends Form {
 			$this->suppFile->setFileId($fileId);
 
 			if ($createRemote) {
-				$this->suppFile->setRemoteURL(__('common.remoteURL'));
+				$this->suppFile->setRemoteURL(PKPLocale::translate('common.remoteURL'));
 			}
 			parent::execute();
 

@@ -23,14 +23,14 @@ class KeywordCloudBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.keywordCloud.displayName');
+		return PKPLocale::translate('plugins.block.keywordCloud.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.keywordCloud.description');
+		return PKPLocale::translate('plugins.block.keywordCloud.description');
 	}
 
 	function _cacheMiss(&$cache, $id) {

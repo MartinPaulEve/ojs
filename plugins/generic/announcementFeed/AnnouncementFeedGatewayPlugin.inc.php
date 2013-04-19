@@ -42,11 +42,11 @@ class AnnouncementFeedGatewayPlugin extends GatewayPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.generic.announcementfeed.displayName');
+		return PKPLocale::translate('plugins.generic.announcementfeed.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.announcementfeed.description');
+		return PKPLocale::translate('plugins.generic.announcementfeed.description');
 	}
 
 	/**
@@ -121,7 +121,7 @@ class AnnouncementFeedGatewayPlugin extends GatewayPlugin {
 		);
 		if (!isset($typeMap[$type])) return false;
 
-		// Get limit setting, if any 
+		// Get limit setting, if any
 		$limitRecentItems = $announcementFeedPlugin->getSetting($journal->getId(), 'limitRecentItems');
 		$recentItems = (int) $announcementFeedPlugin->getSetting($journal->getId(), 'recentItems');
 
@@ -138,17 +138,17 @@ class AnnouncementFeedGatewayPlugin extends GatewayPlugin {
 		// Get date of most recent announcement
 		$lastDateUpdated = $announcementFeedPlugin->getSetting($journal->getId(), 'dateUpdated');
 		if ($announcements->wasEmpty()) {
-			if (empty($lastDateUpdated)) { 
-				$dateUpdated = Core::getCurrentDate(); 
-				$announcementFeedPlugin->updateSetting($journal->getId(), 'dateUpdated', $dateUpdated, 'string');			
+			if (empty($lastDateUpdated)) {
+				$dateUpdated = Core::getCurrentDate();
+				$announcementFeedPlugin->updateSetting($journal->getId(), 'dateUpdated', $dateUpdated, 'string');
 			} else {
 				$dateUpdated = $lastDateUpdated;
 			}
 		} else {
 			$mostRecentAnnouncement =& $announcementDao->getMostRecentAnnouncementByAssocId(ASSOC_TYPE_JOURNAL, $journalId);
 			$dateUpdated = $mostRecentAnnouncement->getDatetimePosted();
-			if (empty($lastDateUpdated) || (strtotime($dateUpdated) > strtotime($lastDateUpdated))) { 
-				$announcementFeedPlugin->updateSetting($journal->getId(), 'dateUpdated', $dateUpdated, 'string');			
+			if (empty($lastDateUpdated) || (strtotime($dateUpdated) > strtotime($lastDateUpdated))) {
+				$announcementFeedPlugin->updateSetting($journal->getId(), 'dateUpdated', $dateUpdated, 'string');
 			}
 		}
 
@@ -157,7 +157,7 @@ class AnnouncementFeedGatewayPlugin extends GatewayPlugin {
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('ojsVersion', $version->getVersionString());
-		$templateMgr->assign('selfUrl', Request::getCompleteUrl()); 
+		$templateMgr->assign('selfUrl', Request::getCompleteUrl());
 		$templateMgr->assign('dateUpdated', $dateUpdated);
 		$templateMgr->assign_by_ref('announcements', $announcements->toArray());
 		$templateMgr->assign_by_ref('journal', $journal);

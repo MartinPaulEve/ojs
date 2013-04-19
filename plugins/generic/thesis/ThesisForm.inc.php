@@ -39,13 +39,13 @@ class ThesisForm extends Form {
 		$thesisPlugin->import('Thesis');
 
 		$this->validStatus = array (
-			THESIS_STATUS_INACTIVE => __('plugins.generic.thesis.manager.status.inactive'),
-			THESIS_STATUS_ACTIVE => __('plugins.generic.thesis.manager.status.active')
+			THESIS_STATUS_INACTIVE => PKPLocale::translate('plugins.generic.thesis.manager.status.inactive'),
+			THESIS_STATUS_ACTIVE => PKPLocale::translate('plugins.generic.thesis.manager.status.active')
 		);
 
 		$this->validDegrees = array (
-			THESIS_DEGREE_MASTERS => __('plugins.generic.thesis.manager.degree.masters'),
-			THESIS_DEGREE_DOCTORATE => __('plugins.generic.thesis.manager.degree.doctorate')
+			THESIS_DEGREE_MASTERS => PKPLocale::translate('plugins.generic.thesis.manager.degree.masters'),
+			THESIS_DEGREE_DOCTORATE => PKPLocale::translate('plugins.generic.thesis.manager.degree.doctorate')
 		);
 
 		$this->thesisId = isset($thesisId) ? (int) $thesisId : null;
@@ -55,11 +55,11 @@ class ThesisForm extends Form {
 
 
 		// Status is provided and is valid value
-		$this->addCheck(new FormValidator($this, 'status', 'required', 'plugins.generic.thesis.manager.form.statusRequired'));	
+		$this->addCheck(new FormValidator($this, 'status', 'required', 'plugins.generic.thesis.manager.form.statusRequired'));
 		$this->addCheck(new FormValidatorInSet($this, 'status', 'required', 'plugins.generic.thesis.manager.form.statusValid', array_keys($this->validStatus)));
 
 		// Degree is provided and is valid value
-		$this->addCheck(new FormValidator($this, 'degree', 'required', 'plugins.generic.thesis.manager.form.degreeRequired'));	
+		$this->addCheck(new FormValidator($this, 'degree', 'required', 'plugins.generic.thesis.manager.form.degreeRequired'));
 		$this->addCheck(new FormValidatorInSet($this, 'degree', 'required', 'plugins.generic.thesis.manager.form.degreeValid', array_keys($this->validDegrees)));
 
 		// Department is provided
@@ -172,7 +172,7 @@ class ThesisForm extends Form {
 	 */
 	function readInputData() {
 		$this->readUserVars(array('status', 'degree', 'degreeName', 'department', 'university', 'dateApprovedYear', 'dateApprovedMonth', 'dateApprovedDay', 'title', 'url', 'abstract', 'comment', 'studentFirstName', 'studentMiddleName', 'studentLastName', 'studentEmail', 'studentEmailPublish', 'studentBio', 'supervisorFirstName', 'supervisorMiddleName', 'supervisorLastName', 'supervisorEmail', 'discipline', 'subjectClass', 'keyword', 'coverageGeo', 'coverageChron', 'coverageSample', 'method', 'language'));
-		$this->_data['dateApproved'] = $this->_data['dateApprovedYear'] . '-' . $this->_data['dateApprovedMonth'] . '-' . $this->_data['dateApprovedDay']; 
+		$this->_data['dateApproved'] = $this->_data['dateApprovedYear'] . '-' . $this->_data['dateApprovedMonth'] . '-' . $this->_data['dateApprovedDay'];
 
 		// If a url is provided, ensure it includes a proper prefix (i.e. http:// or ftp://).
 		if (!empty($this->_data['url'])) {
@@ -181,7 +181,7 @@ class ThesisForm extends Form {
 	}
 
 	/**
-	 * Save thesis. 
+	 * Save thesis.
 	 */
 	function execute() {
 		$thesisPlugin =& PluginRegistry::getPlugin('generic', $this->parentPluginName);

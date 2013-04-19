@@ -143,7 +143,7 @@ class PeopleHandler extends ManagerHandler {
 		if ($roleId == ROLE_ID_REVIEWER) $fieldOptions = array_merge(array(USER_FIELD_INTERESTS => 'user.interests'), $fieldOptions);
 		$templateMgr->assign('fieldOptions', $fieldOptions);
 		$templateMgr->assign('rolePath', $roleDao->getRolePath($roleId));
-		$templateMgr->assign('alphaList', explode(' ', __('common.alphaList')));
+		$templateMgr->assign('alphaList', explode(' ', PKPLocale::translate('common.alphaList')));
 		$templateMgr->assign('roleSymbolic', $roleSymbolic);
 		$templateMgr->assign('sort', $sort);
 		$templateMgr->assign('sortDirection', $sortDirection);
@@ -213,7 +213,7 @@ class PeopleHandler extends ManagerHandler {
 		$templateMgr->assign('fieldOptions', $fieldOptions);
 		$templateMgr->assign_by_ref('users', $users);
 		$templateMgr->assign_by_ref('thisUser', Request::getUser());
-		$templateMgr->assign('alphaList', explode(' ', __('common.alphaList')));
+		$templateMgr->assign('alphaList', explode(' ', PKPLocale::translate('common.alphaList')));
 		$templateMgr->assign('helpTopicId', 'journal.users.index');
 		$templateMgr->assign('sort', $sort);
 
@@ -535,7 +535,7 @@ class PeopleHandler extends ManagerHandler {
 			USER_FIELD_EMAIL => 'user.email',
 			USER_FIELD_INTERESTS => 'user.interests'
 		));
-		$templateMgr->assign('alphaList', explode(' ', __('common.alphaList')));
+		$templateMgr->assign('alphaList', explode(' ', PKPLocale::translate('common.alphaList')));
 		$templateMgr->assign('oldUserIds', $oldUserIds);
 		$templateMgr->assign('rolePath', $roleDao->getRolePath($roleId));
 		$templateMgr->assign('roleSymbolic', $roleSymbolic);

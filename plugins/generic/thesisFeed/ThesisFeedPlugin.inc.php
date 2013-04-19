@@ -31,7 +31,7 @@ class ThesisFeedPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDisplayName() {
-		return __('plugins.generic.thesisfeed.displayName');
+		return PKPLocale::translate('plugins.generic.thesisfeed.displayName');
 	}
 
 	/**
@@ -39,7 +39,7 @@ class ThesisFeedPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDescription() {
-		return __('plugins.generic.thesisfeed.description');
+		return PKPLocale::translate('plugins.generic.thesisfeed.description');
 	}
 
 	/**
@@ -101,7 +101,7 @@ class ThesisFeedPlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('settings', __('plugins.generic.thesisfeed.settings'));
+			$verbs[] = array('settings', PKPLocale::translate('plugins.generic.thesisfeed.settings'));
 		}
 		return parent::getManagementVerbs($verbs);
 	}

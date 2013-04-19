@@ -194,20 +194,20 @@ class IssueAction {
 
 		$issueDao =& DAORegistry::getDAO('IssueDAO');
 
-		$issueOptions['-100'] =  '------    ' . __('editor.issues.futureIssues') . '    ------';
+		$issueOptions['-100'] =  '------    ' . PKPLocale::translate('editor.issues.futureIssues') . '    ------';
 		$issueIterator = $issueDao->getUnpublishedIssues($journalId);
 		while (!$issueIterator->eof()) {
 			$issue =& $issueIterator->next();
 			$issueOptions[$issue->getId()] = $issue->getIssueIdentification();
 		}
-		$issueOptions['-101'] = '------    ' . __('editor.issues.currentIssue') . '    ------';
+		$issueOptions['-101'] = '------    ' . PKPLocale::translate('editor.issues.currentIssue') . '    ------';
 		$issuesIterator = $issueDao->getPublishedIssues($journalId);
 		$issues = $issuesIterator->toArray();
 		if (isset($issues[0]) && $issues[0]->getCurrent()) {
 			$issueOptions[$issues[0]->getId()] = $issues[0]->getIssueIdentification();
 			array_shift($issues);
 		}
-		$issueOptions['-102'] = '------    ' . __('editor.issues.backIssues') . '    ------';
+		$issueOptions['-102'] = '------    ' . PKPLocale::translate('editor.issues.backIssues') . '    ------';
 		foreach ($issues as $issue) {
 			$issueOptions[$issue->getId()] = $issue->getIssueIdentification();
 		}

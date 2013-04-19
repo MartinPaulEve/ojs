@@ -29,14 +29,14 @@ class SubscriptionBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.subscription.displayName');
+		return PKPLocale::translate('plugins.block.subscription.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.subscription.description');
+		return PKPLocale::translate('plugins.block.subscription.description');
 	}
 
 	/**

@@ -57,7 +57,7 @@ class DuraCloudLoginForm extends Form {
 	}
 
 	/**
-	 * Extend 
+	 * Extend
 	 * @see Form::validate()
 	 */
 	function validate() {
@@ -73,7 +73,7 @@ class DuraCloudLoginForm extends Form {
 		$ds = new DuraStore($dcc);
 		if ($ds->getSpaces($storeId) === false) {
 			// Could not get a list of spaces.
-			$this->addError('duracloudUrl', __('plugins.importexport.duracloud.configuration.credentialsInvalid'));
+			$this->addError('duracloudUrl', PKPLocale::translate('plugins.importexport.duracloud.configuration.credentialsInvalid'));
 			return false;
 		}
 

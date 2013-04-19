@@ -17,11 +17,11 @@ import('lib.pkp.classes.plugins.GenericPlugin');
 
 class RoundedCornersPlugin extends GenericPlugin {
 	function getDisplayName() {
-		return __('plugins.generic.roundedcorners.displayName');
+		return PKPLocale::translate('plugins.generic.roundedcorners.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.roundedcorners.description');
+		return PKPLocale::translate('plugins.generic.roundedcorners.description');
 	}
 
 	function register($category, $path) {

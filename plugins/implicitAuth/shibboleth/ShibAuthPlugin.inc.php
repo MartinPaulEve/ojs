@@ -36,11 +36,11 @@ class ShibAuthPlugin extends ImplicitAuthPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.implicitAuth.shibboleth.displayName');
+		return PKPLocale::translate('plugins.implicitAuth.shibboleth.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.implicitAuth.shibboleth.description');
+		return PKPLocale::translate('plugins.implicitAuth.shibboleth.description');
 	}
 
 

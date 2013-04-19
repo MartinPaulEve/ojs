@@ -31,15 +31,15 @@ class TurabianCitationPlugin extends CitationPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.citationFormats.turabian.displayName');
+		return PKPLocale::translate('plugins.citationFormats.turabian.displayName');
 	}
 
 	function getCitationFormatName() {
-		return __('plugins.citationFormats.turabian.citationFormatName');
+		return PKPLocale::translate('plugins.citationFormats.turabian.citationFormatName');
 	}
 
 	function getDescription() {
-		return __('plugins.citationFormats.turabian.description');
+		return PKPLocale::translate('plugins.citationFormats.turabian.description');
 	}
 
 }

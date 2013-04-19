@@ -48,14 +48,14 @@ class DataciteExportPlugin extends DOIExportPlugin {
 	 * @see ImportExportPlugin::getDisplayName()
 	 */
 	function getDisplayName() {
-		return __('plugins.importexport.datacite.displayName');
+		return PKPLocale::translate('plugins.importexport.datacite.displayName');
 	}
 
 	/**
 	 * @see ImportExportPlugin::getDescription()
 	 */
 	function getDescription() {
-		return __('plugins.importexport.datacite.description');
+		return PKPLocale::translate('plugins.importexport.datacite.description');
 	}
 
 

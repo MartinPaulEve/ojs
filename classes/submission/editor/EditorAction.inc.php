@@ -154,7 +154,7 @@ class EditorAction extends SectionEditorAction {
 				} else if (strstr($fileType, 'xml')) {
 					$galley->setLabel('XML');
 				} else {
-					$galley->setLabel(__('common.untitled'));
+					$galley->setLabel(PKPLocale::translate('common.untitled'));
 				}
 			}
 

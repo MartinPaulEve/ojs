@@ -54,8 +54,8 @@ class MedraSettingsForm extends DOIExportSettingsForm {
 
 		// Issue export options.
 		$exportIssueOptions = array(
-			O4DOI_ISSUE_AS_WORK => __('plugins.importexport.medra.settings.form.work'),
-			O4DOI_ISSUE_AS_MANIFESTATION => __('plugins.importexport.medra.settings.form.manifestation'),
+			O4DOI_ISSUE_AS_WORK => PKPLocale::translate('plugins.importexport.medra.settings.form.work'),
+			O4DOI_ISSUE_AS_MANIFESTATION => PKPLocale::translate('plugins.importexport.medra.settings.form.manifestation'),
 		);
 		$templateMgr->assign('exportIssueOptions', $exportIssueOptions);
 

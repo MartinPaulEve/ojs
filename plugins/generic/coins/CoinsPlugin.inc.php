@@ -33,11 +33,11 @@ class CoinsPlugin extends GenericPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.generic.coins.displayName');
+		return PKPLocale::translate('plugins.generic.coins.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.coins.description');
+		return PKPLocale::translate('plugins.generic.coins.description');
 	}
 
 	/**

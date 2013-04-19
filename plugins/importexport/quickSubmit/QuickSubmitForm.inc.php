@@ -71,7 +71,7 @@ class QuickSubmitForm extends Form {
 			unset($section);
 		}
 
-		$templateMgr->assign('sectionOptions', array('0' => __('author.submit.selectSection')) + $sectionTitles);
+		$templateMgr->assign('sectionOptions', array('0' => PKPLocale::translate('author.submit.selectSection')) + $sectionTitles);
 		$templateMgr->assign('sectionAbstractsRequired', $sectionAbstractsRequired);
 
 		$countryDao =& DAORegistry::getDAO('CountryDAO');
@@ -284,7 +284,7 @@ class QuickSubmitForm extends Form {
 					} else if (strstr($fileType, 'xml')) {
 						$galley->setLabel('XML');
 					} else {
-						$galley->setLabel(__('common.untitled'));
+						$galley->setLabel(PKPLocale::translate('common.untitled'));
 					}
 				}
 

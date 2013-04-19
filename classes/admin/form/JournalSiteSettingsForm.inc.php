@@ -168,11 +168,11 @@ class JournalSiteSettingsForm extends Form {
 			$sectionDao =& DAORegistry::getDAO('SectionDAO');
 			$section = new Section();
 			$section->setJournalId($journal->getId());
-			$section->setTitle(__('section.default.title'), $journal->getPrimaryLocale());
-			$section->setAbbrev(__('section.default.abbrev'), $journal->getPrimaryLocale());
+			$section->setTitle(PKPLocale::translate('section.default.title'), $journal->getPrimaryLocale());
+			$section->setAbbrev(PKPLocale::translate('section.default.abbrev'), $journal->getPrimaryLocale());
 			$section->setMetaIndexed(true);
 			$section->setMetaReviewed(true);
-			$section->setPolicy(__('section.default.policy'), $journal->getPrimaryLocale());
+			$section->setPolicy(PKPLocale::translate('section.default.policy'), $journal->getPrimaryLocale());
 			$section->setEditorRestricted(false);
 			$section->setHideTitle(false);
 			$sectionDao->insertSection($section);

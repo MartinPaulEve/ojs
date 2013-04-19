@@ -5,7 +5,7 @@
  *
  * Copyright (c) 2003-2013 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
- * 
+ *
  * @class TimedViewReportPlugin
  * @ingroup plugins_reports_timedView
  *
@@ -21,7 +21,7 @@ class TimedViewPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDisplayName() {
-		return __('plugins.generic.timedView.displayName');
+		return PKPLocale::translate('plugins.generic.timedView.displayName');
 	}
 
 	/**
@@ -29,7 +29,7 @@ class TimedViewPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDescription() {
-		return __('plugins.generic.timedView.description');
+		return PKPLocale::translate('plugins.generic.timedView.description');
 	}
 
 	/**

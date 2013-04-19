@@ -20,14 +20,14 @@ class RelatedItemsBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.relatedItems.displayName');
+		return PKPLocale::translate('plugins.block.relatedItems.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.relatedItems.description');
+		return PKPLocale::translate('plugins.block.relatedItems.description');
 	}
 
 	/**

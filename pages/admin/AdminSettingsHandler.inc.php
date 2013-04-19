@@ -58,14 +58,14 @@ class AdminSettingsHandler extends AdminHandler {
 
 		if ($request->getUserVar('uploadSiteStyleSheet')) {
 			if (!$settingsForm->uploadSiteStyleSheet()) {
-				$settingsForm->addError('siteStyleSheet', __('admin.settings.siteStyleSheetInvalid'));
+				$settingsForm->addError('siteStyleSheet', PKPLocale::translate('admin.settings.siteStyleSheetInvalid'));
 			}
 		} elseif ($request->getUserVar('deleteSiteStyleSheet')) {
 			$publicFileManager = new PublicFileManager();
 			$publicFileManager->removeSiteFile($site->getSiteStyleFilename());
 		} elseif ($request->getUserVar('uploadPageHeaderTitleImage')) {
 			if (!$settingsForm->uploadPageHeaderTitleImage($settingsForm->getFormLocale())) {
-				$settingsForm->addError('pageHeaderTitleImage', __('admin.settings.homeHeaderImageInvalid'));
+				$settingsForm->addError('pageHeaderTitleImage', PKPLocale::translate('admin.settings.homeHeaderImageInvalid'));
 			}
 		} elseif ($request->getUserVar('deletePageHeaderTitleImage')) {
 			$publicFileManager = new PublicFileManager();

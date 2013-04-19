@@ -282,7 +282,7 @@ class MetadataForm extends Form {
 			$extension = $publicFileManager->getImageExtension($type);
 			if (!$extension) {
 				// Not a valid image.
-				$this->addError('imageFile', __('submission.layout.imageInvalid'));
+				$this->addError('imageFile', PKPLocale::translate('submission.layout.imageInvalid'));
 				return false;
 			}
 		}

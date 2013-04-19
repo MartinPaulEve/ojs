@@ -33,7 +33,7 @@ class RecentArticlesBlockPlugin extends BlockPlugin {
 	function templateManagerCallback($hookName, &$args) {
 		$templateMgr =& $args[0]; //TemplateManager::getManager();
 		// if ( Request::getRequestedPage() == 'index' || Request::getRequestedPage() == '' )
-		// 	$templateMgr->assign('alternativeTitleTranslated', ''); 	//__('plugins.blocks.recentArticles.displayTitle'));
+		// 	$templateMgr->assign('alternativeTitleTranslated', ''); 	//PKPLocale::translate('plugins.blocks.recentArticles.displayTitle'));
 	}
 
 	/**
@@ -62,14 +62,14 @@ class RecentArticlesBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.recentArticles.displayName');
+		return PKPLocale::translate('plugins.block.recentArticles.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.recentArticles.description');
+		return PKPLocale::translate('plugins.block.recentArticles.description');
 	}
 
 	function getContents(&$templateMgr) {

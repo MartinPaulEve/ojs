@@ -47,14 +47,14 @@ class MedraExportPlugin extends DOIExportPlugin {
 	 * @see ImportExportPlugin::getDisplayName()
 	 */
 	function getDisplayName() {
-		return __('plugins.importexport.medra.displayName');
+		return PKPLocale::translate('plugins.importexport.medra.displayName');
 	}
 
 	/**
 	 * @see ImportExportPlugin::getDescription()
 	 */
 	function getDescription() {
-		return __('plugins.importexport.medra.description');
+		return PKPLocale::translate('plugins.importexport.medra.description');
 	}
 
 

@@ -3,7 +3,7 @@
 /**
  * @defgroup subscription
  */
- 
+
 /**
  * @file @file classes/subscription/Subscription.inc.php
  *
@@ -11,7 +11,7 @@
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Subscription
- * @ingroup subscription 
+ * @ingroup subscription
  * @see SubscriptionDAO
  *
  * @brief Basic class describing a subscription.
@@ -94,7 +94,7 @@ class Subscription extends DataObject {
 
 	/**
 	 * Get the user's full name of the subscription.
-	 * @return string 
+	 * @return string
 	 */
 	function getUserFullName() {
 		$userDao =& DAORegistry::getDAO('UserDAO');
@@ -103,7 +103,7 @@ class Subscription extends DataObject {
 
 	/**
 	 * Get the user's email of the subscription.
-	 * @return string 
+	 * @return string
 	 */
 	function getUserEmail() {
 		$userDao =& DAORegistry::getDAO('UserDAO');
@@ -181,7 +181,7 @@ class Subscription extends DataObject {
 
 	/**
 	 * Get subscription end date.
-	 * @return date (YYYY-MM-DD) 
+	 * @return date (YYYY-MM-DD)
 	 */
 	function getDateEnd() {
 		return $this->getData('dateEnd');
@@ -218,19 +218,19 @@ class Subscription extends DataObject {
 	function getStatusString() {
 		switch ($this->getData('status')) {
 			case SUBSCRIPTION_STATUS_ACTIVE:
-				return __('subscriptions.status.active');
+				return PKPLocale::translate('subscriptions.status.active');
 			case SUBSCRIPTION_STATUS_NEEDS_INFORMATION:
-				return __('subscriptions.status.needsInformation');
+				return PKPLocale::translate('subscriptions.status.needsInformation');
 			case SUBSCRIPTION_STATUS_NEEDS_APPROVAL:
-				return __('subscriptions.status.needsApproval');
+				return PKPLocale::translate('subscriptions.status.needsApproval');
 			case SUBSCRIPTION_STATUS_AWAITING_MANUAL_PAYMENT:
-				return __('subscriptions.status.awaitingManualPayment');
+				return PKPLocale::translate('subscriptions.status.awaitingManualPayment');
 			case SUBSCRIPTION_STATUS_AWAITING_ONLINE_PAYMENT:
-				return __('subscriptions.status.awaitingOnlinePayment');
+				return PKPLocale::translate('subscriptions.status.awaitingOnlinePayment');
 			case SUBSCRIPTION_STATUS_OTHER:
-				return __('subscriptions.status.other');
+				return PKPLocale::translate('subscriptions.status.other');
 			default:
-				return __('subscriptions.status');
+				return PKPLocale::translate('subscriptions.status');
 		}
 	}
 

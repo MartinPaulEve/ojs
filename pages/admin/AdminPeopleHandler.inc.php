@@ -9,7 +9,7 @@
  * @class AdminPeopleHandler
  * @ingroup pages_admin
  *
- * @brief Handle requests for people management functions. 
+ * @brief Handle requests for people management functions.
  */
 
 import('pages.admin.AdminHandler');
@@ -103,7 +103,7 @@ class AdminPeopleHandler extends AdminHandler {
 			USER_FIELD_EMAIL => 'user.email',
 			USER_FIELD_INTERESTS => 'user.interests'
 		));
-		$templateMgr->assign('alphaList', explode(' ', __('common.alphaList')));
+		$templateMgr->assign('alphaList', explode(' ', PKPLocale::translate('common.alphaList')));
 		$templateMgr->assign('oldUserIds', $oldUserIds);
 		$templateMgr->assign('rolePath', $roleDao->getRolePath($roleId));
 		$templateMgr->assign('roleSymbolic', $roleSymbolic);

@@ -80,53 +80,53 @@ class OJSQueuedPayment extends QueuedPayment {
 					$individualSubscriptionDao =& DAORegistry::getDAO('IndividualSubscriptionDAO');
 					$subscription =& $individualSubscriptionDao->getSubscription($this->assocId);
 				}
-				if (!$subscription) return __('payment.type.subscription');
+				if (!$subscription) return PKPLocale::translate('payment.type.subscription');
 
 				$subscriptionTypeDao =& DAORegistry::getDAO('SubscriptionTypeDAO');
 				$subscriptionType =& $subscriptionTypeDao->getSubscriptionType($subscription->getTypeId());
 
-				return __('payment.type.subscription') . ' (' . $subscriptionType->getSubscriptionTypeName() . ')';
+				return PKPLocale::translate('payment.type.subscription') . ' (' . $subscriptionType->getSubscriptionTypeName() . ')';
 			case PAYMENT_TYPE_DONATION:
 				if ($journal->getLocalizedSetting('donationFeeName') != '') {
 					return $journal->getLocalizedSetting('donationFeeName');
 				} else {
-					return __('payment.type.donation');
+					return PKPLocale::translate('payment.type.donation');
 				}
 			case PAYMENT_TYPE_MEMBERSHIP:
 				if ($journal->getLocalizedSetting('membershipFeeName') != '') {
 					return $journal->getLocalizedSetting('membershipFeeName');
 				} else {
-					return __('payment.type.membership');
+					return PKPLocale::translate('payment.type.membership');
 				}
 			case PAYMENT_TYPE_PURCHASE_ARTICLE:
 				if ($journal->getLocalizedSetting('purchaseArticleFeeName') != '') {
 					return $journal->getLocalizedSetting('purchaseArticleFeeName');
 				} else {
-					return __('payment.type.purchaseArticle');
+					return PKPLocale::translate('payment.type.purchaseArticle');
 				}
 			case PAYMENT_TYPE_PURCHASE_ISSUE:
 				if ($journal->getLocalizedSetting('purchaseIssueFeeName') != '') {
 					return $journal->getLocalizedSetting('purchaseIssueFeeName');
 				} else {
-					return __('payment.type.purchaseIssue');
+					return PKPLocale::translate('payment.type.purchaseIssue');
 				}
 			case PAYMENT_TYPE_SUBMISSION:
 				if ($journal->getLocalizedSetting('submissionFeeName') != '') {
 					return $journal->getLocalizedSetting('submissionFeeName');
 				} else {
-					return __('payment.type.submission');
+					return PKPLocale::translate('payment.type.submission');
 				}
 			case PAYMENT_TYPE_FASTTRACK:
 				if ($journal->getLocalizedSetting('fastTrackFeeName') != '') {
 					return $journal->getLocalizedSetting('fastTrackFeeName');
 				} else {
-					return __('payment.type.fastTrack');
+					return PKPLocale::translate('payment.type.fastTrack');
 				}
 			case PAYMENT_TYPE_PUBLICATION:
 				if ($journal->getLocalizedSetting('publicationFeeName') != '') {
 					return $journal->getLocalizedSetting('publicationFeeName');
 				} else {
-					return __('payment.type.publication');
+					return PKPLocale::translate('payment.type.publication');
 				}
 			case PAYMENT_TYPE_GIFT:
 				$giftDao =& DAORegistry::getDAO('GiftDAO');
@@ -138,7 +138,7 @@ class OJSQueuedPayment extends QueuedPayment {
 				}
 
 				// Otherwise, generic gift name
-				return __('payment.type.gift');
+				return PKPLocale::translate('payment.type.gift');
 			default:
 				// Invalid payment type
 				assert(false);
@@ -166,7 +166,7 @@ class OJSQueuedPayment extends QueuedPayment {
 					$individualSubscriptionDao =& DAORegistry::getDAO('IndividualSubscriptionDAO');
 					$subscription =& $individualSubscriptionDao->getSubscription($this->assocId);
 				}
-				if (!$subscription) return __('payment.type.subscription');
+				if (!$subscription) return PKPLocale::translate('payment.type.subscription');
 
 				$subscriptionTypeDao =& DAORegistry::getDAO('SubscriptionTypeDAO');
 				$subscriptionType =& $subscriptionTypeDao->getSubscriptionType($subscription->getTypeId());
@@ -175,43 +175,43 @@ class OJSQueuedPayment extends QueuedPayment {
 				if ($journal->getLocalizedSetting('donationFeeDescription') != '') {
 					return $journal->getLocalizedSetting('donationFeeDescription');
 				} else {
-					return __('payment.type.donation');
+					return PKPLocale::translate('payment.type.donation');
 				}
 			case PAYMENT_TYPE_MEMBERSHIP:
 				if ($journal->getLocalizedSetting('membershipFeeDescription') != '') {
 					return $journal->getLocalizedSetting('membershipFeeDescription');
 				} else {
-					return __('payment.type.membership');
+					return PKPLocale::translate('payment.type.membership');
 				}
 			case PAYMENT_TYPE_PURCHASE_ARTICLE:
 				if ($journal->getLocalizedSetting('purchaseArticleFeeDescription') != '') {
 					return $journal->getLocalizedSetting('purchaseArticleFeeDescription');
 				} else {
-					return __('payment.type.purchaseArticle');
+					return PKPLocale::translate('payment.type.purchaseArticle');
 				}
 			case PAYMENT_TYPE_PURCHASE_ISSUE:
 				if ($journal->getLocalizedSetting('purchaseIssueFeeDescription') != '') {
 					return $journal->getLocalizedSetting('purchaseIssueFeeDescription');
 				} else {
-					return __('payment.type.purchaseIssue');
+					return PKPLocale::translate('payment.type.purchaseIssue');
 				}
 			case PAYMENT_TYPE_SUBMISSION:
 				if ($journal->getLocalizedSetting('submissionFeeDescription') != '') {
 					return $journal->getLocalizedSetting('submissionFeeDescription');
 				} else {
-					return __('payment.type.submission');
+					return PKPLocale::translate('payment.type.submission');
 				}
 			case PAYMENT_TYPE_FASTTRACK:
 				if ($journal->getLocalizedSetting('fastTrackFeeDescription') != '') {
 					return $journal->getLocalizedSetting('fastTrackFeeDescription');
 				} else {
-					return __('payment.type.fastTrack');
+					return PKPLocale::translate('payment.type.fastTrack');
 				}
 			case PAYMENT_TYPE_PUBLICATION:
 				if ($journal->getLocalizedSetting('publicationFeeDescription') != '') {
 					return $journal->getLocalizedSetting('publicationFeeDescription');
 				} else {
-					return __('payment.type.publication');
+					return PKPLocale::translate('payment.type.publication');
 				}
 			case PAYMENT_TYPE_GIFT:
 				$giftDao =& DAORegistry::getDAO('GiftDAO');
@@ -226,15 +226,15 @@ class OJSQueuedPayment extends QueuedPayment {
 						$subscriptionType =& $subscriptionTypeDao->getSubscriptionType($gift->getAssocId());
 
 						if ($subscriptionType) {
-							return $subscriptionType->getSubscriptionTypeDescription();	
+							return $subscriptionType->getSubscriptionTypeDescription();
 						} else {
-							return __('payment.type.gift') . ' ' . __('payment.type.gift.subscription');								
+							return PKPLocale::translate('payment.type.gift') . ' ' . PKPLocale::translate('payment.type.gift.subscription');
 						}
 					}
 				}
 
 				// Otherwise, generic gift name
-				return __('payment.type.gift');
+				return PKPLocale::translate('payment.type.gift');
 			default:
 				// Invalid payment type
 				assert(false);

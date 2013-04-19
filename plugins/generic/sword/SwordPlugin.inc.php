@@ -30,7 +30,7 @@ class SwordPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDisplayName() {
-		return __('plugins.generic.sword.displayName');
+		return PKPLocale::translate('plugins.generic.sword.displayName');
 	}
 
 	/**
@@ -46,8 +46,8 @@ class SwordPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDescription() {
-		if ($this->getSupported()) return __('plugins.generic.sword.description');
-		return __('plugins.generic.sword.descriptionUnsupported');
+		if ($this->getSupported()) return PKPLocale::translate('plugins.generic.sword.description');
+		return PKPLocale::translate('plugins.generic.sword.descriptionUnsupported');
 	}
 
 	function register($category, $path) {
@@ -204,15 +204,15 @@ class SwordPlugin extends GenericPlugin {
 			case NOTIFICATION_TYPE_SWORD_DEPOSIT_COMPLETE:
 				$notificationSettingsDao =& DAORegistry::getDAO('NotificationSettingsDAO');
 				$params = $notificationSettingsDao->getNotificationSettings($notification->getId());
-				$message = __('plugins.generic.sword.depositComplete', $notificationManager->getParamsForCurrentLocale($params));
+				$message = PKPLocale::translate('plugins.generic.sword.depositComplete', $notificationManager->getParamsForCurrentLocale($params));
 				break;
 			case NOTIFICATION_TYPE_SWORD_AUTO_DEPOSIT_COMPLETE:
 				$notificationSettingsDao =& DAORegistry::getDAO('NotificationSettingsDAO');
 				$params = $notificationSettingsDao->getNotificationSettings($notification->getId());
-				$message = __('plugins.generic.sword.automaticDepositComplete', $notificationManager->getParamsForCurrentLocale($params));
+				$message = PKPLocale::translate('plugins.generic.sword.automaticDepositComplete', $notificationManager->getParamsForCurrentLocale($params));
 				break;
 			case NOTIFICATION_TYPE_SWORD_ENABLED:
-				$message = __('plugins.generic.sword.enabled');
+				$message = PKPLocale::translate('plugins.generic.sword.enabled');
 				break;
 		}
 	}
@@ -225,16 +225,16 @@ class SwordPlugin extends GenericPlugin {
 		if ($this->getEnabled()) {
 			$verbs[] = array(
 				'disable',
-				__('manager.plugins.disable')
+				PKPLocale::translate('manager.plugins.disable')
 			);
 			$verbs[] = array(
 				'settings',
-				__('plugins.generic.sword.settings')
+				PKPLocale::translate('plugins.generic.sword.settings')
 			);
 		} elseif ($this->getSupported()) {
 			$verbs[] = array(
 				'enable',
-				__('manager.plugins.enable')
+				PKPLocale::translate('manager.plugins.enable')
 			);
 		}
 		return $verbs;

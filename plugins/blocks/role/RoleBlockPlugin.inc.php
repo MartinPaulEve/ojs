@@ -28,14 +28,14 @@ class RoleBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return __('plugins.block.role.displayName');
+		return PKPLocale::translate('plugins.block.role.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return __('plugins.block.role.description');
+		return PKPLocale::translate('plugins.block.role.description');
 	}
 
 	/**

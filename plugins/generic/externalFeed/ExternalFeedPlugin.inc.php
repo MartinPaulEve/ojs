@@ -46,11 +46,11 @@ class ExternalFeedPlugin extends GenericPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.generic.externalFeed.displayName');
+		return PKPLocale::translate('plugins.generic.externalFeed.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.generic.externalFeed.description');
+		return PKPLocale::translate('plugins.generic.externalFeed.description');
 	}
 
 	/**
@@ -156,8 +156,8 @@ class ExternalFeedPlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('feeds', __('plugins.generic.externalFeed.manager.feeds'));
-			$verbs[] = array('settings', __('plugins.generic.externalFeed.manager.settings'));
+			$verbs[] = array('feeds', PKPLocale::translate('plugins.generic.externalFeed.manager.feeds'));
+			$verbs[] = array('settings', PKPLocale::translate('plugins.generic.externalFeed.manager.settings'));
 		}
 		return parent::getManagementVerbs($verbs);
 	}

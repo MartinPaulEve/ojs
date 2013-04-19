@@ -33,14 +33,14 @@ class ManualPaymentPlugin extends PaymethodPlugin {
 	 * @see Plugin::getDisplayName
 	 */
 	function getDisplayName() {
-		return __('plugins.paymethod.manual.displayName');
+		return PKPLocale::translate('plugins.paymethod.manual.displayName');
 	}
 
 	/**
 	 * @see Plugin::getDescription
 	 */
 	function getDescription() {
-		return __('plugins.paymethod.manual.description');
+		return PKPLocale::translate('plugins.paymethod.manual.description');
 	}
 
 	/**
@@ -129,8 +129,8 @@ class ManualPaymentPlugin extends PaymethodPlugin {
 				$mail->addRecipient($contactEmail, $contactName);
 				$mail->assignParams(array(
 					'journalName' => $journal->getLocalizedTitle(),
-					'userFullName' => $user?$user->getFullName():('(' . __('common.none') . ')'),
-					'userName' => $user?$user->getUsername():('(' . __('common.none') . ')'),
+					'userFullName' => $user?$user->getFullName():('(' . PKPLocale::translate('common.none') . ')'),
+					'userName' => $user?$user->getUsername():('(' . PKPLocale::translate('common.none') . ')'),
 					'itemName' => $queuedPayment->getName(),
 					'itemCost' => $queuedPayment->getAmount(),
 					'itemCurrencyCode' => $queuedPayment->getCurrencyCode()

@@ -20,7 +20,7 @@ class WebFeedPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDisplayName() {
-		return __('plugins.generic.webfeed.displayName');
+		return PKPLocale::translate('plugins.generic.webfeed.displayName');
 	}
 
 	/**
@@ -28,7 +28,7 @@ class WebFeedPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDescription() {
-		return __('plugins.generic.webfeed.description');
+		return PKPLocale::translate('plugins.generic.webfeed.description');
 	}
 
 	function register($category, $path) {
@@ -146,7 +146,7 @@ class WebFeedPlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('settings', __('plugins.generic.webfeed.settings'));
+			$verbs[] = array('settings', PKPLocale::translate('plugins.generic.webfeed.settings'));
 		}
 		return parent::getManagementVerbs($verbs);
 	}

@@ -58,8 +58,8 @@ class IssueHandler extends Handler {
 		if ($issue != null) {
 			$this->_setupIssueTemplate($request, $issue, ($showToc == 'showToc') ? true : false);
 		} else {
-			$issueCrumbTitle = __('current.noCurrentIssue');
-			$issueHeadingTitle = __('current.noCurrentIssue');
+			$issueCrumbTitle = PKPLocale::translate('current.noCurrentIssue');
+			$issueHeadingTitle = PKPLocale::translate('current.noCurrentIssue');
 		}
 
 		// Display creative commons logo/licence if enabled
@@ -163,7 +163,7 @@ class IssueHandler extends Handler {
 		$templateMgr->assign('galleyId', $galleyId);
 
 		$templateMgr->assign('pageHierarchy', array(array($request->url(null, 'issue', 'view', $issueId), $issue->getIssueIdentification(false, true), true)));
-		$templateMgr->assign('issueHeadingTitle', __('issue.viewIssue'));
+		$templateMgr->assign('issueHeadingTitle', PKPLocale::translate('issue.viewIssue'));
 		$templateMgr->assign('locale', AppLocale::getLocale());
 
 		$templateMgr->display('issue/issueGalley.tpl');
@@ -494,8 +494,8 @@ class IssueHandler extends Handler {
 			}
 
 		} else {
-			$issueCrumbTitle = __('archive.issueUnavailable');
-			$issueHeadingTitle = __('archive.issueUnavailable');
+			$issueCrumbTitle = PKPLocale::translate('archive.issueUnavailable');
+			$issueHeadingTitle = PKPLocale::translate('archive.issueUnavailable');
 		}
 
 		if ($styleFileName = $issue->getStyleFileName()) {

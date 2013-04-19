@@ -42,11 +42,11 @@ class NativeImportExportPlugin extends ImportExportPlugin {
 	}
 
 	function getDisplayName() {
-		return __('plugins.importexport.native.displayName');
+		return PKPLocale::translate('plugins.importexport.native.displayName');
 	}
 
 	function getDescription() {
-		return __('plugins.importexport.native.description');
+		return PKPLocale::translate('plugins.importexport.native.description');
 	}
 
 	function display(&$args, $request) {
@@ -151,7 +151,7 @@ class NativeImportExportPlugin extends ImportExportPlugin {
 					if (!isset($context['issue']) || !isset($context['section'])) {
 						$issues =& $issueDao->getIssues($journal->getId(), Handler::getRangeInfo('issues'));
 						$templateMgr->assign_by_ref('issues', $issues);
-						$templateMgr->assign('sectionOptions', array('0' => __('author.submit.selectSection')) + $sectionDao->getSectionTitles($journal->getId(), false));
+						$templateMgr->assign('sectionOptions', array('0' => PKPLocale::translate('author.submit.selectSection')) + $sectionDao->getSectionTitles($journal->getId(), false));
 						$templateMgr->assign('temporaryFileId', $temporaryFile->getId());
 						return $templateMgr->display($this->getTemplatePath() . 'articleContext.tpl');
 					}
@@ -336,8 +336,8 @@ class NativeImportExportPlugin extends ImportExportPlugin {
 
 		if (!$journal) {
 			if ($journalPath != '') {
-				echo __('plugins.importexport.native.cliError') . "\n";
-				echo __('plugins.importexport.native.error.unknownJournal', array('journalPath' => $journalPath)) . "\n\n";
+				echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
+				echo PKPLocale::translate('plugins.importexport.native.error.unknownJournal', array('journalPath' => $journalPath)) . "\n\n";
 			}
 			$this->usage($scriptName);
 			return;
@@ -355,8 +355,8 @@ class NativeImportExportPlugin extends ImportExportPlugin {
 
 				if (!$user) {
 					if ($userName != '') {
-						echo __('plugins.importexport.native.cliError') . "\n";
-						echo __('plugins.importexport.native.error.unknownUser', array('userName' => $userName)) . "\n\n";
+						echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
+						echo PKPLocale::translate('plugins.importexport.native.error.unknownUser', array('userName' => $userName)) . "\n\n";
 					}
 					$this->usage($scriptName);
 					return;
@@ -377,8 +377,8 @@ class NativeImportExportPlugin extends ImportExportPlugin {
 						if (array_shift($args) !== 'issue_id') return $this->usage($scriptName);
 						$issue =& $issueDao->getIssueByBestIssueId(($issueId = array_shift($args)), $journal->getId());
 						if (!$issue) {
-							echo __('plugins.importexport.native.cliError') . "\n";
-							echo __('plugins.importexport.native.export.error.issueNotFound', array('issueId' => $issueId)) . "\n\n";
+							echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
+							echo PKPLocale::translate('plugins.importexport.native.export.error.issueNotFound', array('issueId' => $issueId)) . "\n\n";
 							return;
 						}
 
@@ -399,8 +399,8 @@ class NativeImportExportPlugin extends ImportExportPlugin {
 						}
 
 						if (!$section) {
-							echo __('plugins.importexport.native.cliError') . "\n";
-							echo __('plugins.importexport.native.export.error.sectionNotFound', array('sectionIdentifier' => $sectionIdentifier)) . "\n\n";
+							echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
+							echo PKPLocale::translate('plugins.importexport.native.export.error.sectionNotFound', array('sectionIdentifier' => $sectionIdentifier)) . "\n\n";
 							return;
 						}
 						$context['section'] =& $section;
@@ -408,22 +408,22 @@ class NativeImportExportPlugin extends ImportExportPlugin {
 
 				$result = $this->handleImport($context, $doc, $errors, $issues, $articles, true);
 				if ($result) {
-					echo __('plugins.importexport.native.import.success.description') . "\n\n";
-					if (!empty($issues)) echo __('issue.issues') . ":\n";
+					echo PKPLocale::translate('plugins.importexport.native.import.success.description') . "\n\n";
+					if (!empty($issues)) echo PKPLocale::translate('issue.issues') . ":\n";
 					foreach ($issues as $issue) {
 						echo "\t" . $issue->getIssueIdentification() . "\n";
 					}
 
-					if (!empty($articles)) echo __('article.articles') . ":\n";
+					if (!empty($articles)) echo PKPLocale::translate('article.articles') . ":\n";
 					foreach ($articles as $article) {
 						echo "\t" . $article->getLocalizedTitle() . "\n";
 					}
 				} else {
 					$errorsTranslated = array();
 					foreach ($errors as $error) {
-						$errorsTranslated[] = __($error[0], $error[1]);
+						$errorsTranslated[] = PKPLocale::translate($error[0], $error[1]);
 					}
-					echo __('plugins.importexport.native.cliError') . "\n";
+					echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
 					foreach ($errorsTranslated as $errorTranslated) {
 						echo "\t" . $errorTranslated . "\n";
 					}
@@ -436,8 +436,8 @@ class NativeImportExportPlugin extends ImportExportPlugin {
 						$articleId = array_shift($args);
 						$publishedArticle =& $publishedArticleDao->getPublishedArticleByBestArticleId($journal->getId(), $articleId);
 						if ($publishedArticle == null) {
-							echo __('plugins.importexport.native.cliError') . "\n";
-							echo __('plugins.importexport.native.export.error.articleNotFound', array('articleId' => $articleId)) . "\n\n";
+							echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
+							echo PKPLocale::translate('plugins.importexport.native.export.error.articleNotFound', array('articleId' => $articleId)) . "\n\n";
 							return;
 						}
 						$issue =& $issueDao->getIssueById($publishedArticle->getIssueId(), $journal->getId());
@@ -446,28 +446,28 @@ class NativeImportExportPlugin extends ImportExportPlugin {
 						$section =& $sectionDao->getSection($publishedArticle->getSectionId());
 
 						if (!$this->exportArticle($journal, $issue, $section, $publishedArticle, $xmlFile)) {
-							echo __('plugins.importexport.native.cliError') . "\n";
-							echo __('plugins.importexport.native.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
+							echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
+							echo PKPLocale::translate('plugins.importexport.native.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
 						}
 						return;
 					case 'articles':
 						$results =& ArticleSearch::formatResults($args);
 						if (!$this->exportArticles($results, $xmlFile)) {
-							echo __('plugins.importexport.native.cliError') . "\n";
-							echo __('plugins.importexport.native.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
+							echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
+							echo PKPLocale::translate('plugins.importexport.native.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
 						}
 						return;
 					case 'issue':
 						$issueId = array_shift($args);
 						$issue =& $issueDao->getIssueByBestIssueId($issueId, $journal->getId());
 						if ($issue == null) {
-							echo __('plugins.importexport.native.cliError') . "\n";
-							echo __('plugins.importexport.native.export.error.issueNotFound', array('issueId' => $issueId)) . "\n\n";
+							echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
+							echo PKPLocale::translate('plugins.importexport.native.export.error.issueNotFound', array('issueId' => $issueId)) . "\n\n";
 							return;
 						}
 						if (!$this->exportIssue($journal, $issue, $xmlFile)) {
-							echo __('plugins.importexport.native.cliError') . "\n";
-							echo __('plugins.importexport.native.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
+							echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
+							echo PKPLocale::translate('plugins.importexport.native.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
 						}
 						return;
 					case 'issues':
@@ -475,15 +475,15 @@ class NativeImportExportPlugin extends ImportExportPlugin {
 						while (($issueId = array_shift($args))!==null) {
 							$issue =& $issueDao->getIssueByBestIssueId($issueId, $journal->getId());
 							if ($issue == null) {
-								echo __('plugins.importexport.native.cliError') . "\n";
-								echo __('plugins.importexport.native.export.error.issueNotFound', array('issueId' => $issueId)) . "\n\n";
+								echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
+								echo PKPLocale::translate('plugins.importexport.native.export.error.issueNotFound', array('issueId' => $issueId)) . "\n\n";
 								return;
 							}
 							$issues[] =& $issue;
 						}
 						if (!$this->exportIssues($journal, $issues, $xmlFile)) {
-							echo __('plugins.importexport.native.cliError') . "\n";
-							echo __('plugins.importexport.native.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
+							echo PKPLocale::translate('plugins.importexport.native.cliError') . "\n";
+							echo PKPLocale::translate('plugins.importexport.native.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
 						}
 						return;
 				}
@@ -496,7 +496,7 @@ class NativeImportExportPlugin extends ImportExportPlugin {
 	 * Display the command-line usage information
 	 */
 	function usage($scriptName) {
-		echo __('plugins.importexport.native.cliUsage', array(
+		echo PKPLocale::translate('plugins.importexport.native.cliUsage', array(
 			'scriptName' => $scriptName,
 			'pluginName' => $this->getName()
 		)) . "\n";

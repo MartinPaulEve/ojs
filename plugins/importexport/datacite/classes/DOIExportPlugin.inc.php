@@ -118,7 +118,7 @@ class DOIExportPlugin extends ImportExportPlugin {
 	 */
 	function getManagementVerbs() {
 		$verbs = parent::getManagementVerbs();
-		$verbs[] = array('settings', __('plugins.importexport.common.settings'));
+		$verbs[] = array('settings', PKPLocale::translate('plugins.importexport.common.settings'));
 		return $verbs;
 	}
 
@@ -366,7 +366,7 @@ class DOIExportPlugin extends ImportExportPlugin {
 			} else {
 				$result = $this->registerObjects($request, $exportSpec, $journal);
 				if ($result === true) {
-					echo __('plugins.importexport.common.register.success') . "\n";
+					echo PKPLocale::translate('plugins.importexport.common.register.success') . "\n";
 				}
 			}
 		}
@@ -1410,19 +1410,19 @@ class DOIExportPlugin extends ImportExportPlugin {
 	 */
 	function _usage($scriptName, $errors = null) {
 		if (is_array($errors) && !empty($errors)) {
-			echo __('plugins.importexport.common.cliError') . "\n";
+			echo PKPLocale::translate('plugins.importexport.common.cliError') . "\n";
 			foreach ($errors as $error) {
 				assert(is_array($error) && count($error) >=1);
 				if (isset($error[1])) {
-					$errorMessage = __($error[0], array('param' => $error[1]));
+					$errorMessage = PKPLocale::translate($error[0], array('param' => $error[1]));
 				} else {
-					$errorMessage = __($error[0]);
+					$errorMessage = PKPLocale::translate($error[0]);
 				}
 				echo "*** $errorMessage\n";
 			}
 			echo "\n\n";
 		}
-		echo __(
+		echo PKPLocale::translate(
 			'plugins.importexport.' . $this->getPluginId() . '.cliUsage',
 			array(
 				'scriptName' => $scriptName,
@@ -1469,7 +1469,7 @@ class DOIExportPlugin extends ImportExportPlugin {
 		$notificationManager->createTrivialNotification(
 			$user->getId(),
 			$notificationType,
-			array('contents' => __($message, $params))
+			array('contents' => PKPLocale::translate($message, $params))
 		);
 	}
 }
