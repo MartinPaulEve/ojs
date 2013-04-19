@@ -16,8 +16,8 @@
  */
 
 
-require_once('LatestNewsBlockPlugin.inc.php');
+//require_once('LatestNewsBlockPlugin.inc.php');
 
-return new LatestNewsBlockPlugin();
+//return new LatestNewsBlockPlugin();
 
 ?>

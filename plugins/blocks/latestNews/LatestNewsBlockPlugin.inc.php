@@ -20,21 +20,22 @@ class LatestNewsBlockPlugin extends BlockPlugin {
 		$success = parent::register($category, $path);
 		if ($success) {
 			$this->addLocaleData();
-			HookRegistry::register('TemplateManager::display', array(&$this, 'templateManagerCallback'));			
+			HookRegistry::register('TemplateManager::display', array(&$this, 'templateManagerCallback'));
 		}
 		return $success;
 	}
-	
+
 	function getEnabled() {
-		return true;
+        if (!Config::getVar('general', 'installed')) return true;
+      		return parent::getEnabled();
 	}
-	
+
 	function templateManagerCallback($hookName, &$args) {
 		$templateMgr =& $args[0]; //TemplateManager::getManager();
 		if ( Request::getRequestedPage() == 'index' || Request::getRequestedPage() == '' )
 			$templateMgr->assign('alternativeTitleTranslated', ''); //Locale::translate('plugins.blocks.latestNews.displayTitle'));
 	}
-	
+
 	/**
 	 * Get the supported contexts (e.g. BLOCK_CONTEXT_...) for this block.
 	 * @return array

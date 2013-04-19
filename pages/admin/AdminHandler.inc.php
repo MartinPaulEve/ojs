@@ -20,9 +20,9 @@ class AdminHandler extends Handler {
 	 **/
 	function AdminHandler() {
 		parent::Handler();
-		
+
 		$this->addCheck(new HandlerValidatorRoles($this, true, null, null, array(ROLE_ID_SITE_ADMIN)));
-		$this->addCheck(new HandlerValidatorCustom($this, true, null, null, create_function(null, 'return Request::getRequestedJournalPath() == \'index\';')));
+//		$this->addCheck(new HandlerValidatorCustom($this, true, null, null, create_function(null, 'return Request::getRequestedJournalPath() == \'index\';')));
 	}
 
 	/**

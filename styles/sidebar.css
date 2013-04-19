@@ -55,3 +55,7 @@
 img.newTools {
 	margin:12px 6px -10px 0px;
 }
+
+#sidebarKeywordCloud a {
+    text-decoration: none;
+}

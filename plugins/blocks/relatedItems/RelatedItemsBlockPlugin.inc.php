@@ -37,17 +37,6 @@ class RelatedItemsBlockPlugin extends BlockPlugin {
 	function getSupportedContexts() {
 		return array(BLOCK_CONTEXT_RIGHT_SIDEBAR);
 	}
-
-	/**
-	 * Get the HTML contents for this block.
-	 * @param $templateMgr object
-	 * @return $string
-	 */
-	function getContents(&$templateMgr) {
-		$journal =& Request::getJournal();
-
-		return parent::getContents($templateMgr);
-	}
 }
 
 ?>

@@ -4,7 +4,7 @@
  * Copyright (c) 2000-2008 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * Most Popular Articles
+ * Latest Video
  *
  *}
 	{php}
@@ -16,7 +16,7 @@
 		{php} while (have_posts()) : the_post(); {/php}
 
 			<h3>{php} the_title(); {/php}</h3>
-			{php} the_content(); {/php}
+			{php} the_excerpt(); {/php}
 
 		{php} endwhile; {/php}
 

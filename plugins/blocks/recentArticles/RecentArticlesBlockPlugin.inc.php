@@ -26,13 +26,14 @@ class RecentArticlesBlockPlugin extends BlockPlugin {
 	}
 
 	function getEnabled() {
-		return true;
+        if (!Config::getVar('general', 'installed')) return true;
+      		return parent::getEnabled();
 	}
 
 	function templateManagerCallback($hookName, &$args) {
 		$templateMgr =& $args[0]; //TemplateManager::getManager();
-		if ( Request::getRequestedPage() == 'index' || Request::getRequestedPage() == '' )
-			$templateMgr->assign('alternativeTitleTranslated', ''); //Locale::translate('plugins.blocks.recentArticles.displayTitle'));
+		// if ( Request::getRequestedPage() == 'index' || Request::getRequestedPage() == '' )
+		// 	$templateMgr->assign('alternativeTitleTranslated', ''); 	//Locale::translate('plugins.blocks.recentArticles.displayTitle'));
 	}
 
 	/**
@@ -77,7 +78,7 @@ class RecentArticlesBlockPlugin extends BlockPlugin {
 
 		$publishedArticleDao =& DAORegistry::getDAO('PublishedArticleDAO'); /* @var $publishedArticleDao PublishedArticleDAO  */
 		import('db.DBResultRange');
-		$rangeInfo = new DBResultRange(4, 1);
+		$rangeInfo = new DBResultRange(8, 1);
 		$publishedArticleObjects =& $publishedArticleDao->getPublishedArticlesByJournalId($journal->getId(), $rangeInfo, true);
 		while ($publishedArticle =& $publishedArticleObjects->next()) {
 			$recentArticles[]['articles'][] =& $publishedArticle;

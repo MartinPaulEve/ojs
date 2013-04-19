@@ -103,13 +103,6 @@
 	{$applicationName}
 {/if}
 <div id="headerContainer">
-	<div id="headerLanguageSelect">
-		<a href="javascript:location.href={if $languageToggleNoUser}'{$currentUrl|escape}{if strstr($currentUrl, '?')}&{else}?{/if}setLocale=en_US{else}('{url page="user" op="setLocale" path="en_US" source=$smarty.server.REQUEST_URI escape=false}'){/if}">english</a>
-		<br />
-		<a href="javascript:location.href={if $languageToggleNoUser}'{$currentUrl|escape}{if strstr($currentUrl, '?')}&{else}?{/if}setLocale=es_ES{else}('{url page="user" op="setLocale" path="es_ES" source=$smarty.server.REQUEST_URI escape=false}'){/if}">espa&ntilde;ol</a>
-		<br />
-		<a href="javascript:location.href={if $languageToggleNoUser}'{$currentUrl|escape}{if strstr($currentUrl, '?')}&{else}?{/if}setLocale=pt_BR{else}('{url page="user" op="setLocale" path="pt_BR" source=$smarty.server.REQUEST_URI escape=false}'){/if}">portugues</a>
-	</div>
 	<div id="headerJournalDesc">a peer-reviewed, independent,<br />open-access, multilingual journal</div>
 </div>
 </h1>

@@ -11,12 +11,14 @@
   *
   * $Id$
   -->
- 
+
 <locale name="en_US" full_name="U.S. English">
 	<message key="plugins.blocks.recentArticles.displayName">Artículos Recientes</message>
 	<message key="plugins.blocks.recentArticles.displayTitle">Artículos Recientes</message>
-	<message key="plugins.blocks.recentArticles.description">This block will display the most recent articles on your homepage</message>	
-	
+	<message key="plugins.blocks.recentArticles.description">This block will display the most recent articles on your homepage</message>
+
 	<message key="plugins.blocks.recentArticles.by">Por</message>
-	<message key="plugins.blocks.recentArticles.fullText">Texto Completo</message>	
+	<message key="plugins.blocks.recentArticles.fullText">Texto Completo</message>
+	<message key="plugins.blocks.recentArticles.latestVideos">Nuevos Vídeos</message>
+
 </locale>

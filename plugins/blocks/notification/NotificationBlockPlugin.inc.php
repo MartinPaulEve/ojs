@@ -60,6 +60,8 @@ class NotificationBlockPlugin extends BlockPlugin {
 		$user =& Request::getUser();
 		$journal =& Request::getJournal();
 
+        if (!$user) return '';
+
 		if ($user && $journal) {
 			$userId = $user->getId();
 			$notificationDao =& DAORegistry::getDAO('NotificationDAO');

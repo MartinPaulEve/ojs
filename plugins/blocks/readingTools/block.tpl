@@ -69,5 +69,36 @@
 			{else}<a href="{url page="comment" op="add" path=$article->getId()|to_array:$galleyId}">{translate key="plugins.block.readingTools.postComment"}</a>{/if}
 		</div>
 	{/if}
+	{if $sharingEnabled}
+	<!-- start AddThis -->
+	<div class="articleToolItem">
+		{if isset($sharingDropDownMenu)}
+			{if isset($sharingUserName)}
+				<script type="text/javascript">
+					var addthis_pub = '{$sharingUserName}';
+				</script>
+			{/if}
+			<br />
+			<br />
+			<div class="addthis_container">
+				<a href="http://www.addthis.com/bookmark.php"
+					onmouseover="return addthis_open(this, '', '{$sharingArticleURL|escape:"javascript"}', '{$sharingArticleTitle|escape:"javascript"}')"
+					onmouseout="addthis_close()" onclick="return addthis_sendto()">
+						<img src="{$sharingButtonUrl}" width="{$sharingButtonWidth}" height="{$sharingButtonHeight}" border="0" alt="Bookmark and Share" style="border:0;padding:0" />
+				</a>
+				<script type="text/javascript" src="http://s7.addthis.com/js/200/addthis_widget.js"></script>
+			</div>
+		{else}
+			<a href="http://www.addthis.com/bookmark.php"
+				onclick="window.open('http://www.addthis.com/bookmark.php?pub={$sharingUserName|escape:"url"}&amp;url={$sharingRequestURL|escape:"url"}&amp;title={$sharingArticleTitle|escape:"url"}', 'addthis',
+				                     'scrollbars=yes,menubar=no,width=620,height=520,resizable=yes,toolbar=no,location=no,status=no');
+				         return false;"
+				title="Bookmark using any bookmark manager!" target="_blank">
+					<img src="{$sharingButtonUrl}" width="{$sharingButtonWidth}" height="{$sharingButtonHeight}" border="0" alt="Bookmark and Share" style="border:0;padding:0" />
+			</a>
+		{/if}
+		<!-- end AddThis -->
+	</div>
+	{/if}
 </div>
 {/if}

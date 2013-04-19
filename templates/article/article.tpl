@@ -22,6 +22,8 @@
 		{include file="article/pdfViewer.tpl"}
 	{/if}
 {else}
+	{assign var=galleys value=$article->getGalleys()}
+	{** remove this as it was creating a big space
 	<div id="topBar">
 		{if is_a($article, 'PublishedArticle')}{assign var=galleys value=$article->getGalleys()}{/if}
 		{if $galleys && $subscriptionRequired && $showGalleyLinks}
@@ -37,6 +39,7 @@
 			</div>
 		{/if}
 	</div>
+	**}
 	{if $coverPagePath}
 		<div id="articleCoverImage"><img src="{$coverPagePath|escape}{$coverPageFileName|escape}"{if $coverPageAltText != ''} alt="{$coverPageAltText|escape}"{else} alt="{translate key="article.coverPage.altText"}"{/if}{if $width} width="{$width|escape}"{/if}{if $height} height="{$height|escape}"{/if}/>
 		</div>

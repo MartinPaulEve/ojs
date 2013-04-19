@@ -15,7 +15,7 @@
 		{if $isUserLoggedIn}
 			<li id="userHome"><a href="{url journal="index" page="user"}">{translate key="navigation.userHome"}</a></li>
 		{else}
-			<li id="login"><a href="{url page="login"}">{translate key="navigation.login"}</a></li>
+			{** <li id="login"><a href="{url page="login"}">{translate key="navigation.login"}</a></li> **}
 			<li id="register"><a href="{url page="user" op="register"}">{translate key="navigation.register"}</a></li>
 		{/if}{* $isUserLoggedIn *}
 

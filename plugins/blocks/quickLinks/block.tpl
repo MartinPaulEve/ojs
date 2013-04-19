@@ -13,5 +13,8 @@
 	<span class="blockTitle">{translate key="plugins.block.quickLinks.displayName"}</span>
 	<ul>
 		{php} wp_list_pages(array('title_li'=>'', 'child_of'=>2)); {/php}
+		{if !$isUserLoggedIn}
+			<li><a href="{url page="user" op="register"}">{translate key="navigation.register"}</a></li>
+		{/if}
 	</ul>
-</div>	
+</div>
