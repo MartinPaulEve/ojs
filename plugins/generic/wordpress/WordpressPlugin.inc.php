@@ -22,11 +22,11 @@ class WordpressPlugin extends GenericPlugin {
 	}
 
 	function getDisplayName() {
-		return Locale::translate('plugins.generic.wordpress.displayName');
+		return __('plugins.generic.wordpress.displayName');
 	}
 
 	function getDescription() {
-		return Locale::translate('plugins.generic.wordpress.description');;
+		return __('plugins.generic.wordpress.description');;
 	}
 
 	/**
@@ -149,18 +149,18 @@ class WordpressPlugin extends GenericPlugin {
 		if ($this->getEnabled()) {
 			$verbs[] = array(
 				'disable',
-				Locale::translate('manager.plugins.disable')
+				__('manager.plugins.disable')
 			);
 /*
 			$verbs[] = array(
 				'settings',
-				Locale::translate('plugins.generic.wordpress.settings')
+				__('plugins.generic.wordpress.settings')
 			);
 */
 		} else {
 			$verbs[] = array(
 				'enable',
-				Locale::translate('manager.plugins.enable')
+				__('manager.plugins.enable')
 			);
 		}
 		return $verbs;

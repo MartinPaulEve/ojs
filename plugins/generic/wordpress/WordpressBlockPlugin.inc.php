@@ -29,14 +29,14 @@ class WordpressBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return Locale::translate('plugins.generic.wordpress.block.displayName');
+		return __('plugins.generic.wordpress.block.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.generic.wordpress.block.description');
+		return __('plugins.generic.wordpress.block.description');
 	}
 
 	/**

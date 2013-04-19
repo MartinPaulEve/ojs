@@ -92,37 +92,37 @@ class QuickLinksBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return Locale::translate('plugins.block.quickLinks.displayName');
+		return __('plugins.block.quickLinks.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.block.quickLinks.description');
+		return __('plugins.block.quickLinks.description');
 	}
-	
+
 	function getContents(&$templateMgr) {
 		$page = Request::getRequestedPage();
 		$op = Request::getRequestedOp();
-		
+
 		if ( $page == 'article' ) return '';
-				
+
 		return parent::getContents($templateMgr);
 		$args = Request::getRequestedArgs();
-		
+
 		//FIXME: this wont work with custom identifiers
 		$articleId = (int) $args[0];
 		$posts = get_posts('meta_key=article_id&meta_value=' . $articleId . '&category=4&numberposts=1');
 		if ( count($posts) != 1 ) return '';
 		$post = $posts[0];
-		
+
 		$output = '<div class="block" id="sidebarQuickLinks">' . "\n" . '<span class="blockTitle">';
-		$output .= Locale::translate('plugins.block.quickLinks.displayName');
+		$output .= __('plugins.block.quickLinks.displayName');
 		$output .= "\n</span>";
 		$output .= nl2br($post->post_content);
 		$output .= "\n</div>";
-		return $output;		
+		return $output;
 	}
 }
 

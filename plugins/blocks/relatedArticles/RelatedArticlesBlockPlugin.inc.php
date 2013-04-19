@@ -92,14 +92,14 @@ class RelatedArticlesBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return Locale::translate('plugins.block.relatedArticles.displayName');
+		return __('plugins.block.relatedArticles.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.block.relatedArticles.description');
+		return __('plugins.block.relatedArticles.description');
 	}
 
 	function getContents() {
@@ -116,7 +116,7 @@ class RelatedArticlesBlockPlugin extends BlockPlugin {
 		$post = $posts[0];
 
 		$output = '<div class="block" id="sidebarRelatedArticles">' . "\n" . '<span class="blockTitle">';
-		$output .= Locale::translate('plugins.block.relatedArticles.displayName');
+		$output .= __('plugins.block.relatedArticles.displayName');
 		$output .= "\n</span>";
 		$output .= nl2br($post->post_content);
 		$output .= "\n</div>";
