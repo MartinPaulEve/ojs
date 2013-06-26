@@ -1,5 +1,5 @@
 <?php
-
+ini_set('memory_limit', '1024M');
 /**
  * @mainpage OJS API Reference
  *

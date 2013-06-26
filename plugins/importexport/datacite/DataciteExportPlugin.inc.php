@@ -81,6 +81,7 @@ class DataciteExportPlugin extends DOIExportPlugin {
 	 */
 	function getAllObjectTypes() {
 		$objectTypes = parent::getAllObjectTypes();
+		$objectTypes['galley'] = DOI_EXPORT_GALLEYS;
 		$objectTypes['suppFile'] = DOI_EXPORT_SUPPFILES;
 		return $objectTypes;
 	}
@@ -90,19 +91,9 @@ class DataciteExportPlugin extends DOIExportPlugin {
 	 */
 	function displayAllUnregisteredObjects(&$templateMgr, &$journal) {
 		// Prepare information specific to this plug-in.
+		$templateMgr->assign_by_ref('galleys', $this->_getUnregisteredGalleys($journal));
 		$templateMgr->assign_by_ref('suppFiles', $this->_getUnregisteredSuppFiles($journal));
 		parent::displayAllUnregisteredObjects($templateMgr, $journal);
-	}
-
-	/**
-	 * @see DOIExportPlugin::getObjectName()
-	 */
-	function getObjectName($exportType) {
-		if ($exportType == DOI_EXPORT_SUPPFILES) {
-			return 'supp-file';
-		} else {
-			return parent::getObjectName($exportType);
-		}
 	}
 
 	/**
@@ -346,54 +337,6 @@ class DataciteExportPlugin extends DOIExportPlugin {
 		$suppFileData['suppFile'] =& $suppFile;
 
 		return $suppFileData;
-	}
-
-	/**
-	 * Get the canonical URL of an object.
-	 * @param $request Request
-	 * @param $journal Journal
-	 * @param $object Issue|PublishedArticle|ArticleGalley|SuppFile
-	 */
-	function _getObjectUrl(&$request, &$journal, &$object) {
-		$router =& $request->getRouter();
-
-		// Retrieve the article of article files.
-		if (is_a($object, 'ArticleFile')) {
-			$articleId = $object->getArticleId();
-			$cache = $this->getCache();
-			if ($cache->isCached('articles', $articleId)) {
-				$article =& $cache->get('articles', $articleId);
-			} else {
-				$articleDao =& DAORegistry::getDAO('PublishedArticleDAO'); /* @var $articleDao PublishedArticleDAO */
-				$article =& $articleDao->getPublishedArticleByArticleId($articleId, $journal->getId(), true);
-			}
-			assert(is_a($article, 'PublishedArticle'));
-		}
-
-		$url = null;
-		switch (true) {
-			case is_a($object, 'Issue'):
-				$url = $router->url($request, null, 'issue', 'view', $object->getBestIssueId($journal));
-				break;
-
-			case is_a($object, 'PublishedArticle'):
-				$url = $router->url($request, null, 'article', 'view', $object->getBestArticleId($journal));
-				break;
-
-			case is_a($object, 'ArticleGalley'):
-				$url = $router->url($request, null, 'article', 'view', array($article->getBestArticleId($journal), $object->getBestGalleyId($journal)));
-				break;
-
-			case is_a($object, 'SuppFile'):
-				$url = $router->url($request, null, 'article', 'downloadSuppFile', array($article->getBestArticleId($journal), $object->getBestSuppFileId($journal)));
-				break;
-		}
-
-		if ($this->isTestMode($request)) {
-			// Change server domain for testing.
-			$url = String::regexp_replace('#://[^\s]+/index.php#', '://example.com/index.php', $url);
-		}
-		return $url;
 	}
 }
 

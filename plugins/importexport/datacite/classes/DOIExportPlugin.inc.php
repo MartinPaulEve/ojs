@@ -20,6 +20,7 @@ define('DOI_EXPORT_ISSUES', 0x01);
 define('DOI_EXPORT_ARTICLES', 0x02);
 define('DOI_EXPORT_GALLEYS', 0x03);
 define('DOI_EXPORT_SUPPFILES', 0x04);
+define('DOI_EXPORT_MIXED', 0x05);
 
 // Current registration state.
 define('DOI_OBJECT_NEEDS_UPDATE', 0x01);
@@ -440,8 +441,7 @@ class DOIExportPlugin extends ImportExportPlugin {
 	function getAllObjectTypes() {
 		return array(
 			'issue' => DOI_EXPORT_ISSUES,
-			'article' => DOI_EXPORT_ARTICLES,
-			'galley' => DOI_EXPORT_GALLEYS
+			'article' => DOI_EXPORT_ARTICLES
 		);
 	}
 
@@ -457,8 +457,8 @@ class DOIExportPlugin extends ImportExportPlugin {
 		// Prepare and display the template.
 		$templateMgr->assign_by_ref('issues', $this->_getUnregisteredIssues($journal));
 		$templateMgr->assign_by_ref('articles', $this->_getUnregisteredArticles($journal));
-		$templateMgr->assign_by_ref('galleys', $this->_getUnregisteredGalleys($journal));
-		$templateMgr->display($this->getTemplatePath() . 'all.tpl');
+		$templateMgr->display($this->getTemplatePath() . 'all.tpl')
+		;
 	}
 
 	/**
@@ -537,10 +537,9 @@ class DOIExportPlugin extends ImportExportPlugin {
 		$errors = array();
 
 		// If we have more than one object type, then we'll need the
-		// tar tool to package the resulting export files. Check this
-		// early on to avoid unnecessary export processing.
+		// tar tool to package the resulting export files. Check this.
 		if (count($exportSpec) > 1) {
-			if (is_array($errors = $this->_checkForTar())) return $errors;
+			$this->_checkForTar();
 		}
 
 		// Get the target directory.
@@ -678,9 +677,11 @@ class DOIExportPlugin extends ImportExportPlugin {
 	 */
 	function getObjectName($exportType) {
 		$objectNames = array(
+			DOI_EXPORT_MIXED => 'mixed',
 			DOI_EXPORT_ISSUES => 'issue',
 			DOI_EXPORT_ARTICLES => 'article',
 			DOI_EXPORT_GALLEYS => 'galley',
+			DOI_EXPORT_SUPPFILES => 'supp-file'
 		);
 		assert(isset($objectNames[$exportType]));
 		return $objectNames[$exportType];
@@ -1160,6 +1161,54 @@ class DOIExportPlugin extends ImportExportPlugin {
 	}
 
 	/**
+	 * Get the canonical URL of an object.
+	 * @param $request Request
+	 * @param $journal Journal
+	 * @param $object Issue|PublishedArticle|ArticleGalley|SuppFile
+	 */
+	function _getObjectUrl(&$request, &$journal, &$object) {
+		$router =& $request->getRouter();
+
+		// Retrieve the article of article files.
+		if (is_a($object, 'ArticleFile')) {
+			$articleId = $object->getArticleId();
+			$cache = $this->getCache();
+			if ($cache->isCached('articles', $articleId)) {
+				$article =& $cache->get('articles', $articleId);
+			} else {
+				$articleDao =& DAORegistry::getDAO('PublishedArticleDAO'); /* @var $articleDao PublishedArticleDAO */
+				$article =& $articleDao->getPublishedArticleByArticleId($articleId, $journal->getId(), true);
+			}
+			assert(is_a($article, 'PublishedArticle'));
+		}
+
+		$url = null;
+		switch (true) {
+			case is_a($object, 'Issue'):
+				$url = $router->url($request, null, 'issue', 'view', $object->getBestIssueId($journal));
+				break;
+
+			case is_a($object, 'PublishedArticle'):
+				$url = $router->url($request, null, 'article', 'view', $object->getBestArticleId($journal));
+				break;
+
+			case is_a($object, 'ArticleGalley'):
+				$url = $router->url($request, null, 'article', 'view', array($article->getBestArticleId($journal), $object->getBestGalleyId($journal)));
+				break;
+
+			case is_a($object, 'SuppFile'):
+				$url = $router->url($request, null, 'article', 'downloadSuppFile', array($article->getBestArticleId($journal), $object->getBestSuppFileId($journal)));
+				break;
+		}
+
+		if ($this->isTestMode($request)) {
+			// Change server domain for testing.
+			$url = String::regexp_replace('#://[^\s]+/index.php#', '://example.com/index.php', $url);
+		}
+		return $url;
+	}
+
+	/**
 	 * Identify published article, issue and language of the given galley.
 	 * @param $galley ArticleGalley
 	 * @param $journal Journal
@@ -1267,6 +1316,7 @@ class DOIExportPlugin extends ImportExportPlugin {
 			$issueDao = DAORegistry::getDAO('IssueDAO'); /* @var $issueDao IssueDAO */
 			$issue = $issueDao->getIssueById($issueId, $journal->getId(), true);
 			assert(is_a($issue, 'Issue'));
+			$nullVar = null;
 			$cache->add($issue, $nullVar);
 			unset($issue);
 		}

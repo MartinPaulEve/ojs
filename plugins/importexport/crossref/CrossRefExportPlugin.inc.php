@@ -9,286 +9,226 @@
  * @class CrossRefExportPlugin
  * @ingroup plugins_importexport_crossref
  *
- * @brief CrossRef/MEDLINE XML metadata export plugin
+ * @brief CrossRef export/registration plugin.
  */
 
-import('classes.plugins.ImportExportPlugin');
 
-class CrossRefExportPlugin extends ImportExportPlugin {
-	/**
-	 * Called as a plugin is registered to the registry
-	 * @param $category String Name of category plugin was registered to
-	 * @return boolean True if plugin initialized successfully; if false,
-	 * 	the plugin will not be registered.
-	 */
-	function register($category, $path) {
-		$success = parent::register($category, $path);
-		$this->addLocaleData();
-		return $success;
+if (!class_exists('DOIExportPlugin')) { // Bug #7848
+	import('plugins.importexport.crossref.classes.DOIExportPlugin');
+}
+
+// CrossRef API
+define('CROSSREF_API_URL', 'http://doi.crossref.org/servlet/deposit');
+define('CROSSREF_API_TEST_URL', 'http://test.crossref.org/servlet/deposit');
+
+define('CROSSREF_API_RESPONSE_OK', 201);
+
+class CrossRefExportPlugin extends DOIExportPlugin {
+
+	//
+	// Constructor
+	//
+	function CrossRefExportPlugin() {
+		parent::DOIExportPlugin();
 	}
 
+
+	//
+	// Implement template methods from ImportExportPlugin
+	//
 	/**
-	 * Get the name of this plugin. The name must be unique within
-	 * its category.
-	 * @return String name of plugin
+	 * @see ImportExportPlugin::getName()
 	 */
 	function getName() {
 		return 'CrossRefExportPlugin';
 	}
 
+	/**
+	 * @see ImportExportPlugin::getDisplayName()
+	 */
 	function getDisplayName() {
 		return __('plugins.importexport.crossref.displayName');
 	}
 
+	/**
+	 * @see ImportExportPlugin::getDescription()
+	 */
 	function getDescription() {
 		return __('plugins.importexport.crossref.description');
 	}
 
-	function display(&$args, $request) {
-		$templateMgr =& TemplateManager::getManager();
-		parent::display($args, $request);
 
-		$issueDao =& DAORegistry::getDAO('IssueDAO');
-
-		$journal =& Request::getJournal();
-
-		switch (array_shift($args)) {
-			case 'exportIssues':
-				$issueIds = Request::getUserVar('issueId');
-				if (!isset($issueIds)) $issueIds = array();
-				$issues = array();
-				foreach ($issueIds as $issueId) {
-					$issue =& $issueDao->getIssueById($issueId);
-					if (!$issue) Request::redirect();
-					$issues[] =& $issue;
-				}
-				$this->exportIssues($journal, $issues);
-				break;
-			case 'exportIssue':
-				$issueId = array_shift($args);
-				$issue =& $issueDao->getIssueById($issueId);
-				if (!$issue) Request::redirect();
-				$issues = array($issue);
-				$this->exportIssues($journal, $issues);
-				break;
-			case 'exportArticle':
-				$articleIds = array(array_shift($args));
-				$result = ArticleSearch::formatResults($articleIds);
-				$this->exportArticles($journal, $result);
-				break;
-			case 'exportArticles':
-				$articleIds = Request::getUserVar('articleId');
-				if (!isset($articleIds)) $articleIds = array();
-				$results =& ArticleSearch::formatResults($articleIds);
-				$this->exportArticles($journal, $results);
-				break;
-			case 'issues':
-				// Display a list of issues for export
-				$this->setBreadcrumbs(array(), true);
-				AppLocale::requireComponents(LOCALE_COMPONENT_OJS_EDITOR);
-				$issueDao =& DAORegistry::getDAO('IssueDAO');
-				$issues =& $issueDao->getPublishedIssues($journal->getId(), Handler::getRangeInfo('issues'));
-
-				$templateMgr->assign_by_ref('issues', $issues);
-				$templateMgr->display($this->getTemplatePath() . 'issues.tpl');
-				break;
-			case 'articles':
-				// Display a list of articles for export
-				$this->setBreadcrumbs(array(), true);
-				$publishedArticleDao =& DAORegistry::getDAO('PublishedArticleDAO');
-				$rangeInfo = Handler::getRangeInfo('articles');
-				$articleIds = $publishedArticleDao->getPublishedArticleIdsByJournal($journal->getId(), false);
-				$totalArticles = count($articleIds);
-				if ($rangeInfo->isValid()) $articleIds = array_slice($articleIds, $rangeInfo->getCount() * ($rangeInfo->getPage()-1), $rangeInfo->getCount());
-				import('lib.pkp.classes.core.VirtualArrayIterator');
-				$iterator = new VirtualArrayIterator(ArticleSearch::formatResults($articleIds), $totalArticles, $rangeInfo->getPage(), $rangeInfo->getCount());
-				$templateMgr->assign_by_ref('articles', $iterator);
-				$templateMgr->display($this->getTemplatePath() . 'articles.tpl');
-				break;
-			default:
-				$this->setBreadcrumbs();
-				$doiPrefix = null;
-				$pubIdPlugins = PluginRegistry::loadCategory('pubIds', true);
-				if (isset($pubIdPlugins['DOIPubIdPlugin'])) {
-					$doiPrefix = $pubIdPlugins['DOIPubIdPlugin']->getSetting($journal->getId(), 'doiPrefix');
-				}
-				$templateMgr->assign('doiPrefix', $doiPrefix);
-				$templateMgr->display($this->getTemplatePath() . 'index.tpl');
-		}
+	//
+	// Implement template methods from DOIExportPlugin
+	//
+	/**
+	 * @see DOIExportPlugin::getPluginId()
+	 */
+	function getPluginId() {
+		return 'crossref';
 	}
 
-	function exportArticles(&$journal, &$results, $outputFile = null) {
-		$this->import('CrossRefExportDom');
-
-		$doc =& CrossRefExportDom::generateCrossRefDom();
-		$doiBatchNode =& CrossRefExportDom::generateDoiBatchDom($doc);
-
-		// Create Head Node and all parts inside it
-		$head =& CrossRefExportDom::generateHeadDom($doc, $journal);
-
-		// attach it to the root node
-		XMLCustomWriter::appendChild($doiBatchNode, $head);
-
-		// the body node contains everything
-		$bodyNode =& XMLCustomWriter::createElement($doc, 'body');
-		XMLCustomWriter::appendChild($doiBatchNode, $bodyNode);
-
-		// now cycle through everything we want to submit in this batch
-		foreach ($results as $result) {
-			$journal =& $result['journal'];
-			$issue =& $result['issue'];
-			$section =& $result['section'];
-			$article =& $result['publishedArticle'];
-
-			// Create the metadata node
-			// this does not need to be repeated for every article
-			// but its allowed to be and its simpler to do so
-			$journalNode =& XMLCustomWriter::createElement($doc, 'journal');
-			$journalMetadataNode =& CrossRefExportDom::generateJournalMetadataDom($doc, $journal);
-			XMLCustomWriter::appendChild($journalNode, $journalMetadataNode);
-
-			// Create the journal_issue node
-			$journalIssueNode =& CrossRefExportDom::generateJournalIssueDom($doc, $journal, $issue, $section, $article);
-			XMLCustomWriter::appendChild($journalNode, $journalIssueNode);
-
-			// Create the article
-			$journalArticleNode =& CrossRefExportDom::generateJournalArticleDom($doc, $journal, $issue, $section, $article);
-			XMLCustomWriter::appendChild($journalNode, $journalArticleNode);
-
-			XMLCustomWriter::appendChild($bodyNode, $journalNode);
-		}
-
-
-		// dump out the results
-		if (!empty($outputFile)) {
-			if (($h = fopen($outputFile, 'w'))===false) return false;
-			fwrite($h, XMLCustomWriter::getXML($doc));
-			fclose($h);
-		} else {
-			header("Content-Type: application/xml");
-			header("Cache-Control: private");
-			header("Content-Disposition: attachment; filename=\"crossref.xml\"");
-			XMLCustomWriter::printXML($doc);
-		}
-		return true;
+	/**
+	 * @see DOIExportPlugin::getSettingsFormClassName()
+	 */
+	function getSettingsFormClassName() {
+		return 'CrossRefSettingsForm';
 	}
 
-	function exportIssues(&$journal, &$issues, $outputFile = null) {
-		$this->import('CrossRefExportDom');
+	/**
+	 * @see: DOIExportPlugin::_generateExportFilesForObjects
+	 */
+	function _generateExportFilesForObjects(&$request, &$journal, $exportSpec, $exportPath, &$errors) {
+		// Lets figure out how many export files we need and generate them
+		$exportFiles = array();
 
-		$doc =& CrossRefExportDom::generateCrossRefDom();
-		$doiBatchNode =& CrossRefExportDom::generateDoiBatchDom($doc);
+		// these will hold the articles and issue id's we'll export.
+		$issueIds = isset($exportSpec[DOI_EXPORT_ISSUES]) ? $exportSpec[DOI_EXPORT_ISSUES] : array();
+		$articleIds = array();
 
-		// Create Head Node and all parts inside it
-		$head =& CrossRefExportDom::generateHeadDom($doc, $journal);
+		// These are articles that were asked for specifically
+		$requestedArticleIds = isset($exportSpec[DOI_EXPORT_ARTICLES]) ? $exportSpec[DOI_EXPORT_ARTICLES] : array();
 
-		// attach it to the root node
-		XMLCustomWriter::appendChild($doiBatchNode, $head);
+		// Normalize the object id(s) into an array.
+		if (is_scalar($issueIds)) $issueIds = array($issueIds);
+		if (is_scalar($requestedArticleIds)) $requestedArticleIds = array($requestedArticleIds);
 
-		$bodyNode =& XMLCustomWriter::createElement($doc, 'body');
-		XMLCustomWriter::appendChild($doiBatchNode, $bodyNode);
-
-		$sectionDao =& DAORegistry::getDAO('SectionDAO');
-		$publishedArticleDao =& DAORegistry::getDAO('PublishedArticleDAO');
-
-		foreach ($issues as $issue) {
-			foreach ($sectionDao->getSectionsForIssue($issue->getId()) as $section) {
-				foreach ($publishedArticleDao->getPublishedArticlesBySectionId($section->getId(), $issue->getId()) as $article) {
-					// Create the metadata node
-					// this does not need to be repeated for every article
-					// but its allowed to be and its simpler to do so
-					$journalNode =& XMLCustomWriter::createElement($doc, 'journal');
-					$journalMetadataNode =& CrossRefExportDom::generateJournalMetadataDom($doc, $journal);
-					XMLCustomWriter::appendChild($journalNode, $journalMetadataNode);
-
-					$journalIssueNode =& CrossRefExportDom::generateJournalIssueDom($doc, $journal, $issue, $section, $article);
-					XMLCustomWriter::appendChild($journalNode, $journalIssueNode);
-
-					// Article node
-					$journalArticleNode =& CrossRefExportDom::generateJournalArticleDom($doc, $journal, $issue, $section, $article);
-					XMLCustomWriter::appendChild($journalNode, $journalArticleNode);
-
-					XMLCustomWriter::appendChild($bodyNode, $journalNode);
+		// Retrieve them
+		$articles =& $this->_getObjectsFromIds(DOI_EXPORT_ARTICLES, $requestedArticleIds, $journal->getId(), $errors);
+		if ($articles) {
+			foreach ($articles as $article) {
+				// but only keep the articleIds that are not in issues we're already going to export
+				if (!in_array($article->getIssueId(), $issueIds)) {
+					$articleIds[] = $article->getId();
 				}
 			}
 		}
 
-		// dump out results
-		if (!empty($outputFile)) {
-			if (($h = fopen($outputFile, 'w'))===false) return false;
-			fwrite($h, XMLCustomWriter::getXML($doc));
-			fclose($h);
+		$issues =& $this->_getObjectsFromIds(DOI_EXPORT_ISSUES, $issueIds, $journal->getId(), $errors);
+		$articles =& $this->_getObjectsFromIds(DOI_EXPORT_ARTICLES, $articleIds, $journal->getId(), $errors);
+
+		// FIXME: this is a little messy, but _getObjectsFromIds returns false
+		// and need to check why it cannot return an empty array
+		// which would let us simply array_merge the two results
+		if (!$issues && !$articles) {
+			return false;
+		} elseif (!$issues) {
+			$objects = $articles;
+		} elseif (!$articles) {
+			$objects = $issues;
 		} else {
-			header("Content-Type: application/xml");
-			header("Cache-Control: private");
-			header("Content-Disposition: attachment; filename=\"crossref.xml\"");
-			XMLCustomWriter::printXML($doc);
+			$objects = array_merge($issues, $articles);
 		}
 
+		// NB: This is different from the parent class generateExportFiles
+		// CrossRef allows us to put everything in one file so we do that for simplicity and efficiency
+		// The base class has not been designed correctly to work for the single-file usecase
+		// which is why we're working around it by making a new method
+		$exportFile = $this->generateExportFile($request, $objects, $exportPath, $journal, $errors);
+		if ($exportFile === false) {
+			$this->cleanTmpfiles($exportPath, $exportFile);
+			return false;
+		}
+
+		return $exportFile;
+	}
+
+
+	/**
+	 * Generate the export data file.
+	 * Note this is different than DoiExportPlugin::genereateExportFiles
+	 * although it serves a similar function.
+	 * CrossRef allows us to put everything in one file so we do that for simplicity and efficiency
+	 * The base class has not been designed correctly to work for the single-file usecase
+	 * which is why we're working around it by making a new method
+	 * @param $request Request
+	 * @param $objects
+	 * @param $targetPath string
+	 * @param $journal Journal
+	 * @param $errors array Output parameter for error details when
+	 *  the function returns false.
+	 * @return array|boolean Either an array of generated export
+	 *  files together with the contained objects or false if not successful.
+	 */
+	function generateExportFile($request, &$objects, $targetPath, $journal, &$errors) {
+		// Additional locale file.
+		AppLocale::requireComponents(array(LOCALE_COMPONENT_OJS_EDITOR));
+
+		$exportFiles = array();
+
+		$this->import('classes.CrossRefExportDom');
+		$dom = new CrossRefExportDom($request, $this, $journal, $this->getCache());
+		$doc =& $dom->generate($objects);
+		if ($doc) {
+			// Write the result.
+			$exportFile = $this->getTargetFileName($targetPath, DOI_EXPORT_MIXED);
+			file_put_contents($exportFile, XMLCustomWriter::getXML($doc));
+			$fileManager = new FileManager();
+			$fileManager->setMode($exportFile, FILE_MODE_MASK);
+			$exportFiles[$exportFile] = $objects;
+			unset($object);
+		}
+		return $exportFiles;
+	}
+
+	function isTestMode($request) {
 		return true;
 	}
 
 	/**
-	 * Execute import/export tasks using the command-line interface.
-	 * @param $args Parameters to the plugin
+	 * @see DOIExportPlugin::registerDoi()
 	 */
-	function executeCLI($scriptName, &$args) {
-//		$command = array_shift($args);
-		$xmlFile = array_shift($args);
-		$journalPath = array_shift($args);
-
-		$journalDao =& DAORegistry::getDAO('JournalDAO');
-		$issueDao =& DAORegistry::getDAO('IssueDAO');
-		$sectionDao =& DAORegistry::getDAO('SectionDAO');
-		$userDao =& DAORegistry::getDAO('UserDAO');
-		$publishedArticleDao =& DAORegistry::getDAO('PublishedArticleDAO');
-
-		$journal =& $journalDao->getJournalByPath($journalPath);
-
-		if (!$journal) {
-			if ($journalPath != '') {
-				echo __('plugins.importexport.crossref.cliError') . "\n";
-				echo __('plugins.importexport.crossref.error.unknownJournal', array('journalPath' => $journalPath)) . "\n\n";
-			}
-			$this->usage($scriptName);
-			return;
+	function registerDoi($request, $journal, &$objects, $file) {
+		if ($this->isTestMode($request)) {
+			$url = CROSSREF_API_TEST_URL;
+		} else {
+			$url = CROSSREF_API_URL;
 		}
 
-		if ($xmlFile != '') switch (array_shift($args)) {
-			case 'articles':
-				$results =& ArticleSearch::formatResults($args);
-				if (!$this->exportArticles($journal, $results, $xmlFile)) {
-					echo __('plugins.importexport.crossref.cliError') . "\n";
-					echo __('plugins.importexport.crossref.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
-				}
-				return;
-			case 'issue':
-				$issueId = array_shift($args);
-				$issue =& $issueDao->getIssueByBestIssueId($issueId, $journal->getId());
-				if ($issue == null) {
-					echo __('plugins.importexport.crossref.cliError') . "\n";
-					echo __('plugins.importexport.crossref.export.error.issueNotFound', array('issueId' => $issueId)) . "\n\n";
-					return;
-				}
-				$issues = array($issue);
-				if (!$this->exportIssues($journal, $issues, $xmlFile)) {
-					echo __('plugins.importexport.crossref.cliError') . "\n";
-					echo __('plugins.importexport.crossref.export.error.couldNotWrite', array('fileName' => $xmlFile)) . "\n\n";
-				}
-				return;
-		}
-		$this->usage($scriptName);
+		$params = array();
+		$params['login_id'] = $this->getSetting($journal->getId(), 'username');
+		$params['login_passwd'] = $this->getSetting($journal->getId(), 'password');
 
-	}
+		assert(is_readable($file));
+		$payload = file_get_contents($file);
+		assert($payload !== false && !empty($payload));
+		$params['fname'] = $payload;
 
-	/**
-	 * Display the command-line usage information
-	 */
-	function usage($scriptName) {
-		echo __('plugins.importexport.crossref.cliUsage', array(
-			'scriptName' => $scriptName,
-			'pluginName' => $this->getName()
-		)) . "\n";
+		import('lib.pkp.classes.webservice.WebService');
+		$crossRefWebServiceRequest = new WebServiceRequest($url, $params, 'POST');
+		$webService = new WebService();
+		$result = $webService->call($crossRefWebServiceRequest);
+		var_dump($result);
+		exit;
+
+//
+//		// Mint a DOI.
+//		if ($result === true) {
+//			$payload = "doi=$doi\nurl=$url";
+//
+//			curl_setopt($curlCh, CURLOPT_URL, CROSSREF_API_URL . 'doi');
+//			curl_setopt($curlCh, CURLOPT_HTTPHEADER, array('Content-Type: text/plain;charset=UTF-8'));
+//			curl_setopt($curlCh, CURLOPT_POSTFIELDS, $payload);
+//
+//			$response = curl_exec($curlCh);
+//			if ($response === false) {
+//				$result = array(array('plugins.importexport.common.register.error.mdsError', 'No response from server.'));
+//			} else {
+//				$status = curl_getinfo($curlCh, CURLINFO_HTTP_CODE);
+//				if ($status != CROSSREF_API_RESPONSE_OK) {
+//					$result = array(array('plugins.importexport.common.register.error.mdsError', "$status - $response"));
+//				}
+//			}
+//		}
+//
+//		curl_close($curlCh);
+//
+//		if ($result === true) {
+//			// Mark the object as registered.
+//			$this->markRegistered($request, $object, CROSSREF_API_TESTPREFIX);
+//		}
+//
+//		return $result;
 	}
 }
 

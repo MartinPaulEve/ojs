@@ -202,42 +202,6 @@ class DataciteExportDom extends DOIExportDom {
 	}
 
 	/**
-	 * @see DOIExportDom::retrievePublicationObjects()
-	 */
-	function &retrievePublicationObjects(&$object) {
-		// Initialize local variables.
-		$nullVar = null;
- 		$journal =& $this->getJournal();
- 		$cache =& $this->getCache();
-
-		// Retrieve basic OJS objects.
-		$publicationObjects = parent::retrievePublicationObjects($object);
-		if (is_a($object, 'SuppFile')) {
-			assert(isset($publicationObjects['article']));
-			$cache->add($object, $publicationObjects['article']);
-			$publicationObjects['suppFile'] =& $object;
-		}
-
-		// Retrieve additional related objects.
-		// For articles: Retrieve all galleys and supp files of the article:
-		if (is_a($object, 'PublishedArticle')) {
-			$article =& $publicationObjects['article'];
-			$publicationObjects['galleysByArticle'] =& $this->retrieveGalleysByArticle($article);
-			$publicationObjects['suppFilesByArticle'] =& $this->_retrieveSuppFilesByArticle($article);
-		}
-
-		// For issues: Retrieve all articles of the issue:
-		if (is_a($object, 'Issue')) {
-			// Articles by issue.
-			assert(isset($publicationObjects['issue']));
-			$issue =& $publicationObjects['issue'];
-			$publicationObjects['articlesByIssue'] =& $this->retrieveArticlesByIssue($issue);
-		}
-
-		return $publicationObjects;
-	}
-
-	/**
 	 * @see DOIExportDom::getObjectLocalePrecedence()
 	 * @param $suppFile SuppFile
 	 */

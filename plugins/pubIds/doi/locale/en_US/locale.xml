@@ -9,7 +9,7 @@
   *
   * DOI plugin localization strings
   -->
- 
+
 <locale name="en_US" full_name="U.S. English">
 	<message key="plugins.pubIds.doi.displayName">DOI</message>
 	<message key="plugins.pubIds.doi.description">This plugin enables the assignment of the Digital Object Identifiers to issues, articles, galleys and supplementary files in OJS.</message>
@@ -17,15 +17,16 @@
 	<!-- settings form -->
 	<message key="plugins.pubIds.doi.manager.settings.doiSettings">DOI Plugin Settings</message>
 	<message key="plugins.pubIds.doi.manager.settings.description">Please configure the DOI plug-in to be able to manage and use DOIs in OJS:</message>
-	
+
 	<message key="plugins.pubIds.doi.manager.settings.doiObjects">Journal Content</message>
 	<message key="plugins.pubIds.doi.manager.settings.doiObjectsRequired">Please choose the objects DOIs should be assigned to.</message>
 	<message key="plugins.pubIds.doi.manager.settings.explainDois">Please select the publishing objects that will have Digital Object Identifiers (DOI) assigned:</message>
 	<message key="plugins.pubIds.doi.manager.settings.enableIssueDoi">Issues</message>
 	<message key="plugins.pubIds.doi.manager.settings.enableArticleDoi">Articles</message>
 	<message key="plugins.pubIds.doi.manager.settings.enableGalleyDoi">Galleys</message>
+	<message key="plugins.pubIds.doi.manager.settings.enableGalleyDoi.warning">NOTE: Assigning DOI's to galleys is not generally considered good practice. There is generally a strong guideline that DOI's should only be assigned to manifestations of a work that differ enough that they would be cited separately. Different representations (i.e., PDF/HTML) do not normally fall into that definition.</message>
 	<message key="plugins.pubIds.doi.manager.settings.enableSuppFileDoi">Supplementary Files</message>
-	
+
 	<message key="plugins.pubIds.doi.manager.settings.doiPrefix">DOI Prefix</message>
 	<message key="plugins.pubIds.doi.manager.settings.doiPrefixDescription"><![CDATA[The DOI Prefix is assigned by registration agencies (e.g. <a href="http://www.crossref.org" target="_new">CrossRef</a>) and is in the format 10.xxxx (e.g. 10.1234):]]></message>
 	<message key="plugins.pubIds.doi.manager.settings.doiPrefixPattern">The DOI prefix is mandatory and must be in the form 10.xxxx.</message>
@@ -46,10 +47,10 @@
 	<message key="plugins.pubIds.doi.manager.settings.doiArticleSuffixPatternRequired">Please enter the DOI suffix pattern for articles.</message>
 	<message key="plugins.pubIds.doi.manager.settings.doiGalleySuffixPatternRequired">Please enter the DOI suffix pattern for galleys.</message>
 	<message key="plugins.pubIds.doi.manager.settings.doiSuppFileSuffixPatternRequired">Please enter the DOI suffix pattern for supplementary files.</message>
-	
+
 	<message key="plugins.pubIds.doi.manager.settings.doiReassign">Reassign DOIs</message>
 	<message key="plugins.pubIds.doi.manager.settings.doiReassign.description">If you change your DOI configuration, DOIs that have already been assigned will not be affected. Once the DOI configuration is saved, use this button to clear all existing DOIs so that the new settings will take effect with existing articles.</message>
-	<message key="plugins.pubIds.doi.manager.settings.doiReassign.confirm">Are you sure you wish to delete all existing DOIs?</message>	
+	<message key="plugins.pubIds.doi.manager.settings.doiReassign.confirm">Are you sure you wish to delete all existing DOIs?</message>
 
 
 	<!-- metadata form -->

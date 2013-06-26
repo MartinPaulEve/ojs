@@ -31,6 +31,7 @@
 					{fieldLabel name="enableArticleDoi" key="plugins.pubIds.doi.manager.settings.enableArticleDoi"}<br />
 					<input type="checkbox" name="enableGalleyDoi" id="enableGalleyDoi" value="1"{if $enableGalleyDoi} checked="checked"{/if} />
 					{fieldLabel name="enableGalleyDoi" key="plugins.pubIds.doi.manager.settings.enableGalleyDoi"}<br />
+					{translate key="plugins.pubIds.doi.manager.settings.enableGalleyDoi.warning"}<br />
 					<input type="checkbox" name="enableSuppFileDoi" id="enableSuppFileDoi" value="1"{if $enableSuppFileDoi} checked="checked"{/if} />
 					{fieldLabel name="enableSuppFileDoi" key="plugins.pubIds.doi.manager.settings.enableSuppFileDoi"}<br />
 				</td>
