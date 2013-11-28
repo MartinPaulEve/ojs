@@ -1,0 +1,100 @@
+.alm {
+    font-size: 1em;
+	font-family: sans-serif;
+	margin-bottom: 15px;
+}
+
+.alm-chart-area {
+ 			font-size: 11px;
+}
+
+.axis line,
+.axis path {
+    fill: none;
+    stroke: black;
+	stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.bar.main{
+	fill: #789aa1;
+}
+
+.bar.alt{
+	fill: #304345;
+}
+
+.alm-row {
+    margin-bottom: 1em;
+}
+
+.alm-category-row-info {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	border: none;
+	background-color: transparent;
+    position: relative;
+    top: -5px;
+    left: 2px;
+    margin-top: 5px;
+}
+
+.alm-count-label {
+	float: left;
+	width: 100px;
+    margin-top: .5em;
+	margin-right: 2em;
+	padding: 0.8em;
+	text-align: center;
+}
+
+.alm-count-label a:hover {
+	background-color: transparent !important;
+	color: #555555 !important;
+}
+
+.alm-count-label a {
+    text-decoration: none;
+    color: #337755 !important;
+}
+
+.alm-count-label img {
+	padding-right:0.5em;
+}
+
+.alm-count {
+	font-size: 1.15em;
+	padding-bottom: 0.4em;
+	padding-top: 0.4em;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.alm-control {
+	text-decoration: underline;
+	color: blue;
+}
+
+.alm-control.active {
+	text-decoration: none;
+	color: blue;
+}
+
+.alm-control.disabled {
+	cursor: default;
+	text-decoration: none;
+	color: grey;
+}
+
+.alm-control.disabled:hover {
+	background-color: transparent;
+}
+
+#content h5 {
+    font-size: 1.2em;
+}
+
+.label-img {
+	vertical-align: middle;
+}
