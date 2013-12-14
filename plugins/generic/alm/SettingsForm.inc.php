@@ -33,8 +33,8 @@ class SettingsForm extends Form {
 		$this->plugin =& $plugin;
 
 		parent::Form($plugin->getTemplatePath() . 'settingsForm.tpl');
-		$this->addCheck(new FormValidator($this, 'apiKey', 'string', Locale::translate('plugins.generic.alm.apiKeyRequired')));
-		$this->addCheck(new FormValidator($this, 'depositUrl', 'string', Locale::translate('plugins.generic.alm.depositUrlRequired')));
+		$this->addCheck(new FormValidator($this, 'apiKey', 'string', __('plugins.generic.alm.apiKeyRequired')));
+		$this->addCheck(new FormValidator($this, 'depositUrl', 'string', __('plugins.generic.alm.depositUrlRequired')));
 		$this->addCheck(new FormValidatorPost($this));
 	}
 
@@ -54,18 +54,7 @@ class SettingsForm extends Form {
 	 * Assign form data to user-submitted data.
 	 */
 	function readInputData() {
-		$this->readUserVars(array('apiKey'));
-		$this->readUserVars(array('depositUrl'));
-	}
-
-	/**
-	 * @see Form::display()
-	 */
-	function display() {
-		$templateMgr =& TemplateManager::getManager();
-		$templateMgr->assign('ipAdress', __('plugins.generic.alm.settings.ipAddress', array('ip' => $_SERVER['SERVER_ADDR'])));
-
-		return parent::display();
+		$this->readUserVars(array('apiKey', 'depositUrl'));
 	}
 
 	/**

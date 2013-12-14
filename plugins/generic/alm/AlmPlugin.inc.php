@@ -14,6 +14,7 @@
 
 import('lib.pkp.classes.plugins.GenericPlugin');
 import('lib.pkp.classes.webservice.WebService');
+import('lib.pkp.classes.core.JSONManager');
 
 DEFINE('ALM_API_URL', 'http://pkp-alm.lib.sfu.ca/api/v3/articles/');
 
@@ -133,7 +134,7 @@ class AlmPlugin extends GenericPlugin {
 	            $d3import = $scriptImportString . $baseImportPath .
 	            	'js' . DIRECTORY_SEPARATOR . 'd3.v3.min.js"></script>';
 	            $controllerImport = $scriptImportString . $baseImportPath .
-	            	'js' . DIRECTORY_SEPARATOR . 'ALMVisualizationHandler.js"></script>';
+	            	'js' . DIRECTORY_SEPARATOR . 'alm.js"></script>';
 
 				$templateMgr->assign('additionalHeadData', $additionalHeadData . "\n" . $d3import . "\n" . $controllerImport);
 
@@ -164,11 +165,16 @@ class AlmPlugin extends GenericPlugin {
 		list($totalHtml, $totalPdf, $byMonth, $byYear) = $this->_aggregateDownloadStats($downloadStats);
 		$downloadJson = $this->_buildDownloadStatsJson($totalHtml, $totalPdf, $byMonth, $byYear);
 
-		$altStatsJson = $this->_getAlternativeStats($article);
+		$almStatsJson = $this->_getAlmStats($article);
+		if (!$almStatsJson) {
+			// The ALM stats answer comes with needed article info,
+			// so we build this information if no ALM stats response.
+			$almStatsJson = $this->_buildRequiredArticleInfoJson($article);
+		}
 
-		if ($downloadJson || $altStatsJson) {
-			if ($altStatsJson) $smarty->assign('altStatsJson', $altStatsJson);
-			if ($downloadJson) $smarty->assign('downloadJson', $downloadJson);
+		if ($downloadJson || $almStatsJson) {
+			if ($almStatsJson) $smarty->assign('almStatsJson', $almStatsJson);
+			if ($downloadJson) $smarty->assign('additionalStatsJson', $downloadJson);
 
 			$baseImportPath = Request::getBaseUrl() . DIRECTORY_SEPARATOR . $this->getPluginPath() .
 				DIRECTORY_SEPARATOR . 'js' . DIRECTORY_SEPARATOR;
@@ -184,6 +190,13 @@ class AlmPlugin extends GenericPlugin {
 
 	    return false;
 	}
+
+    /**
+     * @see PKPPlugin::getInstallSitePluginSettingsFile()
+     */
+    function getInstallSitePluginSettingsFile() {
+        return $this->getPluginPath() . '/settings.xml';
+    }
 
 	/**
 	* @see AcronPlugin::parseCronTab()
@@ -242,21 +255,20 @@ class AlmPlugin extends GenericPlugin {
 		);
 
 		// Call the web service (URL defined at top of this file)
-		$resultJson =& $this->_callWebService(ALM_API_URL . 'info:doi/' . '10.3402/fnr.v52i0.1811' , $searchParams);
-		//$resultJson =& $this->_callWebService(ALM_API_URL . 'info:doi/' . $article->getPubId('doi'), $searchParams);
+		$resultJson =& $this->_callWebService(ALM_API_URL . 'info:doi/' . $article->getPubId('doi'), $searchParams);
 		if (!$resultJson) $resultJson = false;
 
 		$cache->setEntireCache($resultJson);
-		return $result;
+		return $resultJson;
 	}
 
 	/**
-	 * Get alternative metrics for the passed
+	 * Get ALM metrics for the passed
 	 * article object.
 	 * @param $article Article
 	 * @return string JSON message
 	 */
-	function _getAlternativeStats($article) {
+	function _getAlmStats($article) {
 		$articleId = $article->getId();
 		$articlePublishedDate = $article->getDatePublished();
 		$cacheManager =& CacheManager::getManager();
@@ -327,7 +339,7 @@ class AlmPlugin extends GenericPlugin {
 					$totalPdf += $views;
 					break;
 				default:
-					// switch is considered a loop for purpuses of continue
+					// switch is considered a loop for purposes of continue
 					continue 2;
 			}
 
@@ -355,7 +367,7 @@ class AlmPlugin extends GenericPlugin {
 	 */
 	function _getStatsTotal($totalHtml, $totalPdf) {
 		$metrics = array('pdf' => $totalPdf, 'html' => $totalHtml);
-		return array_merge($metrics, $this->_getAltMetricsTemplate());
+		return array_merge($metrics, $this->_getAlmMetricsTemplate());
 	}
 
 	/**
@@ -396,7 +408,7 @@ class AlmPlugin extends GenericPlugin {
 					$partialStats['month'] = $month;
 				}
 
-				$byTime[] = array_merge($partialStats, $this->_getAltMetricsTemplate());
+				$byTime[] = array_merge($partialStats, $this->_getAlmMetricsTemplate());
 			}
 		} else {
 			$byTime = null;
@@ -406,10 +418,10 @@ class AlmPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * Get template for alternate metrics JSON response.
+	 * Get template for ALM metrics JSON response.
 	 * @return array
 	 */
-	function _getAltMetricsTemplate() {
+	function _getAlmMetricsTemplate() {
 		return array(
 	    	'shares' => null,
 	    	'groups' => null,
@@ -430,8 +442,8 @@ class AlmPlugin extends GenericPlugin {
 	 */
 	function _buildDownloadStatsJson($totalHtml, $totalPdf, $byMonth, $byYear) {
 		$response = array(
-			'name' => 'pkpTimedViews',
-			'display_name' => '',
+			'name' => 'ojsViews',
+			'display_name' => __('plugins.generic.alm.thisJournal'),
 			'events_url' => null,
 			'metrics' => $this->_getStatsTotal($totalHtml, $totalPdf),
 			'by_day' => null,
@@ -440,7 +452,25 @@ class AlmPlugin extends GenericPlugin {
 		);
 
 		// Encode the object.
-		import('lib.pkp.classes.core.JSONManager');
+		$jsonManager = new JSONManager();
+		return $jsonManager->encode($response);
+	}
+
+	/**
+	 * Build the required article information for the
+	 * metrics visualization.
+	 * @param $article PublishedArticle
+	 * @return string JSON response
+	 */
+	function _buildRequiredArticleInfoJson($article) {
+		$response = array(
+			array(
+				'publication_date' => date('c', strtotime($article->getDatePublished())),
+				'doi' => $article->getPubId('doi'),
+				'title' => $article->getLocalizedTitle(),
+				'sources' => array()
+		));
+
 		$jsonManager = new JSONManager();
 		return $jsonManager->encode($response);
 	}

@@ -8,36 +8,6 @@
  *
  *}
 
-<script type="text/javascript">
-	$(function() {ldelim}
-		// Attach the alm visualization handler.
-		$('#alm').pkpHandler('$.pkp.plugins.generic.alm.ALMVisualizationHandler',
-			{ldelim}
-				altStatsJson: '{$altStatsJson|escape:"javascript"}',
-				downloadStatsJson: '{$downloadJson|escape:"javascript"}',
-				d3: d3,
-				baseUrl: "http://pkp-alm.lib.sfu.ca",
-				minItemsToShowGraph: {ldelim}
-					minEventsForYearly: 2,
-					minEventsForMonthly: 2,
-					minEventsForDaily: 2,
-					minYearsForYearly: 2,
-					minMonthsForMonthly: 2,
-					minDaysForDaily: 2
-				{rdelim},
-				categories: [{ldelim} name: "html", display_name: "HTML Views", tooltip_text: "{translate key="plugins.generic.alm.categories.html"}" },
-					{ldelim} name: "pdf", display_name: "PDF Downloads", tooltip_text: "{translate key="plugins.generic.alm.categories.pdf"}" {rdelim},
-					{ldelim} name: "likes", display_name: "Likes", tooltip_text: "{translate key="plugins.generic.alm.categories.likes"}" {rdelim},
-					{ldelim} name: "shares", display_name: "Shares", tooltip_text: "{translate key="plugins.generic.alm.categories.shares"}" {rdelim},
-					{ldelim} name: "comments", display_name: "Comments", tooltip_text: "{translate key="plugins.generic.alm.categories.comments"}" {rdelim},
-					{ldelim} name: "citations", display_name: "Citations", tooltip_text: "{translate key="plugins.generic.alm.categories.citations"}?)" {rdelim}],
-				jqueryImportUrl: '{$jqueryImportPath}',
-				tooltipImportUrl: '{$tooltipImportPath}'
-			{rdelim}
-		);
-	{rdelim});
-</script>
-
 <div class="separator"></div>
 <a name="alm"></a>
 <h4>{translate key="plugins.generic.alm.title"}</h4>
@@ -47,4 +17,39 @@
 <span style="float: right"><sub>Metrics powered by <a href="http://pkp-alm.lib.sfu.ca/">PLOS ALM</a><sub></span>
 <br />
 
+<script type="text/javascript">
+    options = {ldelim}
+        almStatsJson: $.parseJSON('{$almStatsJson|escape:"javascript"}'),
+        additionalStatsJson: $.parseJSON('{$additionalStatsJson|escape:"javascript"}'),
+        baseUrl: 'http://pkp-alm.lib.sfu.ca',
+        minItemsToShowGraph: {ldelim}
+            minEventsForYearly: 0,
+            minEventsForMonthly: 0,
+            minEventsForDaily: 0,
+            minYearsForYearly: 0,
+            minMonthsForMonthly: 0,
+            minDaysForDaily: 0
+        {rdelim},
+        hasIcon: ['wikipedia', 'scienceseeker', 'researchblogging', 'pubmed', 'nature', 'mendeley', 'facebook', 'crossref', 'citeulike', 'ojsViews'],
+        categories: [{ldelim} name: "html", display_name: '{translate key="plugins.generic.alm.categories.html"}', tooltip_text: '{translate key="plugins.generic.alm.categories.html.description"}' {rdelim},
+            {ldelim} name: "pdf", display_name: '{translate key="plugins.generic.alm.categories.pdf"}', tooltip_text: '{translate key="plugins.generic.alm.categories.pdf.description"}' {rdelim},
+            {ldelim} name: "likes", display_name: '{translate key="plugins.generic.alm.categories.likes"}', tooltip_text: '{translate key="plugins.generic.alm.categories.likes.description"}' {rdelim},
+            {ldelim} name: "shares", display_name: '{translate key="plugins.generic.alm.categories.shares"}', tooltip_text: '{translate key="plugins.generic.alm.categories.shares.description"}' {rdelim},
+            {ldelim} name: "citations", display_name: '{translate key="plugins.generic.alm.categories.citations"}', tooltip_text: '{translate key="plugins.generic.alm.categories.citations.description"}' {rdelim}],
+        vizDiv: "#alm"
+    {rdelim}
 
+    // Import JQuery 1.10 version, needed for the tooltip plugin
+    // that we use below. jQuery.noConflict puts the old $ back.
+    $.getScript('{$jqueryImportPath}', function() {ldelim}
+        $.getScript('{$tooltipImportPath}', function() {ldelim}
+            // Assign the last inserted JQuery version to a new variable, to avoid
+            // conflicts with the current version in $ variable.
+            options.jQuery = $;
+            var almviz = new AlmViz(options);
+            almviz.initViz();
+            jQuery.noConflict(true);
+        {rdelim});
+    {rdelim});
+
+</script>
