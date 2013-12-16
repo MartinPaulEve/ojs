@@ -444,7 +444,7 @@ class AlmPlugin extends GenericPlugin {
 	function _buildDownloadStatsJson($totalHtml, $totalPdf, $byMonth, $byYear) {
 		$response = array(
 			'name' => 'ojsViews',
-			'display_name' => '',
+			'display_name' => __('plugins.generic.alm.thisJournal'),
 			'events_url' => null,
 			'metrics' => $this->_getStatsTotal($totalHtml, $totalPdf),
 			'by_day' => null,

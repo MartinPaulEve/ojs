@@ -57,18 +57,17 @@
 	margin-right: 2em;
 	padding: 0.8em;
 	text-align: center;
-    background: #dfeffc;
-    font-size: .75em;
-    color: #555;
-    border: 1px solid #c5dbec;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
+    /*background: #dfeffc;*/
+    /*color: #555;*/
+    /*border: 1px solid #c5dbec;*/
+    /*-moz-border-radius: 5px;*/
+    /*-webkit-border-radius: 5px;*/
+    /*border-radius: 5px;*/
 }
 
-.alm-count-label a {
-    color: #2e6e9e;
-}
+/*.alm-count-label a {*/
+    /*color: #2e6e9e;*/
+/*}*/
 
 .alm-count-label a:hover {
 	background-color: transparent !important;

@@ -30,7 +30,7 @@
             minMonthsForMonthly: 0,
             minDaysForDaily: 0
         {rdelim},
-        hasIcon: ['wikipedia', 'scienceseeker', 'researchblogging', 'pubmed', 'nature', 'mendeley', 'facebook', 'crossref', 'citeulike'],
+        hasIcon: ['wikipedia', 'scienceseeker', 'researchblogging', 'pubmed', 'nature', 'mendeley', 'facebook', 'crossref', 'citeulike', 'ojsViews'],
         categories: [{ldelim} name: "html", display_name: '{translate key="plugins.generic.alm.categories.html"}', tooltip_text: '{translate key="plugins.generic.alm.categories.html.description"}' {rdelim},
             {ldelim} name: "pdf", display_name: '{translate key="plugins.generic.alm.categories.pdf"}', tooltip_text: '{translate key="plugins.generic.alm.categories.pdf.description"}' {rdelim},
             {ldelim} name: "likes", display_name: '{translate key="plugins.generic.alm.categories.likes"}', tooltip_text: '{translate key="plugins.generic.alm.categories.likes.description"}' {rdelim},
