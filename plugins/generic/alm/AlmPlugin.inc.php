@@ -249,8 +249,8 @@ class AlmPlugin extends GenericPlugin {
 		);
 
 		// Call the web service (URL defined at top of this file)
-//        $resultJson =& $this->_callWebService(ALM_API_URL . 'info:doi/' . '10.3402/fnr.v52i0.1811' , $searchParams);
-		$resultJson =& $this->_callWebService(ALM_API_URL . 'info:doi/' . $article->getPubId('doi'), $searchParams);
+        $resultJson =& $this->_callWebService(ALM_API_URL . 'info:doi/' . '10.3402/tellusa.v64i0.11595' , $searchParams);
+//		$resultJson =& $this->_callWebService(ALM_API_URL . 'info:doi/' . $article->getPubId('doi'), $searchParams);
 		if (!$resultJson) $resultJson = false;
 
 		$cache->setEntireCache($resultJson);

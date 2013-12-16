@@ -23,12 +23,12 @@
         additionalStatsJson: $.parseJSON('{$additionalStatsJson|escape:"javascript"}'),
         baseUrl: 'http://pkp-alm.lib.sfu.ca',
         minItemsToShowGraph: {ldelim}
-            minEventsForYearly: 2,
-            minEventsForMonthly: 2,
-            minEventsForDaily: 2,
-            minYearsForYearly: 2,
-            minMonthsForMonthly: 2,
-            minDaysForDaily: 2
+            minEventsForYearly: 0,
+            minEventsForMonthly: 0,
+            minEventsForDaily: 0,
+            minYearsForYearly: 0,
+            minMonthsForMonthly: 0,
+            minDaysForDaily: 0
         {rdelim},
         hasIcon: ['wikipedia', 'scienceseeker', 'researchblogging', 'pubmed', 'nature', 'mendeley', 'facebook', 'crossref', 'citeulike'],
         categories: [{ldelim} name: "html", display_name: '{translate key="plugins.generic.alm.categories.html"}', tooltip_text: '{translate key="plugins.generic.alm.categories.html.description"}' {rdelim},
@@ -44,10 +44,10 @@
         $.getScript('{$tooltipImportPath}', function() {ldelim}
             // Assign the last inserted JQuery version to a new variable, to avoid
             // conflicts with the current version in $ variable.
+            options.jQuery = $;
             var almviz = new AlmViz(options);
             almviz.initViz();
             jQuery.noConflict(true);
-
         {rdelim});
     {rdelim});
 

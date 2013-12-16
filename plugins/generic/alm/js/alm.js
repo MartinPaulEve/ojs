@@ -13,9 +13,13 @@
  * @brief Article level metrics visualization controller.
  */
 function AlmViz(options) {
-    var stats, additionalStats;
+    // in case a different version of jQuery is needed from the one globally defined
+    if (options.jQuery) {
+        var $ = options.jQuery;
+    }
 
-    stats = options.almStatsJson;
+    var stats = options.almStatsJson;
+    var additionalStats;
     if (stats[0] !== undefined && stats[0].sources !== undefined) {
         additionalStats = options.additionalStatsJson;
         if (additionalStats) {
@@ -23,25 +27,23 @@ function AlmViz(options) {
         }
     }
 
-    if (stats) {
-        this.stats = stats;
-    }
-
-    this.baseUrl_ = options.baseUrl;
-    this.hasSVG_ = document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
-    this.hasIcon = options.hasIcon;
-    this.minItems_ = options.minItemsToShowGraph;
-    this.categories_ = options.categories;
-    this.showTitle = options.showTitle;
-    this.formatNumber_ = d3.format(",d");
+    var baseUrl_ = options.baseUrl;
+    var hasSVG_ = document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
+    var hasIcon = options.hasIcon;
+    var minItems_ = options.minItemsToShowGraph;
+    var categories_ = options.categories;
+    var showTitle = options.showTitle;
+    var formatNumber_ = d3.format(",d");
 
     /**
      * Initialize the visualization.
+     * NB: needs to be accessible from the outside
      */
     this.initViz = function() {
+        // keep a reference to the AlmViz object
         var almviz = this;
 
-        var data = almviz.stats,
+        var data = stats,
             canvas = d3.select("#alm"),
             index, limit, pub_date, category;
 
@@ -50,7 +52,7 @@ function AlmViz(options) {
         // extract publication date
         pub_date = d3.time.format.iso.parse(data[0]["publication_date"]);
 
-        if (almviz.showTitle) {
+        if (showTitle) {
             canvas.append("a")
                 .attr('href', 'http://dx.doi.org/' + data[0].doi)
                 .attr("class", "title")
@@ -58,12 +60,12 @@ function AlmViz(options) {
         }
 
         // loop through categories
-        for (index = 0, limit = almviz.categories_.length; index < limit; index++) {
-            category = almviz.categories_[index];
-            almviz.addCategory_(canvas, category, pub_date, data);
+        for (index = 0, limit = categories_.length; index < limit; index++) {
+            category = categories_[index];
+            addCategory_(canvas, category, pub_date, data);
         }
 
-        if (!almviz.metricsFound_) {
+        if (!metricsFound_) {
             canvas.append("p")
                 .attr("class", "muted")
                 .text("No metrics found.");
@@ -79,7 +81,7 @@ function AlmViz(options) {
      * @param {Object} data Statistics.
      * @return {JQueryObject|boolean}
      */
-    this.addCategory_ = function(canvas, category, pub_date, data) {
+    var addCategory_ = function(canvas, category, pub_date, data) {
         var almviz = this;
         var categoryRow = false, index, limit, source;
 
@@ -93,12 +95,12 @@ function AlmViz(options) {
                 // because as soon as we get the category element, it will be
                 // added to the canvas.
                 if (!categoryRow) {
-                    categoryRow = almviz.getCategoryRow_(canvas, category);
+                    categoryRow = getCategoryRow_(canvas, category);
                 }
 
                 // Flag that there is at least one metric
-                almviz.metricsFound_ = true;
-                almviz.addSource_(source, total, category, categoryRow, pub_date);
+                metricsFound_ = true;
+                addSource_(source, total, category, categoryRow, pub_date);
             }
         }
     };
@@ -111,7 +113,7 @@ function AlmViz(options) {
      * @param {Array} category Category information.
      * @param {d3Object}
      */
-    this.getCategoryRow_ = function(canvas, category) {
+    var getCategoryRow_ = function(canvas, category) {
         var almviz = this;
         var categoryRow, categoryTitle, tooltip;
 
@@ -121,7 +123,7 @@ function AlmViz(options) {
             .attr("style", "width: 100%; overflow: hidden;")
             .attr("id", "category-" + category.name);
 
-        categoryTitle = categoryRow.append("h5")
+        categoryTitle = categoryRow.append("h2")
             .attr("class", "alm-category-row-heading")
             .attr("id", "month-" + category.name)
             .text(category.display_name);
@@ -145,7 +147,7 @@ function AlmViz(options) {
      * @param {Function} pub_date
      * @return {JQueryObject}
      */
-    this.addSource_ = function(source, sourceTotalValue, category, $categoryRow, pub_date) {
+    var addSource_ = function(source, sourceTotalValue, category, $categoryRow, pub_date) {
         var almviz = this;
         var $row, $countLabel, $count, total = sourceTotalValue;
 
@@ -158,9 +160,9 @@ function AlmViz(options) {
         $countLabel = $row.append("div")
             .attr("class", "alm-count-label ui-state-default ui-corner-all");
 
-        if (almviz.hasIcon.indexOf(source.name) >= 0) {
+        if (hasIcon.indexOf(source.name) >= 0) {
             $countLabel.append("img")
-                .attr("src", almviz.baseUrl_ + '/assets/' + source.name + '.png')
+                .attr("src", baseUrl_ + '/assets/' + source.name + '.png')
                 .attr("alt", 'a description of the source')
                 .attr("class", "label-img");
         }
@@ -177,7 +179,7 @@ function AlmViz(options) {
         $count
             .attr("class", "alm-count")
             .attr("id", "alm-count-" + source.name + "-" + category.name)
-            .text(almviz.formatNumber_(total));
+            .text(formatNumber_(total));
 
         $countLabel.append("br");
 
@@ -187,11 +189,11 @@ function AlmViz(options) {
         } else {
             // link the source name
             $countLabel.append("a")
-                .attr("href", almviz.baseUrl_ + "/sources/" + source.name)
+                .attr("href", baseUrl_ + "/sources/" + source.name)
                 .text(source.display_name);
         }
 
-        if (almviz.hasSVG_) {
+        if (hasSVG_) {
             var level = false;
 
             // check what levels we can show
@@ -200,35 +202,35 @@ function AlmViz(options) {
             var showYearly = false;
 
             if (source.by_year) {
-                level_data = almviz.getData_('year', source);
+                level_data = getData_('year', source);
                 var yearTotal = level_data.reduce(function(i, d) { return i + d[category.name]; }, 0);
                 var numYears = d3.time.year.utc.range(pub_date, new Date()).length;
 
-                if (yearTotal >= almviz.minItems_.minEventsForYearly &&
-                    numYears >= almviz.minItems_.minYearsForYearly) {
+                if (yearTotal >= minItems_.minEventsForYearly &&
+                    numYears >= minItems_.minYearsForYearly) {
                     showYearly = true;
                     level = 'year';
                 };
             }
 
             if (source.by_month) {
-                level_data = almviz.getData_('month', source);
+                level_data = getData_('month', source);
                 var monthTotal = level_data.reduce(function(i, d) { return i + d[category.name]; }, 0);
                 var numMonths = d3.time.month.utc.range(pub_date, new Date()).length;
 
-                if (monthTotal >= almviz.minItems_.minEventsForMonthly &&
-                    numMonths >= almviz.minItems_.minMonthsForMonthly) {
+                if (monthTotal >= minItems_.minEventsForMonthly &&
+                    numMonths >= minItems_.minMonthsForMonthly) {
                     showMonthly = true;
                     level = 'month';
                 };
             }
 
             if (source.by_day){
-                level_data = almviz.getData_('day', source);
+                level_data = getData_('day', source);
                 var dayTotal = level_data.reduce(function(i, d) { return i + d[category.name]; }, 0);
                 var numDays = d3.time.day.utc.range(pub_date, new Date()).length;
 
-                if (dayTotal >= almviz.minItems_.minEventsForDaily && numDays >= almviz.minItems_.minDaysForDaily) {
+                if (dayTotal >= minItems_.minEventsForDaily && numDays >= minItems_.minDaysForDaily) {
                     showDaily = true;
                     level = 'day';
                 };
@@ -236,7 +238,7 @@ function AlmViz(options) {
 
             // The level and level_data should be set to the finest level
             // of granularity that we can show
-            timeInterval = almviz.getTimeInterval_(level);
+            timeInterval = getTimeInterval_(level);
 
             // check there is data for
             if (showDaily || showMonthly || showYearly) {
@@ -244,8 +246,8 @@ function AlmViz(options) {
                     .attr("style", "width: 70%; float:left;")
                     .attr("class", "alm-chart-area");
 
-                var viz = almviz.getCanvas_($chartDiv, pub_date, source, category);
-                almviz.loadData_(viz, level);
+                var viz = getCanvas_($chartDiv, pub_date, source, category);
+                loadData_(viz, level);
 
                 var update_controls = function(control) {
                     control.siblings('.alm-control').removeClass('active');
@@ -266,7 +268,7 @@ function AlmViz(options) {
                         .text("daily (first 30)")
                         .on("click", function() {
                             if (showDaily && !$(this).hasClass('active')) {
-                                almviz.loadData_(viz, 'day');
+                                loadData_(viz, 'day');
                                 update_controls($(this));
                             }
                         }
@@ -283,7 +285,7 @@ function AlmViz(options) {
                         .classed("active", (level == 'month'))
                         .text("monthly")
                         .on("click", function() { if (showMonthly && !$(this).hasClass('active')) {
-                            almviz.loadData_(viz, 'month');
+                            loadData_(viz, 'month');
                             update_controls($(this));
                         } });
 
@@ -295,8 +297,6 @@ function AlmViz(options) {
                 }
 
                 if (showYearly) {
-                    $levelControlsDiv.append("text").text(" | ");
-
                     $levelControlsDiv.append("a")
                         .attr("href", "javascript:void(0)")
                         .classed("alm-control", true)
@@ -305,7 +305,7 @@ function AlmViz(options) {
                         .text("yearly")
                         .on("click", function() {
                             if (showYearly && !$(this).hasClass('active')) {
-                                almviz.loadData_(viz, 'year');
+                                loadData_(viz, 'year');
                                 update_controls($(this));
                             }
                         }
@@ -329,7 +329,7 @@ function AlmViz(options) {
      * @param d the datum
      * @return {Date}
      */
-    this.getDate_ = function(level, d) {
+    var getDate_ = function(level, d) {
         switch (level) {
             case 'year':
                 return new Date(d.year, 0, 1);
@@ -349,15 +349,15 @@ function AlmViz(options) {
      * @param d the datum
      * @return {String}
      */
-    this.getFormattedDate_ = function(level, d) {
+    var getFormattedDate_ = function(level, d) {
         var almviz = this;
         switch (level) {
             case 'year':
-                return d3.time.format("%Y")(almviz.getDate_(level, d));
+                return d3.time.format("%Y")(getDate_(level, d));
             case 'month':
-                return d3.time.format("%b %y")(almviz.getDate_(level, d));
+                return d3.time.format("%b %y")(getDate_(level, d));
             case 'day':
-                return d3.time.format("%d %b %y")(almviz.getDate_(level, d));
+                return d3.time.format("%d %b %y")(getDate_(level, d));
         }
     };
 
@@ -368,7 +368,7 @@ function AlmViz(options) {
      * @param {Object} source
      * @return {Array} Metrics
      */
-    this.getData_ = function(level, source) {
+    var getData_ = function(level, source) {
         switch (level) {
             case 'year':
                 return source.by_year;
@@ -384,7 +384,7 @@ function AlmViz(options) {
      * @param {string} level (day|month|year
      * @return {Object} d3 time Interval
      */
-    this.getTimeInterval_ = function(level) {
+    var getTimeInterval_ = function(level) {
         switch (level) {
             case 'year':
                 return d3.time.year.utc;
@@ -403,7 +403,7 @@ function AlmViz(options) {
      * @param {Array} category The category for 86 chart
      * @return {Object}
      */
-    this.getCanvas_ = function(chartDiv, pub_date, source, category) {
+    var getCanvas_ = function(chartDiv, pub_date, source, category) {
         var canvas = {};
 
         // size parameters
@@ -463,13 +463,13 @@ function AlmViz(options) {
      * @param {Object} viz AlmViz object
      * @param {string} level (day|month|year)
      */
-    this.loadData_ = function(viz, level) {
+    var loadData_ = function(viz, level) {
         var almviz = this;
 
         var pub_date = viz.pub_date;
         var category = viz.category;
-        var level_data = almviz.getData_(level, viz.source);
-        var timeInterval = almviz.getTimeInterval_(level);
+        var level_data = getData_(level, viz.source);
+        var timeInterval = getTimeInterval_(level);
 
         var end_date = new Date();
         // use only first 29 days if using day view
@@ -514,23 +514,23 @@ function AlmViz(options) {
         var barWidth = Math.max((viz.width/(timeInterval.range(pub_date, end_date).length + 1)) - 2, 1);
 
         var barsForTooltips = viz.barsForTooltips.selectAll(".barsForTooltip")
-            .data(level_data, function(d) { return almviz.getDate_(level, d); });
+            .data(level_data, function(d) { return getDate_(level, d); });
 
         barsForTooltips
             .exit()
             .remove();
 
         var bars = viz.bars.selectAll(".bar")
-            .data(level_data, function(d) { return almviz.getDate_(level, d); });
+            .data(level_data, function(d) { return getDate_(level, d); });
 
         bars
             .enter().append("rect")
-            .attr("class", function(d) { return "bar " + viz.z((level == 'day' ? d3.time.weekOfYear(almviz.getDate_(level, d)) : d.year)); })
+            .attr("class", function(d) { return "bar " + viz.z((level == 'day' ? d3.time.weekOfYear(getDate_(level, d)) : d.year)); })
             .attr("y", viz.height)
             .attr("height", 0);
 
         bars
-            .attr("x", function(d) { return viz.x(almviz.getDate_(level, d)) + 2; }) // padding of 2, 1 each side
+            .attr("x", function(d) { return viz.x(getDate_(level, d)) + 2; }) // padding of 2, 1 each side
             .attr("width", barWidth);
 
         bars.transition()
@@ -559,11 +559,11 @@ function AlmViz(options) {
 
         barsForTooltips
             .enter().append("rect")
-            .attr("class", function(d) { return "barsForTooltip " + viz.z((level == 'day' ? d3.time.weekOfYear(almviz.getDate_(level, d)) : d.year)); });
+            .attr("class", function(d) { return "barsForTooltip " + viz.z((level == 'day' ? d3.time.weekOfYear(getDate_(level, d)) : d.year)); });
 
         barsForTooltips
             .attr("width", barWidth + 2)
-            .attr("x", function(d) { return viz.x(almviz.getDate_(level, d)) + 1; })
+            .attr("x", function(d) { return viz.x(getDate_(level, d)) + 1; })
             .attr("y", function(d) { return viz.y(d[category.name]) - 1; })
             .attr("height", function(d) { return viz.height - viz.y(d[category.name]) + 1; });
 
@@ -572,7 +572,7 @@ function AlmViz(options) {
         viz.barsForTooltips.selectAll("rect").each(
             function(d,i){
                 $(this).tooltip('destroy'); // need to destroy so all bars get updated
-                $(this).tooltip({title: almviz.formatNumber_(d[category.name]) + " in " + almviz.getFormattedDate_(level, d), container: "body"});
+                $(this).tooltip({title: formatNumber_(d[category.name]) + " in " + getFormattedDate_(level, d), container: "body"});
             }
         );
     }

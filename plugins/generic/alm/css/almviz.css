@@ -4,7 +4,7 @@ body {
 }
 
 .alm {
-    font-size: 11pt;
+    font-size: 1em;
 	font-family: sans-serif;
 	margin-bottom: 15px;
 }
@@ -89,7 +89,7 @@ body {
 }
 
 .alm-count {
-	font-size: 1.25em;
+	font-size: 1.15em;
 	padding-bottom: 0.4em;
 	padding-top: 0.4em;
 	font-weight: bold;
@@ -123,4 +123,7 @@ body {
 #built-with {
     float: right;
     font-size: .75em;
+}
+#content h5 {
+    font-size: 1.2em;
 }
