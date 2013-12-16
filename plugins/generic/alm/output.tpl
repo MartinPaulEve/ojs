@@ -35,7 +35,8 @@
             {ldelim} name: "pdf", display_name: '{translate key="plugins.generic.alm.categories.pdf"}', tooltip_text: '{translate key="plugins.generic.alm.categories.pdf.description"}' {rdelim},
             {ldelim} name: "likes", display_name: '{translate key="plugins.generic.alm.categories.likes"}', tooltip_text: '{translate key="plugins.generic.alm.categories.likes.description"}' {rdelim},
             {ldelim} name: "shares", display_name: '{translate key="plugins.generic.alm.categories.shares"}', tooltip_text: '{translate key="plugins.generic.alm.categories.shares.description"}' {rdelim},
-            {ldelim} name: "citations", display_name: '{translate key="plugins.generic.alm.categories.citations"}', tooltip_text: '{translate key="plugins.generic.alm.categories.citations.description"}' {rdelim}]
+            {ldelim} name: "citations", display_name: '{translate key="plugins.generic.alm.categories.citations"}', tooltip_text: '{translate key="plugins.generic.alm.categories.citations.description"}' {rdelim}],
+        vizDiv: "#alm"
     {rdelim}
 
     // Import JQuery 1.10 version, needed for the tooltip plugin

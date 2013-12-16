@@ -14,56 +14,65 @@
  */
 function AlmViz(options) {
     // in case a different version of jQuery is needed from the one globally defined
+    // allow jQuery object to be passed in
     if (options.jQuery) {
         var $ = options.jQuery;
     }
 
+    // Init data
+    var categories_ = options.categories;
     var data = options.almStatsJson;
     var additionalStats = options.additionalStatsJson;
     if (additionalStats) {
         data[0].sources.push(additionalStats);
     }
 
+    // Init basic options
     var baseUrl_ = options.baseUrl;
-    var hasSVG_ = document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
     var hasIcon = options.hasIcon;
     var minItems_ = options.minItemsToShowGraph;
-    var categories_ = options.categories;
     var showTitle = options.showTitle;
     var formatNumber_ = d3.format(",d");
 
     // extract publication date
     var pub_date = d3.time.format.iso.parse(data[0]["publication_date"]);
 
+    var vizDiv;
+    // Get the Div where the viz should go (default to one with ID "alm')
+    if (options.vizDiv) {
+        vizDiv = d3.select(options.vizDiv);
+    } else {
+        vizDiv = d3.select("#alm");
+    }
+
+    // look to make sure browser support SVG
+    var hasSVG_ = document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
+
+    // to track if any metrics have been found
+    var metricsFound_;
+
     /**
      * Initialize the visualization.
      * NB: needs to be accessible from the outside for initialization
      */
     this.initViz = function() {
-        // keep a reference to the AlmViz object
-        var almviz = this;
-
-        var
-            canvas = d3.select("#alm"),
-            index, limit, pub_date, category;
-
-        d3.select("#alm > #loading").remove();
+        vizDiv.select("#loading").remove();
 
         if (showTitle) {
-            canvas.append("a")
+            vizDiv.append("a")
                 .attr('href', 'http://dx.doi.org/' + data[0].doi)
                 .attr("class", "title")
                 .text(data[0].title);
         }
 
         // loop through categories
-        for (index = 0, limit = categories_.length; index < limit; index++) {
-            category = categories_[index];
-            addCategory_(canvas, category, data);
-        }
+        categories_.forEach(function(category) {
+            addCategory_(vizDiv, category, data);
+        });
+
 
         if (!metricsFound_) {
-            canvas.append("p")
+            vizDiv.append("p")
                 .attr("class", "muted")
                 .text("No metrics found.");
         }
@@ -78,27 +87,22 @@ function AlmViz(options) {
      * @return {JQueryObject|boolean}
      */
     var addCategory_ = function(canvas, category, data) {
-        var almviz = this;
-        var categoryRow = false, index, limit, source;
+        var $categoryRow = false;
 
         // Loop through sources to add statistics data to the category.
-        for (index = 0, limit = data[0]["sources"].length; index < limit; index++) {
-            source = data[0]["sources"][index];
+        data[0]["sources"].forEach(function(source) {
             var total = source.metrics[category.name];
             if (total > 0) {
-                // We can only get the category row element if we have sure
-                // that there is at least one source with metrics to show,
-                // because as soon as we get the category element, it will be
-                // added to the canvas.
-                if (!categoryRow) {
-                    categoryRow = getCategoryRow_(canvas, category);
+                // Only add the category row the first time
+                if (!$categoryRow) {
+                    $categoryRow = getCategoryRow_(canvas, category);
                 }
 
                 // Flag that there is at least one metric
                 metricsFound_ = true;
-                addSource_(source, total, category, categoryRow);
+                addSource_(source, total, category, $categoryRow);
             }
-        }
+        });
     };
 
 
@@ -110,7 +114,6 @@ function AlmViz(options) {
      * @param {d3Object}
      */
     var getCategoryRow_ = function(canvas, category) {
-        var almviz = this;
         var categoryRow, categoryTitle, tooltip;
 
         // Build category html objects.
@@ -143,8 +146,8 @@ function AlmViz(options) {
      * @return {JQueryObject}
      */
     var addSource_ = function(source, sourceTotalValue, category, $categoryRow) {
-        var almviz = this;
-        var $row, $countLabel, $count, total = sourceTotalValue;
+        var $row, $countLabel, $count,
+            total = sourceTotalValue;
 
         $row = $categoryRow
             .append("div")
@@ -188,6 +191,7 @@ function AlmViz(options) {
                 .text(source.display_name);
         }
 
+        // Only add a chart if the browser supports SVG
         if (hasSVG_) {
             var level = false;
 
@@ -241,7 +245,7 @@ function AlmViz(options) {
                     .attr("style", "width: 70%; float:left;")
                     .attr("class", "alm-chart-area");
 
-                var viz = getCanvas_($chartDiv, source, category);
+                var viz = getViz_($chartDiv, source, category);
                 loadData_(viz, level);
 
                 var update_controls = function(control) {
@@ -345,7 +349,6 @@ function AlmViz(options) {
      * @return {String}
      */
     var getFormattedDate_ = function(level, d) {
-        var almviz = this;
         switch (level) {
             case 'year':
                 return d3.time.format("%Y")(getDate_(level, d));
@@ -358,7 +361,7 @@ function AlmViz(options) {
 
 
     /**
-     * Extract the date from the source.
+     * Extract the data from the source.
      * @param {string} level (day|month|year)
      * @param {Object} source
      * @return {Array} Metrics
@@ -397,55 +400,55 @@ function AlmViz(options) {
      * @param {Array} category The category for 86 chart
      * @return {Object}
      */
-    var getCanvas_ = function(chartDiv, source, category) {
-        var canvas = {};
+    var getViz_ = function(chartDiv, source, category) {
+        var viz = {};
 
         // size parameters
-        canvas.margin = {top: 10, right: 40, bottom: 0, left: 40};
-        canvas.width = 400 - canvas.margin.left - canvas.margin.right;
-        canvas.height = 100 - canvas.margin.top - canvas.margin.bottom;
+        viz.margin = {top: 10, right: 40, bottom: 0, left: 40};
+        viz.width = 400 - viz.margin.left - viz.margin.right;
+        viz.height = 100 - viz.margin.top - viz.margin.bottom;
 
         // div where everything goes
-        canvas.chartDiv = chartDiv;
+        viz.chartDiv = chartDiv;
 
         // source data and which category
-        canvas.category = category;
-        canvas.source = source;
+        viz.category = category;
+        viz.source = source;
 
         // just for record keeping
-        canvas.name = source.name + '-' + category.name;
+        viz.name = source.name + '-' + category.name;
 
-        canvas.x = d3.time.scale();
-        canvas.x.range([0, canvas.width]);
+        viz.x = d3.time.scale();
+        viz.x.range([0, viz.width]);
 
-        canvas.y = d3.scale.linear();
-        canvas.y.range([canvas.height, 0]);
+        viz.y = d3.scale.linear();
+        viz.y.range([viz.height, 0]);
 
-        canvas.z = d3.scale.ordinal();
-        canvas.z.range(['main', 'alt']);
+        viz.z = d3.scale.ordinal();
+        viz.z.range(['main', 'alt']);
 
         // the chart
-        canvas.svg = canvas.chartDiv.append("svg")
-            .attr("width", canvas.width + canvas.margin.left + canvas.margin.right)
-            .attr("height", canvas.height + canvas.margin.top + canvas.margin.bottom)
+        viz.svg = viz.chartDiv.append("svg")
+            .attr("width", viz.width + viz.margin.left + viz.margin.right)
+            .attr("height", viz.height + viz.margin.top + viz.margin.bottom)
             .append("g")
-            .attr("transform", "translate(" + canvas.margin.left + "," + canvas.margin.top + ")");
+            .attr("transform", "translate(" + viz.margin.left + "," + viz.margin.top + ")");
 
 
         // draw the bars g first so it ends up underneath the axes
-        canvas.bars = canvas.svg.append("g");
+        viz.bars = viz.svg.append("g");
 
         // and the shadow bars on top for the tooltips
-        canvas.barsForTooltips = canvas.svg.append("g");
+        viz.barsForTooltips = viz.svg.append("g");
 
-        canvas.svg.append("g")
+        viz.svg.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate(0," + (canvas.height - 1) + ")");
+            .attr("transform", "translate(0," + (viz.height - 1) + ")");
 
-        canvas.svg.append("g")
+        viz.svg.append("g")
             .attr("class", "y axis");
 
-        return canvas;
+        return viz;
     };
 
 

@@ -443,7 +443,7 @@ class AlmPlugin extends GenericPlugin {
 	 */
 	function _buildDownloadStatsJson($totalHtml, $totalPdf, $byMonth, $byYear) {
 		$response = array(
-			'name' => 'pkpTimedViews',
+			'name' => 'ojsViews',
 			'display_name' => '',
 			'events_url' => null,
 			'metrics' => $this->_getStatsTotal($totalHtml, $totalPdf),
