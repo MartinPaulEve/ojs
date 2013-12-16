@@ -14,6 +14,7 @@
 
 import('lib.pkp.classes.plugins.GenericPlugin');
 import('lib.pkp.classes.webservice.WebService');
+import('lib.pkp.classes.core.JSONManager');
 
 DEFINE('ALM_API_URL', 'http://pkp-alm.lib.sfu.ca/api/v3/articles/');
 
@@ -165,6 +166,11 @@ class AlmPlugin extends GenericPlugin {
 		$downloadJson = $this->_buildDownloadStatsJson($totalHtml, $totalPdf, $byMonth, $byYear);
 
 		$almStatsJson = $this->_getAlmStats($article);
+		if (!$almStatsJson) {
+			// The ALM stats answer comes with needed article info,
+			// so we build this information if no ALM stats response.
+			$almStatsJson = $this->_buildRequiredArticleInfoJson($article);
+		}
 
 		if ($downloadJson || $almStatsJson) {
 			if ($almStatsJson) $smarty->assign('almStatsJson', $almStatsJson);
@@ -447,7 +453,25 @@ class AlmPlugin extends GenericPlugin {
 		);
 
 		// Encode the object.
-		import('lib.pkp.classes.core.JSONManager');
+		$jsonManager = new JSONManager();
+		return $jsonManager->encode($response);
+	}
+
+	/**
+	 * Build the required article information for the
+	 * metrics visualization.
+	 * @param $article PublishedArticle
+	 * @return string JSON response
+	 */
+	function _buildRequiredArticleInfoJson($article) {
+		$response = array(
+			array(
+				'publication_date' => date('c', strtotime($article->getDatePublished())),
+				'doi' => $article->getPubId('doi'),
+				'title' => $article->getLocalizedTitle(),
+				'sources' => array()
+		));
+
 		$jsonManager = new JSONManager();
 		return $jsonManager->encode($response);
 	}

@@ -19,12 +19,9 @@ function AlmViz(options) {
     }
 
     var data = options.almStatsJson;
-    var additionalStats;
-    if (data[0] !== undefined && data[0].sources !== undefined) {
-        additionalStats = options.additionalStatsJson;
-        if (additionalStats) {
-            data[0].sources.push(additionalStats);
-        }
+    var additionalStats = options.additionalStatsJson;
+    if (additionalStats) {
+        data[0].sources.push(additionalStats);
     }
 
     var baseUrl_ = options.baseUrl;
