@@ -18,12 +18,12 @@ function AlmViz(options) {
         var $ = options.jQuery;
     }
 
-    var stats = options.almStatsJson;
+    var data = options.almStatsJson;
     var additionalStats;
-    if (stats[0] !== undefined && stats[0].sources !== undefined) {
+    if (data[0] !== undefined && data[0].sources !== undefined) {
         additionalStats = options.additionalStatsJson;
         if (additionalStats) {
-            stats[0].sources.push(additionalStats);
+            data[0].sources.push(additionalStats);
         }
     }
 
@@ -35,22 +35,22 @@ function AlmViz(options) {
     var showTitle = options.showTitle;
     var formatNumber_ = d3.format(",d");
 
+    // extract publication date
+    var pub_date = d3.time.format.iso.parse(data[0]["publication_date"]);
+
     /**
      * Initialize the visualization.
-     * NB: needs to be accessible from the outside
+     * NB: needs to be accessible from the outside for initialization
      */
     this.initViz = function() {
         // keep a reference to the AlmViz object
         var almviz = this;
 
-        var data = stats,
+        var
             canvas = d3.select("#alm"),
             index, limit, pub_date, category;
 
         d3.select("#alm > #loading").remove();
-
-        // extract publication date
-        pub_date = d3.time.format.iso.parse(data[0]["publication_date"]);
 
         if (showTitle) {
             canvas.append("a")
@@ -62,7 +62,7 @@ function AlmViz(options) {
         // loop through categories
         for (index = 0, limit = categories_.length; index < limit; index++) {
             category = categories_[index];
-            addCategory_(canvas, category, pub_date, data);
+            addCategory_(canvas, category, data);
         }
 
         if (!metricsFound_) {
@@ -77,11 +77,10 @@ function AlmViz(options) {
      * Build each article level statistics category.
      * @param {Object} canvas d3 element
      * @param {Array} category Information about the category.
-     * @param {Function} pub_date d3 date function.
      * @param {Object} data Statistics.
      * @return {JQueryObject|boolean}
      */
-    var addCategory_ = function(canvas, category, pub_date, data) {
+    var addCategory_ = function(canvas, category, data) {
         var almviz = this;
         var categoryRow = false, index, limit, source;
 
@@ -100,7 +99,7 @@ function AlmViz(options) {
 
                 // Flag that there is at least one metric
                 metricsFound_ = true;
-                addSource_(source, total, category, categoryRow, pub_date);
+                addSource_(source, total, category, categoryRow);
             }
         }
     };
@@ -144,10 +143,9 @@ function AlmViz(options) {
      * @param {integer} sourceTotalValue
      * @param {Object} category
      * @param {JQueryObject} $categoryRow
-     * @param {Function} pub_date
      * @return {JQueryObject}
      */
-    var addSource_ = function(source, sourceTotalValue, category, $categoryRow, pub_date) {
+    var addSource_ = function(source, sourceTotalValue, category, $categoryRow) {
         var almviz = this;
         var $row, $countLabel, $count, total = sourceTotalValue;
 
@@ -246,7 +244,7 @@ function AlmViz(options) {
                     .attr("style", "width: 70%; float:left;")
                     .attr("class", "alm-chart-area");
 
-                var viz = getCanvas_($chartDiv, pub_date, source, category);
+                var viz = getCanvas_($chartDiv, source, category);
                 loadData_(viz, level);
 
                 var update_controls = function(control) {
@@ -398,12 +396,11 @@ function AlmViz(options) {
     /**
      * The basic general set up of the graph itself
      * @param {JQueryElement} chartDiv The div where the chart should go
-     * @param {Function} pub_date
      * @param {Object} source
      * @param {Array} category The category for 86 chart
      * @return {Object}
      */
-    var getCanvas_ = function(chartDiv, pub_date, source, category) {
+    var getCanvas_ = function(chartDiv, source, category) {
         var canvas = {};
 
         // size parameters
@@ -413,9 +410,6 @@ function AlmViz(options) {
 
         // div where everything goes
         canvas.chartDiv = chartDiv;
-
-        // publication date
-        canvas.pub_date = pub_date;
 
         // source data and which category
         canvas.category = category;
@@ -464,9 +458,6 @@ function AlmViz(options) {
      * @param {string} level (day|month|year)
      */
     var loadData_ = function(viz, level) {
-        var almviz = this;
-
-        var pub_date = viz.pub_date;
         var category = viz.category;
         var level_data = getData_(level, viz.source);
         var timeInterval = getTimeInterval_(level);
