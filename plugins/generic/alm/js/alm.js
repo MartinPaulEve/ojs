@@ -1,23 +1,14 @@
 /**
- * @defgroup plugins_generic_alm_js
- */
-/**
- * @file plugins/generic/alm/js/ALMVisualizationHandler.js
- *
- * Copyright (c) 2000-2013 John Willinsky
+ * ALMViz
+ * See https://github.com/jalperin/almviz for more details
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
- *
- * @class ALMVisualizationHandler
- * @ingroup plugins_generic_alm_js
  *
  * @brief Article level metrics visualization controller.
  */
 function AlmViz(options) {
-    // in case a different version of jQuery is needed from the one globally defined
     // allow jQuery object to be passed in
-    if (options.jQuery) {
-        var $ = options.jQuery;
-    }
+    // in case a different version of jQuery is needed from the one globally defined
+    $ = options.jQuery || $;
 
     // Init data
     var categories_ = options.categories;
@@ -122,13 +113,13 @@ function AlmViz(options) {
             .attr("style", "width: 100%; overflow: hidden;")
             .attr("id", "category-" + category.name);
 
-        categoryTitle = categoryRow.append("h2")
+        categoryTitle = categoryRow.append("div")
             .attr("class", "alm-category-row-heading")
             .attr("id", "month-" + category.name)
             .text(category.display_name);
 
         tooltip = categoryTitle.append("div")
-            .attr("class", "alm-category-row-info ui-state-highlight").append("span")
+            .attr("class", "alm-category-row-info").append("span")
             .attr("class", "ui-icon ui-icon-info");
 
         $(tooltip).tooltip({title: category.tooltip_text, container: 'body'});
@@ -156,7 +147,7 @@ function AlmViz(options) {
             .attr("id", "alm-row-" + source.name + "-" + category.name);
 
         $countLabel = $row.append("div")
-            .attr("class", "alm-count-label ui-state-default ui-corner-all");
+            .attr("class", "alm-count-label");
 
         if (hasIcon.indexOf(source.name) >= 0) {
             $countLabel.append("img")
