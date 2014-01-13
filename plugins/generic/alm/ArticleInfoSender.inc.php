@@ -101,14 +101,19 @@ class ArticleInfoSender extends ScheduledTask {
 			$journalId = $journal->getId();
 			if (!$plugin->getSetting($journalId, 'enabled')) continue;
 
-			if ($journal->getSetting('doiPrefix')) {
-				$journals[] =& $journal;
-			} else {
-				$this->notify(SCHEDULED_TASK_MESSAGE_TYPE_WARNING,
-					__('plugins.generic.alm.senderTask.warning.noDOIprefix', array('path' => $journal->getPath())));
-			}
-		}
+			$doiPrefix = null;
+      $pubIdPlugins = PluginRegistry::loadCategory('pubIds', true);
 
+      if (isset($pubIdPlugins['DOIPubIdPlugin'])) {
+				$doiPrefix = $pubIdPlugins['DOIPubIdPlugin']->getSetting($journal->getId(), 'doiPrefix');
+      }
+
+      if (empty($doiPrefix)) {
+				$this->notify(SCHEDULED_TASK_MESSAGE_TYPE_WARNING,__('plugins.generic.alm.senderTask.warning.noDOIprefix',array('path' => $journal->getPath())));
+      } else {
+				$journals[] =& $journal;
+      }
+			
 		return $journals;
 	}
 
