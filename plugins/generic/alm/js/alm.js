@@ -151,7 +151,7 @@ function AlmViz(options) {
 
         if (hasIcon.indexOf(source.name) >= 0) {
             $countLabel.append("img")
-                .attr("src", baseUrl_ + '/assets/' + source.name + '.png')
+                .attr("src", '/plugins/generic/alm/assets/' + source.name + '.png')
                 .attr("alt", 'a description of the source')
                 .attr("class", "label-img");
         }
