@@ -8,7 +8,7 @@
 function AlmViz(options) {
     // allow jQuery object to be passed in
     // in case a different version of jQuery is needed from the one globally defined
-    $ = options.jQuery || $;
+    var $ = options.jQuery || $;
 
     // Init data
     var categories_ = options.categories;
